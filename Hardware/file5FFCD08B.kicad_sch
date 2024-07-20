@@ -4,6 +4,11 @@
 
   (paper "B")
 
+  (title_block
+    (title "WE65816 - MARK2")
+    (rev "V0.80")
+  )
+
   (lib_symbols
     (symbol "Audio:YM2149" (in_bom yes) (on_board yes)
       (property "Reference" "U" (at -10.16 29.21 0)

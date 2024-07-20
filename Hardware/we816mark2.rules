@@ -1,0 +1,128 @@
+
+(rules PCB we816mark2
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 63644)
+    (layer_rule Component
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 3.5)
+    )
+    (layer_rule Copper
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.4)
+    )
+  )
+  (rule
+    (width 250.0)
+    (clear 200.0)
+    (clear 125.0 (type smd_to_turn_gap))
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle Component 800.0 0.0 0.0)
+    )
+    (shape
+      (circle Copper 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_800:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer Component Copper)
+    )
+  )
+  (class "kicad_default"
+    "Net-(BT1-+)" "Net-(BT1--)" "Net-(U7-OSCIN)" "Net-(U7-OSCOUT)" "Net-(C37-Pad2)" "Net-(U17-C1+)" "Net-(U17-C1-)" "Net-(U17-C2+)"
+    "Net-(C44-Pad2)" "Net-(C45-Pad1)" "Net-(C46-Pad2)" "Net-(C47-Pad2)" "B_INT" "VIA2_INT" "VIA1_INT" "Net-(U17-C2-)"
+    "P1_B" "P1_A" "P1_R" "P1_L" "P1_D" "P1_U" "P2_B" "P2_A"
+    "P2_R" "P2_L" "P2_D" "P2_U" "Net-(J4-Pad3)" SERSRQ SERCLKIN SERDATAIN
+    COLUMN1 COLUMN0 "USERA_2" "USERA_3" "USERA_4" "USERCA_2" "USERB_7" "USERB_6"
+    "USERB_5" "USERB_4" "USERB_3" "USERB_2" "USERB_1" "USERB_0" "LED_1" "LED_2"
+    "Net-(U17-VS+)" "CLK_CPU" "CLK_UART" CTS TX RTS RX "Net-(U17-VS-)"
+    "unconnected-(J9-Pad5)" EMU ABORT NMI INT "B_BUSRQ" "B_NMI" "B_WAIT"
+    "VRAM_BANK" "UART_INT" RW D2 D1 WR D0 A13
+    A0 A8 A1 A9 A2 A11 A3 RD
+    A4 A10 A5 "CS_RAM" A6 D7 A7 D6
+    A12 D5 A14 D4 D3 RESET VDA BUSRQ
+    AD0 AD1 AD2 AD3 AD4 AD5 AD6 VPA
+    AD7 A15 ML WAIT VP "CS_ROM" A23 A19
+    A22 A18 A21 A17 A20 A16 "CTS_TTL" "CS_UART"
+    "RTS_TTL" "SOUT_TTL" "SIN_TTL" "CS_VDP" "CS_VIA1" "CS_VIA2" IO BUS
+    BUSAK "DATA_DIR" "unconnected-(J10-Pad5)" "Net-(D1-A)" SERATNOUT SERCLKOUT SERDATAOUT "KB_GRAPH_LED"
+    "KB_CAPS_LED" ROWD ROWC ROWB ROWA COLUMN7 COLUMN6 COLUMN5
+    COLUMN4 COLUMN3 COLUMN2 "Net-(J6-Pin_1)" "Net-(J11-Pad1)" "B_A16" "B_A17" "B_A18"
+    "B_A19" "B_A20" "B_A21" "B_A22" "B_A23" "B_CLK_CPU" "B_A0" "B_A1"
+    "B_A2" "B_A3" "B_A4" "B_A5" "B_A6" "B_A7" "B_A8" "B_A9"
+    "B_A10" "B_A11" "B_A12" "B_A13" "B_A14" "B_A15" "B_D7" "B_D6"
+    "B_D5" "B_D4" "B_D3" "B_D2" "B_D1" "B_D0" "LED_ANODE" "Net-(J11-Pad2)"
+    URESET "Net-(J11-Pad3)" "N_EMU" "B_RW" "O1_ROM" "unconnected-(J11-Pad4)" "unconnected-(J11-Pad9)" "unconnected-(J11-Pad11)"
+    "unconnected-(J11-Pad12)" "Net-(J11-Pad13)" "Net-(J11-Pad14)" "unconnected-(J11-Pad15)" "unconnected-(U2-Pad8)" "unconnected-(U2-Pad9)" "unconnected-(U2-Pad10)" "unconnected-(U2-Pad11)"
+    "unconnected-(U2-Pad12)" "unconnected-(U2-Pad13)" "unconnected-(U3-Pad1)" "unconnected-(U3-Pad2)" "Net-(U3-Pad9)" "unconnected-(U3-Pad10)" "unconnected-(U3-Pad11)" "Net-(U3-Pad13)"
+    "~{RTC_CS}" "unconnected-(U4-Pad10)" "unconnected-(U4-Pad11)" "~{RTC_CS_O}" "Net-(K1-Pin_2)" "Net-(K2-Pin_2)" "Net-(K3-Pin_2)" "Net-(K4-Pin_2)"
+    "unconnected-(P1-Pin_1-Pad1)" "unconnected-(P1-Pin_2-Pad2)" "unconnected-(P1-Pin_7-Pad7)" "unconnected-(P1-Pin_8-Pad8)" "unconnected-(P1-Pin_10-Pad10)" "Net-(P2-Pin_1)" "Net-(P2-Pin_2)" "Net-(P2-Pin_3)"
+    "Net-(P4-Pin_1)" "Net-(U7-ADJ)" "Net-(U7-CS)" "V_RW" VDSEL "V_CLK" VGAR500 VGAR1K
+    VGAR2K VGAG500 VGAG1L VGAG2K VGAB500 VGAB1K VGAB2K HSYNC
+    VSYNC "VADDR_HIGH" "VADDR_LOW" VDATA "unconnected-(RN1-R5-Pad6)" "unconnected-(RR1-R1-Pad2)" "unconnected-(RR2-R4-Pad5)" "unconnected-(RR2-R5-Pad6)"
+    "unconnected-(RR4-R5-Pad6)" "unconnected-(U1-PA5-Pad7)" "unconnected-(U1-PA6-Pad8)" "unconnected-(U1-CB1-Pad18)" "unconnected-(U1-CB2-Pad19)" "unconnected-(U1-CA1-Pad40)" "unconnected-(U3-Pad3)" "unconnected-(U3-Pad4)"
+    "unconnected-(U4-Pad5)" "unconnected-(U4-Pad6)" "unconnected-(U6-I10{slash}~{OE}-Pad11)" "unconnected-(U6-IO8-Pad12)" "unconnected-(U6-IO7-Pad13)" "unconnected-(U6-IO6-Pad14)" "unconnected-(U6-IO5-Pad15)" "unconnected-(U6-IO4-Pad16)"
+    "unconnected-(U6-I03-Pad17)" "unconnected-(U6-IO2-Pad18)" "VIDEO_WINDOW" "Net-(U7-A0)" "Net-(U7-A1)" "Net-(U7-A2)" "Net-(U7-A3)" "unconnected-(U8-~{Q0}-Pad3)"
+    "unconnected-(U8-~{Q1}-Pad6)" "~{RTC_AD_WR}" "unconnected-(U8-~{Q2}-Pad11)" "unconnected-(U8-~{Q3}-Pad14)" "Net-(U30-LE)" "unconnected-(U10-Pad4)" "unconnected-(U10-Pad6)" "unconnected-(U10-Pad8)"
+    "unconnected-(U10-Pad10)" "unconnected-(U10-Pad12)" "unconnected-(U11-M{slash}XXTAL-Pad38)" "unconnected-(U12-IO8-Pad12)" "unconnected-(U12-IO7-Pad13)" "unconnected-(U14-I9-Pad9)" "unconnected-(U14-I10{slash}~{OE}-Pad11)" "unconnected-(U14-IO8-Pad12)"
+    "unconnected-(U14-IO7-Pad13)" "unconnected-(U14-IO2-Pad18)" "unconnected-(U14-IO1-Pad19)" "Net-(U15-RCLK)" "unconnected-(U15-XOUT-Pad17)" "unconnected-(U15-DDIS-Pad23)" "unconnected-(U15-~{TXRDY}-Pad24)" "unconnected-(U15-~{RXRDY}-Pad29)"
+    "unconnected-(U15-~{OUT2}-Pad31)" "unconnected-(U15-~{DTR}-Pad33)" "unconnected-(U15-~{OUT1}-Pad34)" "unconnected-(U15-~{DSR}-Pad37)" "unconnected-(U15-~{DCD}-Pad38)" "unconnected-(U15-~{RI}-Pad39)" "unconnected-(U21-I1a-Pad4)" "unconnected-(U21-I3a-Pad8)"
+    "unconnected-(U21-O0b-Pad9)" "unconnected-(U21-I0b-Pad11)" "unconnected-(U21-O3a-Pad12)" "unconnected-(U21-O1a-Pad16)" "unconnected-(U25-NC-Pad2)" "unconnected-(U25-NC-Pad5)" "unconnected-(U25-IOB7-Pad6)" "unconnected-(U25-IOB6-Pad7)"
+    "unconnected-(U25-IOA7-Pad14)" "unconnected-(U25-IOA6-Pad15)" "unconnected-(U25-~{SEL}-Pad26)" "unconnected-(U25-TEST1-Pad39)" "VDATA_DIR" "V_DA7" "V_DA6" "V_DA5"
+    "V_DA4" "V_DA3" "V_DA2" "V_DA1" "V_DA0" "unconnected-(U36-GND-Pad23)" "unconnected-(U36-GND-Pad28)" "unconnected-(U36-RUN-Pad30)"
+    "unconnected-(U36-AGND-Pad33)" "unconnected-(U36-ADC_VREF-Pad35)" "unconnected-(U36-3V3-Pad36)" "unconnected-(U36-3V3_EN-Pad37)" "unconnected-(U36-GND-Pad38)" "unconnected-(U36-VBUS-Pad40)" "unconnected-(U36-SWCLK-Pad41)" "unconnected-(U36-GND-Pad42)"
+    "unconnected-(U36-SWDIO-Pad43)"
+    (clearance_class "kicad_default")
+    (via_rule "kicad_default")
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer Component Copper)
+    )
+  )
+  (class Power
+    GND VCC "VCC_RTC" +3.3V
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 1000.0)
+    )
+    (circuit 
+      (use_layer Component Copper)
+    )
+  )
+)

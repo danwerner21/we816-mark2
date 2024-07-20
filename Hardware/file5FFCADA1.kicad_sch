@@ -4,6 +4,11 @@
 
   (paper "B")
 
+  (title_block
+    (title "WE65816 - MARK2")
+    (rev "V0.80")
+  )
+
   (lib_symbols
     (symbol "74xx:74HC04" (in_bom yes) (on_board yes)
       (property "Reference" "U" (at 0 1.27 0)
@@ -5136,7 +5141,7 @@
     (property "Value" "POWER" (at 158.75 210.82 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "TerminalBlock_RND:TerminalBlock_RND_205-00003_1x04_P5.00mm_Horizontal" (at 162.56 213.36 0)
+    (property "Footprint" "TerminalBlock_RND:TerminalBlock_RND_205-00001_1x02_P5.00mm_Horizontal" (at 162.56 213.36 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 162.56 213.36 0)

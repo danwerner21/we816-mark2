@@ -5,7 +5,8 @@
   (paper "B")
 
   (title_block
-    (date "23 jan 2013")
+    (title "WE65816 - MARK2")
+    (rev "V0.80")
   )
 
   (lib_symbols
