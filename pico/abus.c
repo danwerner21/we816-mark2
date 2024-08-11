@@ -158,7 +158,7 @@ static void shadow_softsw_0f(bool is_write, uint_fast16_t address, uint_fast8_t 
 
 static void shadow_softsw_10(bool is_write, uint_fast16_t address, uint_fast8_t data) {
     if(is_write)
-        soft_dhires = false;
+        soft_qhires = false;
 }
 
 static void shadow_softsw_11(bool is_write, uint_fast16_t address, uint_fast8_t data) {
