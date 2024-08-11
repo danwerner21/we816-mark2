@@ -13,7 +13,7 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
 ## Bugs:
 * V0.08 board
         U13 should be a 22V10 rather than a 20V8  (no patches required)
-        Sound Chip Select is not connected (U12 pin 13 to U25 pin 26 )
+
 
 ## To Do:
 
