@@ -6,6 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
+    (date "2024-08-11")
     (rev "V0.90")
   )
 
@@ -4156,7 +4157,7 @@
     (property "Value" "SRAM_512KO" (at 57.15 182.88 0)
       (effects (font (size 1.778 1.778)) (justify left))
     )
-    (property "Footprint" "Package_DIP:DIP-32_W15.24mm" (at 59.69 149.86 0)
+    (property "Footprint" "Package_DIP:DIP-32_W15.24mm_Socket_LongPads" (at 59.69 149.86 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "https://www.alliancememory.com/wp-content/uploads/pdf/AS6C4008.pdf" (at 59.69 149.86 0)
@@ -4212,7 +4213,7 @@
     (property "Value" "27C256" (at 158.75 113.03 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Package_DIP:DIP-28_W15.24mm" (at 161.29 95.25 0)
+    (property "Footprint" "Package_DIP:DIP-28_W15.24mm_Socket_LongPads" (at 161.29 95.25 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/doc0014.pdf" (at 161.29 95.25 0)
@@ -4721,7 +4722,7 @@
     (property "Value" "27C512" (at 252.73 67.31 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Package_DIP:DIP-28_W15.24mm" (at 246.38 95.25 0)
+    (property "Footprint" "Package_DIP:DIP-28_W15.24mm_Socket_LongPads" (at 246.38 95.25 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/doc0015.pdf" (at 246.38 95.25 0)
@@ -4912,7 +4913,7 @@
     (property "Value" "658C16" (at 84.5059 34.29 0)
       (effects (font (size 1.524 1.524)) (justify left))
     )
-    (property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket" (at 82.55 43.18 0)
+    (property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket_LongPads" (at 82.55 43.18 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (at 82.55 43.18 0)

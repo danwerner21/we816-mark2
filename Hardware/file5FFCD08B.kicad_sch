@@ -6,6 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
+    (date "2024-08-11")
     (rev "V0.90")
   )
 
@@ -2251,7 +2252,7 @@
     (property "Value" "AY-3-8910" (at 139.7 128.27 0)
       (effects (font (size 1.524 1.524)))
     )
-    (property "Footprint" "Package_DIP:DIP-40_W15.24mm" (at 158.75 144.78 0)
+    (property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket_LongPads" (at 158.75 144.78 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://www.ym2149.com/ym2149.pdf" (at 142.24 109.22 0)

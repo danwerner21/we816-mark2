@@ -2,30 +2,16 @@
 #include "buffers.h"
 
 
-void render_init() {
-    generate_hires_tables();
-}
-
 
 void render_loop() {
     while(1) {
-
-        switch(soft_switches & SOFTSW_MODE_MASK) {
-        case 0:
+        if(!soft_mixed & soft_lores)
             render_lores();
-            break;
-        case SOFTSW_MIX_MODE:
+        if(soft_mixed & soft_lores)
             render_mixed_lores();
-            break;
-        case SOFTSW_HIRES_MODE:
-            render_hires(false);
-            break;
-        case SOFTSW_HIRES_MODE | SOFTSW_MIX_MODE:
-            render_hires(true);
-            break;
-        default:
-                render_text();
-            break;
-        }
+        if(soft_hires)
+            render_hires(soft_mixed);
+        if(soft_text)
+            render_text();
     }
 }

@@ -5,7 +5,7 @@
 #include "board_config.h"
 #include "vga.pio.h"
 #include "vga.h"
-
+#include "buffers.h"
 
 #define PIXEL_FREQ 25.2 /*MHz*/
 #define PIXELS_PER_LINE 800

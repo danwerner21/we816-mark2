@@ -35,7 +35,6 @@ target_sources(applevga PUBLIC
     render.c
     render_hires.c
     render_lores.c
-    render_testpat.c
     render_text.c
     ${TEXTFONT_SRC_FILES}
     vga.c
@@ -50,5 +49,3 @@ target_link_libraries(applevga PUBLIC
 )
 
 pico_add_extra_outputs(applevga)
-
-)

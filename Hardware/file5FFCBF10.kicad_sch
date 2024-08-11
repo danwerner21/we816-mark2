@@ -6,6 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
+    (date "2024-08-11")
     (rev "V0.90")
   )
 

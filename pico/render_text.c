@@ -14,7 +14,7 @@ static inline uint text_line_to_mem_offset(uint line) {
 static inline uint_fast8_t char_text_bits(uint_fast8_t ch, uint_fast8_t glyph_line) {
 
     uint_fast8_t bits = character_rom[((uint_fast16_t)ch << 3) + glyph_line];
-    return bits & 0x7f;
+    return bits  & 0x7f;
 }
 
 void render_text() {
@@ -23,12 +23,12 @@ void render_text() {
     vga_skip_lines(48);
 
     for(int line = 0; line < 24; line++) {
-        render_text_line(line, soft_force_alt_textcolor);
+        render_text_line(line);
     }
 }
 
 
-void render_text_line(unsigned int line, bool force_monocolor) {
+void render_text_line(unsigned int line) {
     const uint line_offset = text_line_to_mem_offset(line);
 
     const uint8_t *page_main = soft_page2 ? text_mainmem_page2 : text_mainmem_page1;

@@ -25,9 +25,6 @@ struct config {
     uint16_t size;
 
     uint8_t scanline_emulation;
-    uint8_t monochrome;
-    uint16_t mono_bg_color;
-    uint16_t mono_fg_color;
     uint8_t character_rom[CHARACTER_ROM_SIZE];
 
     // magic word determines if the stored configuration is valid
@@ -35,7 +32,6 @@ struct config {
 
     // Add new fields after here. When reading the config use the IS_STORED_IN_CONFIG macro
     // to determine if the field you're looking for is actually present in the stored config.
-    uint8_t force_alt_textcolor;
 };
 
 // This is a compile-time check to ensure the size of the config struct fits within one flash erase sector
@@ -56,21 +52,13 @@ void config_load() {
     }
 
     soft_scanline_emulation = cfg->scanline_emulation;
-    soft_monochrom = cfg->monochrome;
-    mono_bg_color = cfg->mono_bg_color;
-    mono_fg_color = cfg->mono_fg_color;
     memcpy(character_rom, cfg->character_rom, CHARACTER_ROM_SIZE);
-    soft_force_alt_textcolor = IS_STORED_IN_CONFIG(cfg, force_alt_textcolor) ? cfg->force_alt_textcolor : false;
 }
 
 
 void config_load_defaults() {
     soft_scanline_emulation = false;
-    soft_monochrom = false;
-    mono_bg_color = mono_bg_colors[1];
-    mono_fg_color = mono_fg_colors[1];
     memcpy(character_rom, default_character_rom, CHARACTER_ROM_SIZE);
-    soft_force_alt_textcolor = false;
 }
 
 
@@ -83,12 +71,8 @@ void config_save() {
 
     new_config->size = sizeof(struct config);
     new_config->scanline_emulation = soft_scanline_emulation;
-    new_config->monochrome = soft_monochrom;
-    new_config->mono_bg_color = mono_bg_color;
-    new_config->mono_fg_color = mono_fg_color;
     memcpy(new_config->character_rom, character_rom, CHARACTER_ROM_SIZE);
     new_config->magic_word = MAGIC_WORD_VALUE;
-    new_config->force_alt_textcolor = soft_force_alt_textcolor;
 
     const uint32_t flash_offset = (uint32_t)cfg - XIP_BASE;
     flash_range_erase(flash_offset, FLASH_SECTOR_SIZE);

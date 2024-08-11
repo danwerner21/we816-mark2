@@ -6,6 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
+    (date "2024-08-11")
     (rev "V0.90")
   )
 
@@ -3026,7 +3027,7 @@
     (property "Value" "74LS06N" (at 74.93 76.2 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket" (at 72.39 71.12 0)
+    (property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads" (at 72.39 71.12 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS06N" (at 72.39 71.12 0)
@@ -3532,7 +3533,7 @@
     (property "Value" "74LS06N" (at 59.69 44.45 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket" (at 57.15 39.37 0)
+    (property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads" (at 57.15 39.37 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS06N" (at 57.15 39.37 0)
@@ -3570,7 +3571,7 @@
     (property "Value" "74LS06N" (at 113.03 31.75 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket" (at 110.49 26.67 0)
+    (property "Footprint" "Package_DIP:DIP-14_W7.62mm_Socket_LongPads" (at 110.49 26.67 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "http://www.ti.com/lit/gpn/sn74LS06N" (at 110.49 26.67 0)

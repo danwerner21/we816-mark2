@@ -5,11 +5,11 @@
 #include "config.h"
 #include "render.h"
 #include "vga.h"
+#include "buffers.h"
 
 
 static void core1_main() {
     vga_init();
-    render_init();
     render_loop();
 }
 

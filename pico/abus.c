@@ -85,15 +85,56 @@ static void shadow_softsw_01(bool is_write, uint_fast16_t address, uint_fast8_t 
         soft_page2 = true;
 }
 
+static void shadow_softsw_02(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_text = false;
+}
+
+static void shadow_softsw_03(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_text = true;
+}
+
 static void shadow_softsw_04(bool is_write, uint_fast16_t address, uint_fast8_t data) {
     if(is_write)
-        soft_ramwrt = false;
+        soft_lores = false;
 }
 
 static void shadow_softsw_05(bool is_write, uint_fast16_t address, uint_fast8_t data) {
     if(is_write)
-        soft_ramwrt = true;
+        soft_lores = true;
 }
+
+static void shadow_softsw_06(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_dlores = false;
+}
+
+static void shadow_softsw_07(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_dlores = true;
+}
+
+static void shadow_softsw_08(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_hires = false;
+}
+
+static void shadow_softsw_09(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_hires = true;
+}
+
+static void shadow_softsw_0a(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_dhires = false;
+}
+
+static void shadow_softsw_0b(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_dhires = true;
+}
+
 
 static void shadow_softsw_0c(bool is_write, uint_fast16_t address, uint_fast8_t data) {
     if(is_write)
@@ -107,100 +148,58 @@ static void shadow_softsw_0d(bool is_write, uint_fast16_t address, uint_fast8_t 
 
 static void shadow_softsw_0e(bool is_write, uint_fast16_t address, uint_fast8_t data) {
     if(is_write)
-        soft_altcharset = false;
+        soft_mixed = false;
 }
 
 static void shadow_softsw_0f(bool is_write, uint_fast16_t address, uint_fast8_t data) {
     if(is_write)
-        soft_altcharset = true;
+        soft_mixed = true;
 }
 
-static void shadow_softsw_21(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write) {
-        if(data & 0x80) {
-            soft_monochrom = true;
-        } else {
-            soft_monochrom = false;
-        }
-    }
+static void shadow_softsw_10(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_dhires = false;
 }
 
-static void shadow_softsw_50(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches &= ~((uint32_t)SOFTSW_TEXT_MODE);
+static void shadow_softsw_11(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+       soft_qhires = true;
 }
 
-static void shadow_softsw_51(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches |= SOFTSW_TEXT_MODE;
+static void shadow_softsw_12(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+        soft_mhires = false;
 }
 
-static void shadow_softsw_52(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches &= ~((uint32_t)SOFTSW_MIX_MODE);
-}
-
-static void shadow_softsw_53(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches |= SOFTSW_MIX_MODE;
-}
-
-static void shadow_softsw_54(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches &= ~((uint32_t)SOFTSW_PAGE_2);
-}
-
-static void shadow_softsw_55(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches |= SOFTSW_PAGE_2;
-}
-
-static void shadow_softsw_56(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches &= ~((uint32_t)SOFTSW_HIRES_MODE);
-}
-
-static void shadow_softsw_57(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_switches |= SOFTSW_HIRES_MODE;
-}
-
-
-static void shadow_softsw_5e(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    soft_dhires = true;
-}
-
-static void shadow_softsw_5f(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(soft_dhires) {
-        // This is the VIDEO7 Magic (Not documented by apple but by a patent US4631692)
-        // Apple II has softswitches and also a special 2bit shift register (two flipflops basically)
-        // controlled with Softwitch 80COL and AN3. AN3 is the Clock so when AN3 goes from clear to set
-        // it shifts the content of 80COL into the 2 switches.
-        // this is VIDEO7 Mode
-        soft_video7_mode = ((soft_video7_mode & 0x01) << 1) | (soft_80col ? 0 : 1);
-    }
-
-    soft_dhires = false;
+static void shadow_softsw_13(bool is_write, uint_fast16_t address, uint_fast8_t data) {
+    if(is_write)
+       soft_mhires = true;
 }
 
 
 void abus_init() {
-    // Init states
-    soft_switches = SOFTSW_TEXT_MODE;
-
 
     // Setup soft-switch handlers for the Apple model
-    softsw_handlers[0x21] = shadow_softsw_21;
-    softsw_handlers[0x50] = shadow_softsw_50;
-    softsw_handlers[0x51] = shadow_softsw_51;
-    softsw_handlers[0x52] = shadow_softsw_52;
-    softsw_handlers[0x53] = shadow_softsw_53;
-    softsw_handlers[0x54] = shadow_softsw_54;
-    softsw_handlers[0x55] = shadow_softsw_55;
-    softsw_handlers[0x56] = shadow_softsw_56;
-    softsw_handlers[0x57] = shadow_softsw_57;
     softsw_handlers[0x00] = shadow_softsw_00;
     softsw_handlers[0x01] = shadow_softsw_01;
+    softsw_handlers[0x02] = shadow_softsw_02;
+    softsw_handlers[0x03] = shadow_softsw_03;
     softsw_handlers[0x04] = shadow_softsw_04;
     softsw_handlers[0x05] = shadow_softsw_05;
+    softsw_handlers[0x06] = shadow_softsw_06;
+    softsw_handlers[0x07] = shadow_softsw_07;
+    softsw_handlers[0x08] = shadow_softsw_08;
+    softsw_handlers[0x09] = shadow_softsw_09;
+    softsw_handlers[0x0a] = shadow_softsw_0a;
+    softsw_handlers[0x0b] = shadow_softsw_0b;
     softsw_handlers[0x0c] = shadow_softsw_0c;
     softsw_handlers[0x0d] = shadow_softsw_0d;
     softsw_handlers[0x0e] = shadow_softsw_0e;
     softsw_handlers[0x0f] = shadow_softsw_0f;
-    softsw_handlers[0x5e] = shadow_softsw_5e;
-    softsw_handlers[0x5f] = shadow_softsw_5f;
+    softsw_handlers[0x10] = shadow_softsw_10;
+    softsw_handlers[0x11] = shadow_softsw_11;
+    softsw_handlers[0x12] = shadow_softsw_12;
+    softsw_handlers[0x13] = shadow_softsw_13;
 
     abus_main_setup(CONFIG_ABUS_PIO, ABUS_MAIN_SM);
 
@@ -211,7 +210,7 @@ void abus_init() {
 // Shadow parts of the Apple's memory by observing the bus write cycles
 static void shadow_memory(bool is_write, uint_fast16_t address, uint32_t value) {
 
-    if((address>=0x1000) && (address<0x6000))
+    if((address>=0x1000) && (address<0xA000))
     {
         if(is_write)
             main_memory[address] = value & 0xff;
