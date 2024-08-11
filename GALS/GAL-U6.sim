@@ -1,0 +1,21 @@
+%SIGNAL
+PIN   1 =  a15 
+PIN   2 =  a16 
+PIN   3 =  a17 
+PIN   4 =  a18 
+PIN   5 =  a19 
+PIN   6 =  a20 
+PIN   7 =  a21 
+PIN   8 =  a22 
+PIN   9 =  a23 
+PIN  19 = !video_window 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+video_window =>
+    !a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23
+
+%END

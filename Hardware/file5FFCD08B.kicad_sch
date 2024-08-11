@@ -6,7 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (rev "V0.80")
+    (rev "V0.90")
   )
 
   (lib_symbols
@@ -2248,7 +2248,7 @@
     (property "Reference" "U25" (at 139.7 90.17 0)
       (effects (font (size 1.524 1.524)))
     )
-    (property "Value" "AY-3-8910" (at 143.51 100.33 0)
+    (property "Value" "AY-3-8910" (at 139.7 128.27 0)
       (effects (font (size 1.524 1.524)))
     )
     (property "Footprint" "Package_DIP:DIP-40_W15.24mm" (at 158.75 144.78 0)

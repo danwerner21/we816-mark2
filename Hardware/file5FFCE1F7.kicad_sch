@@ -6,7 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (rev "V0.80")
+    (rev "V0.90")
   )
 
   (lib_symbols
@@ -5889,7 +5889,6 @@
     (property "Datasheet" "" (at 125.73 44.45 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "9" (uuid 1d7bd8df-3646-4b34-9f26-0ab44753ab91))
     (pin "1" (uuid 1bd6c255-6bc7-4e04-9dd0-8bb43f88ae67))
     (pin "10" (uuid 23e6c8ac-2299-4987-9087-c53f1de79b89))
     (pin "11" (uuid e694c3de-92f9-4d9d-beb0-7278ae8fa932))
@@ -5907,6 +5906,7 @@
     (pin "6" (uuid 63074935-3e70-4518-bdad-257d37f81b9b))
     (pin "7" (uuid abb171fe-ca4b-4c66-92ba-0e0a5a5bd0e1))
     (pin "8" (uuid 2ce3e6e0-6419-44ed-8ca4-0ecb8eb2c802))
+    (pin "9" (uuid 1d7bd8df-3646-4b34-9f26-0ab44753ab91))
     (instances
       (project "we816mark2"
         (path "/ca9b74ce-0dee-401c-9544-f599f4cf538d/00000000-0000-0000-0000-00005ffce1f8"

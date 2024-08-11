@@ -1,0 +1,18 @@
+Name     GAL-U6 ;
+PartNo   00 ;
+Date     8/9/2024 ;
+Revision 01 ;
+Designer Dan Werner ;
+Company  a ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+PIN [1..9] = [a15..23]    ; /*  upper 9 address*/
+
+
+PIN   19  = !video_window ; /*                                 */
+
+
+video_window		=	!a23 & !a22 & !a21 & !a20 & !a19 & !a18 & !a17 & !a16 & !a15 	;
+

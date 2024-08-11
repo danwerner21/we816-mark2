@@ -6,7 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (rev "V0.80")
+    (rev "V0.90")
   )
 
   (lib_symbols
@@ -5056,12 +5056,12 @@
   )
 
   (symbol (lib_id "power:PWR_FLAG") (at 172.72 218.44 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (in_bom yes) (on_board yes) (dnp no)
     (uuid 5e2efbf8-59fd-4f4d-8299-b468762edbfc)
     (property "Reference" "#FLG01" (at 172.72 216.535 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "PWR_FLAG" (at 172.72 214.63 0)
+    (property "Value" "PWR_FLAG" (at 172.72 212.09 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 172.72 218.44 0)

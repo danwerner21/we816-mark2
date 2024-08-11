@@ -1,0 +1,41 @@
+Name     GAL-U12 ;
+PartNo   00 ;
+Date     8/9/2024 ;
+Revision 01 ;
+Designer Dan Werner ;
+Company  a ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+PIN   1    = !io         ; /*                */
+PIN [2..9] = [a0..7]    ; /*  lower 8 address*/
+PIN   11   = !wr        ; /*                */
+
+
+PIN   19  = !cs_uart    ; /*                                 */
+PIN   18  = !rtc_ad_wr  ; /*                                 */
+PIN   17  = !cs_vdp     ; /*                                 */
+PIN   16  = !cs_rtc     ; /*                                 */
+PIN   15  = !cs_via1    ; /*                                 */
+PIN   14  = !cs_via2    ; /*                                 */
+
+
+/****
+Memory Map
+UART 00.. 07	RW
+RTC_AD_WR 08 	WR
+RTC       09  WR
+OPEN  0a..0b  --
+SND   0c..0d  WR
+VIA1  10..1f  RW
+VIA2  20..2f  RW
+VDP   30..3f  WR
+*****/
+
+cs_uart		=	!a7 & !a6 & !a5 & !a4 & !a3 &  io	;
+rtc_ad_wr		=	!a7 & !a6 & !a5 & !a4 &  a3 & !a2 & !a1 & !a0  &  io  &  wr	;
+cs_rtc			=	!a7 & !a6 & !a5 & !a4 &  a3 & !a2 & !a1 &  a0  &  io	;
+cs_via1		=	!a7 & !a6 & !a5 &  a4 &  io	 ;
+cs_via2		=	!a7 & !a6 &  a5 & !a4 &  io	 ;
+cs_vdp			=	!a7 & !a6 &  a5 &  a4 &  io	;

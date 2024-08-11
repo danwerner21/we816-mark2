@@ -6,7 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (rev "V0.80")
+    (rev "V0.90")
   )
 
   (lib_symbols

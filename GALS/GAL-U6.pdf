@@ -1,0 +1,146 @@
+{COMPONENT N:\PROJECTS\WE816-MARK2\GALS\GAL-U6.SYM
+
+ {ENVIRONMENT
+  {PDIFvrev 3.00}
+  {Program "CUPL(WM) Version 5.0a"}
+  {DBtype "Schematic"}
+  {DBvrev 1.01}
+  {DBtime "Fri Aug 09 16:45:34 2024 "}
+  {DBunit "MIL"}
+  {DBgrid 10}
+  {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
+          "PINNAM" 6 "PINCON" 4 "REFDES" 2 "ATTR" 6 "SDOT" 1 
+          "DEVICE" 5 "OUTLIN" 5 "ATTR2" 6 "NOTES" 6 "NETNAM" 4 
+          "CMPNAM" 5 "BORDER" 5}
+ }
+
+ {USER
+  {VIEW
+   {Mode SYMB}
+   {Nlst OPEN}
+   {Vw 0 0 2}
+   {Lv 12 2 2 2 0 0 2 2 2 2 0 0 2 1 2 0 0 0 0}
+   {Gs 10 10}
+  }
+ }
+
+ {DISPLAY
+  [Ly "PINNUM"]
+  [Ls "SOLID"][Wd 0]
+  [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+ }
+
+ {SYMBOL
+  {PIN_DEF
+   [Ly "PINCON"]
+   {P A15 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P A16 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P A17 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P A18 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P A19 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P A20 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P A21 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P A22 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P A23 {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
+   {P VIDEO_WI' {Pt "I/O"}{Lq 0}{Ploc 310 20}}
+  }
+
+  {PKG
+   [Ly "REFDES"]
+   [Ts 25][Tj "CB"][Tr 0][Tm "N"]
+   {Rdl 205 210}
+
+   [Ly "PINNUM"]
+   [Ts 15][Tj "RC"]
+   {Pnl 120 190}
+   {Pnl 120 170}
+   {Pnl 120 150}
+   {Pnl 120 130}
+   {Pnl 120 110}
+   {Pnl 120 90}
+   {Pnl 120 70}
+   {Pnl 120 50}
+   {Pnl 120 30}
+   [Ts 15][Tj "LC"]
+   {Pnl 290 30}
+
+   {Sd A 1 2 3 4 5 6 7 8 9 19}
+  }
+
+  {PIC
+   [Ly "GATE"]
+   [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+   {R 130 200 280 0}
+   {L 130 180 100 180}
+   {L 130 160 100 160}
+   {L 130 140 100 140}
+   {L 130 120 100 120}
+   {L 130 100 100 100}
+   {L 130 80 100 80}
+   {L 130 60 100 60}
+   {L 130 40 100 40}
+   {L 130 20 100 20}
+   {C 285 20 5}
+   {L 290 20 310 20}
+   [Ly "PINNAM"]
+   [Tj "LC"]
+   {T "A15" 140 180}
+   {T "A16" 140 160}
+   {T "A17" 140 140}
+   {T "A18" 140 120}
+   {T "A19" 140 100}
+   {T "A20" 140 80}
+   {T "A21" 140 60}
+   {T "A22" 140 40}
+   {T "A23" 140 20}
+   [Tj "RC"]
+   {T "VIDEO_WI'" 270 20}
+   [Ly "DEVICE"]
+   [Tj "CT"]
+   {T "G16V8AS" 205 -10}
+  }
+
+  {ATR
+   {IN
+    {Org 100 20}
+    {Ty 255}
+   }
+   {EX
+    [Ly "ATTR2"]
+    [Ts 12][Tj "CT"][Tr 0][Tm "N"]
+    {At PLD N:\PROJECTS\WE816-MARK2\GALS\GAL-U6 205 200}
+   }
+  }
+ }
+
+ {DETAIL
+  {ANNOTATE
+  }
+
+  {NET_DEF
+   {N A15
+   }
+   {N A16
+   }
+   {N A17
+   }
+   {N A18
+   }
+   {N A19
+   }
+   {N A20
+   }
+   {N A21
+   }
+   {N A22
+   }
+   {N A23
+   }
+   {N VIDEO_WI'
+   }
+  }
+
+  {SUBCOMP
+  }
+ }
+}
