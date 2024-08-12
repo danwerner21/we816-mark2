@@ -109,6 +109,28 @@ Jumper J1, Interrupt Select
 
 ---
 
+## Video Programming
+IO PORTS
+
+Address|Description|Value|Value
+--------|--------|----------|--------
+$fe30 | Scan Line Emulation | on | off
+$fe31 | Display Page | page 0 | page 1
+$fe32 | character generator write offset | write offset |
+$fe33 | character generator write | Value |
+$fe34 | device command  | Command |
+$fe35 | Text Mode  | on | off
+$fe36 | Lores Mode  | on | off
+$fe37 | Double Lores Mode (must be in lores first)  | on | off
+$fe38 | Hires Mode | on | off
+$fe39 | Double Hires Mode (must be in hires first)  | on | off
+$fe3A | 80 Col Mode (must be in text mode)  | on | off
+$fe3b | Mixed Mode   (must be in lores/hires first) | on | off
+$fe3c | Quad Hires  (must be in hires first) | on | off
+$fe3d | Mono Hires  (must be in hires first)| on | off
+
+
+
 ## Bill Of Materials
 
 ### Mainboard

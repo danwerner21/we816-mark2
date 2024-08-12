@@ -14,6 +14,7 @@ static unsigned int char_write_offset;
 // Handle a write to one of the registers on this device's slot
 void device_write(uint_fast8_t reg, uint_fast8_t data) {
     switch(reg) {
+    // Scan Line Emulation
     case 0x00:
         if(data & 0x01)
             soft_scanline_emulation = true;
@@ -21,12 +22,12 @@ void device_write(uint_fast8_t reg, uint_fast8_t data) {
             soft_scanline_emulation = false;
         break;
 
-    // soft-monochrome color setting
+    // Select Page 2
     case 0x01:
-        if(data & 0x03)
-       //     mono_fg_color = mono_fg_colors[data & 0x3];
-        if(data & 0x30)
-     //       mono_bg_color = mono_bg_colors[(data >> 4) & 0x3];
+        if(data & 0x01)
+            soft_page2 = false;
+        if(data & 0x02)
+            soft_page2 = true;
         break;
 
     // character generator write offset
@@ -43,6 +44,78 @@ void device_write(uint_fast8_t reg, uint_fast8_t data) {
     // device command
     case 0x04:
         execute_device_command(data);
+        break;
+
+    // Text Mode
+    case 0x05:
+        if(data & 0x01)
+            soft_text = true;
+        if(data & 0x02)
+            soft_text = false;
+        break;
+
+    // Lores Mode
+    case 0x06:
+        if(data & 0x01)
+            soft_lores = true;
+        if(data & 0x02)
+            soft_lores = false;
+        break;
+
+    // Double Lores Mode
+    case 0x07:
+        if(data & 0x01)
+            soft_dlores = true;
+        if(data & 0x02)
+            soft_dlores = false;
+        break;
+
+    // Hires Mode
+    case 0x08:
+        if(data & 0x01)
+           soft_hires = true;
+        if(data & 0x02)
+            soft_hires = false;
+        break;
+
+    // Double Hires Mode
+    case 0x09:
+        if(data & 0x01)
+            soft_dhires = true;
+        if(data & 0x02)
+            soft_dhires = false;
+        break;
+
+    // 80 Col Mode
+    case 0x0A:
+        if(data & 0x01)
+            soft_80col = true;
+        if(data & 0x02)
+            soft_80col = false;
+        break;
+
+    // Mixed Mode
+    case 0x0B:
+        if(data & 0x01)
+            soft_mixed = true;
+        if(data & 0x02)
+            soft_mixed = false;
+        break;
+
+    // Quad Hires
+    case 0x0C:
+        if(data & 0x01)
+            soft_qhires = true;
+        if(data & 0x02)
+            soft_qhires = false;
+        break;
+
+    // Mono Hires
+    case 0x0D:
+        if(data & 0x01)
+            soft_mhires = true;
+        if(data & 0x02)
+            soft_mhires = false;
         break;
 
     default:;
@@ -70,9 +143,6 @@ void execute_device_command(uint_fast8_t cmd) {
     case 0x02:
         // save the current configuration
         config_save();
-        break;
-    case 0x10 ... 0x1f:
-        // This is now open for use
         break;
     default:;
     }

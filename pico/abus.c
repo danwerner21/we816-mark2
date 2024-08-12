@@ -17,9 +17,6 @@ enum {
     ABUS_MAIN_SM = 0,
 };
 
-typedef void (*shadow_handler)(bool is_write, uint_fast16_t address, uint_fast8_t data);
-
-static shadow_handler softsw_handlers[256];
 
 
 static void abus_main_setup(PIO pio, uint sm) {
@@ -75,131 +72,7 @@ static void abus_main_setup(PIO pio, uint sm) {
 }
 
 
-static void shadow_softsw_00(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_page2 = false;
-}
-
-static void shadow_softsw_01(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_page2 = true;
-}
-
-static void shadow_softsw_02(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_text = false;
-}
-
-static void shadow_softsw_03(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_text = true;
-}
-
-static void shadow_softsw_04(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_lores = false;
-}
-
-static void shadow_softsw_05(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_lores = true;
-}
-
-static void shadow_softsw_06(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_dlores = false;
-}
-
-static void shadow_softsw_07(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_dlores = true;
-}
-
-static void shadow_softsw_08(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_hires = false;
-}
-
-static void shadow_softsw_09(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_hires = true;
-}
-
-static void shadow_softsw_0a(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_dhires = false;
-}
-
-static void shadow_softsw_0b(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_dhires = true;
-}
-
-
-static void shadow_softsw_0c(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_80col = false;
-}
-
-static void shadow_softsw_0d(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_80col = true;
-}
-
-static void shadow_softsw_0e(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_mixed = false;
-}
-
-static void shadow_softsw_0f(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_mixed = true;
-}
-
-static void shadow_softsw_10(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_qhires = false;
-}
-
-static void shadow_softsw_11(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-       soft_qhires = true;
-}
-
-static void shadow_softsw_12(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-        soft_mhires = false;
-}
-
-static void shadow_softsw_13(bool is_write, uint_fast16_t address, uint_fast8_t data) {
-    if(is_write)
-       soft_mhires = true;
-}
-
-
 void abus_init() {
-
-    // Setup soft-switch handlers for the Apple model
-    softsw_handlers[0x00] = shadow_softsw_00;
-    softsw_handlers[0x01] = shadow_softsw_01;
-    softsw_handlers[0x02] = shadow_softsw_02;
-    softsw_handlers[0x03] = shadow_softsw_03;
-    softsw_handlers[0x04] = shadow_softsw_04;
-    softsw_handlers[0x05] = shadow_softsw_05;
-    softsw_handlers[0x06] = shadow_softsw_06;
-    softsw_handlers[0x07] = shadow_softsw_07;
-    softsw_handlers[0x08] = shadow_softsw_08;
-    softsw_handlers[0x09] = shadow_softsw_09;
-    softsw_handlers[0x0a] = shadow_softsw_0a;
-    softsw_handlers[0x0b] = shadow_softsw_0b;
-    softsw_handlers[0x0c] = shadow_softsw_0c;
-    softsw_handlers[0x0d] = shadow_softsw_0d;
-    softsw_handlers[0x0e] = shadow_softsw_0e;
-    softsw_handlers[0x0f] = shadow_softsw_0f;
-    softsw_handlers[0x10] = shadow_softsw_10;
-    softsw_handlers[0x11] = shadow_softsw_11;
-    softsw_handlers[0x12] = shadow_softsw_12;
-    softsw_handlers[0x13] = shadow_softsw_13;
 
     abus_main_setup(CONFIG_ABUS_PIO, ABUS_MAIN_SM);
 
@@ -214,15 +87,6 @@ static void shadow_memory(bool is_write, uint_fast16_t address, uint32_t value) 
     {
         if(is_write)
             main_memory[address] = value & 0xff;
-    }
-
-    if((address>=0xC000) && (address<0xC100))
-    {
-        // Handle shadowing of the soft switches and I/O in the range $C000 - $C0FF
-        shadow_handler h = softsw_handlers[address & 0xff];
-        if(h) {
-                h(is_write, address, value & 0xff);
-        }
     }
 
 }
