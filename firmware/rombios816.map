@@ -1,0 +1,32 @@
+Modules list:
+-------------
+rombios816.o:
+    ROM               Offs=000000  Size=001869  Align=00001  Fill=0000
+    NJUMP             Offs=000000  Size=000074  Align=00001  Fill=0000
+    EJUMP             Offs=000000  Size=000057  Align=00001  Fill=0000
+    VECTORS           Offs=000000  Size=00001C  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+ROM                   00E000  00F868  001869  00001
+NJUMP                 00FD00  00FD73  000074  00001
+EJUMP                 00FF71  00FFC7  000057  00001
+VECTORS               00FFE4  00FFFF  00001C  00001
+
+
+Exports list by name:
+---------------------
+
+
+
+Exports list by value:
+----------------------
+
+
+
+Imports list:
+-------------
+

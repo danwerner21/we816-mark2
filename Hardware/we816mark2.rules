@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 63644)
+    (start_pass_no 29467)
     (layer_rule Component
       (active on)
       (preferred_direction horizontal)
@@ -29,6 +29,7 @@
     (width 250.0)
     (clear 200.0)
     (clear 125.0 (type smd_to_turn_gap))
+    (clear 50.0 (type smd-smd))
   )
   (padstack "Via[0-1]_800:400_um"
     (shape
@@ -62,7 +63,7 @@
     )
   )
   (class "kicad_default"
-    "Net-(BT1-+)" "Net-(BT1--)" "Net-(U7-OSCIN)" "Net-(U7-OSCOUT)" "Net-(C37-Pad2)" "Net-(U17-C1+)" "Net-(U17-C1-)" "Net-(U17-C2+)"
+    "Net-(#FLG03-pwr)" "Net-(#FLG04-pwr)" "Net-(U7-OSCIN)" "Net-(U7-OSCOUT)" "Net-(C37-Pad2)" "Net-(U17-C1+)" "Net-(U17-C1-)" "Net-(U17-C2+)"
     "Net-(C44-Pad2)" "Net-(C45-Pad1)" "Net-(C46-Pad2)" "Net-(C47-Pad2)" "B_INT" "VIA2_INT" "VIA1_INT" "Net-(U17-C2-)"
     "P1_B" "P1_A" "P1_R" "P1_L" "P1_D" "P1_U" "P2_B" "P2_A"
     "P2_R" "P2_L" "P2_D" "P2_U" "Net-(J4-Pad3)" SERSRQ SERCLKIN SERDATAIN
@@ -95,7 +96,7 @@
     VSYNC "VADDR_HIGH" "VADDR_LOW" VDATA "unconnected-(RN1-R5-Pad6)" "unconnected-(RR1-R1-Pad2)" "unconnected-(RR2-R4-Pad5)" "unconnected-(RR2-R5-Pad6)"
     "unconnected-(RR4-R5-Pad6)" "unconnected-(U1-PA5-Pad7)" "unconnected-(U1-PA6-Pad8)" "unconnected-(U1-CB1-Pad18)" "unconnected-(U1-CB2-Pad19)" "unconnected-(U1-CA1-Pad40)" "unconnected-(U3-Pad3)" "unconnected-(U3-Pad4)"
     "unconnected-(U4-Pad5)" "unconnected-(U4-Pad6)" "unconnected-(U6-I10{slash}~{OE}-Pad11)" "unconnected-(U6-IO8-Pad12)" "unconnected-(U6-IO7-Pad13)" "unconnected-(U6-IO6-Pad14)" "unconnected-(U6-IO5-Pad15)" "unconnected-(U6-IO4-Pad16)"
-    "unconnected-(U6-I03-Pad17)" "unconnected-(U6-IO2-Pad18)" "VIDEO_WINDOW" "Net-(U7-A0)" "Net-(U7-A1)" "Net-(U7-A2)" "Net-(U7-A3)" "unconnected-(U8-~{Q0}-Pad3)"
+    "unconnected-(U6-I03-Pad17)" "VIDEO_WS" "VIDEO_WINDOW" "Net-(U7-A0)" "Net-(U7-A1)" "Net-(U7-A2)" "Net-(U7-A3)" "unconnected-(U8-~{Q0}-Pad3)"
     "unconnected-(U8-~{Q1}-Pad6)" "~{RTC_AD_WR}" "unconnected-(U8-~{Q2}-Pad11)" "unconnected-(U8-~{Q3}-Pad14)" "Net-(U30-LE)" "unconnected-(U10-Pad4)" "unconnected-(U10-Pad6)" "unconnected-(U10-Pad8)"
     "unconnected-(U10-Pad10)" "unconnected-(U10-Pad12)" "unconnected-(U11-M{slash}XXTAL-Pad38)" "unconnected-(U12-IO8-Pad12)" "unconnected-(U12-IO7-Pad13)" "unconnected-(U14-I9-Pad9)" "unconnected-(U14-I10{slash}~{OE}-Pad11)" "unconnected-(U14-IO8-Pad12)"
     "unconnected-(U14-IO7-Pad13)" "unconnected-(U14-IO2-Pad18)" "unconnected-(U14-IO1-Pad19)" "Net-(U15-RCLK)" "unconnected-(U15-XOUT-Pad17)" "unconnected-(U15-DDIS-Pad23)" "unconnected-(U15-~{TXRDY}-Pad24)" "unconnected-(U15-~{RXRDY}-Pad29)"
@@ -104,7 +105,8 @@
     "unconnected-(U25-IOA7-Pad14)" "unconnected-(U25-IOA6-Pad15)" "unconnected-(U25-~{SEL}-Pad26)" "unconnected-(U25-TEST1-Pad39)" "VDATA_DIR" "V_DA7" "V_DA6" "V_DA5"
     "V_DA4" "V_DA3" "V_DA2" "V_DA1" "V_DA0" "unconnected-(U36-GND-Pad23)" "unconnected-(U36-GND-Pad28)" "unconnected-(U36-RUN-Pad30)"
     "unconnected-(U36-AGND-Pad33)" "unconnected-(U36-ADC_VREF-Pad35)" "unconnected-(U36-3V3-Pad36)" "unconnected-(U36-3V3_EN-Pad37)" "unconnected-(U36-GND-Pad38)" "unconnected-(U36-VBUS-Pad40)" "unconnected-(U36-SWCLK-Pad41)" "unconnected-(U36-GND-Pad42)"
-    "unconnected-(U36-SWDIO-Pad43)"
+    "unconnected-(U36-SWDIO-Pad43)" "unconnected-(U16-I8-Pad8)" FF1 FF2 WS1 WS2 "unconnected-(U16-I03-Pad17)" "unconnected-(U16-IO2-Pad18)"
+    "unconnected-(U16-IO1-Pad19)"
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule
@@ -114,7 +116,7 @@
       (use_layer Component Copper)
     )
   )
-  (class Power
+  (class power
     GND VCC "VCC_RTC" +3.3V
     (clearance_class default)
     (via_rule default)

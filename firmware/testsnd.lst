@@ -1,0 +1,515 @@
+ca65 V2.18 - Ubuntu 2.19-1
+Main file   : testsnd.asm
+Current file: testsnd.asm
+
+000000r 1               .P816
+000000r 1               .A8
+000000r 1               .I8
+000000r 1               ;*****************************************************************************
+000000r 1               ;*****************************************************************************
+000000r 1               ;**                                                                         **
+000000r 1               ;**	AY-3-8910 Sound Test Program                                        **
+000000r 1               ;**	Author: Rich Cini -- 11/26/2020	                                    **
+000000r 1               ;**                                                                         **
+000000r 1               ;**	Translation of similar test program by Wayne Warthen for the Z80    **
+000000r 1               ;**                                                                         **
+000000r 1               ;*****************************************************************************
+000000r 1               ;*****************************************************************************
+000000r 1               ;
+000000r 1               ;=============================================================================
+000000r 1               ; Constants Section
+000000r 1               ;=============================================================================
+000000r 1               
+000000r 1                       .SEGMENT "MAINMEM"
+000000r 1                       .INCLUDE "macros.asm"
+000000r 2               ;___________________________________________________________________________________________________
+000000r 2               ;
+000000r 2               ;	USEFUL 65186 MACROS
+000000r 2               ;__________________________________________________________________________________________________
+000000r 2               
+000000r 2               .macro       STORECONTEXT             ; Store Complete Context at the beginning of a Sub
+000000r 2                       PHX
+000000r 2                       phy
+000000r 2                       pha
+000000r 2                       php
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       RESTORECONTEXT                 ; Restore Complete Context at the end of a Sub
+000000r 2                       plp
+000000r 2                       pla
+000000r 2                       ply
+000000r 2                       plx
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       INDEX16                         ; Set 16bit Index Registers
+000000r 2               		REP #$10 		; 16 bit Index registers
+000000r 2               		.I16
+000000r 2               .endmacro
+000000r 2               .macro       INDEX8                          ; Set 8bit Index Registers
+000000r 2               		SEP #$10 		; 8 bit Index registers
+000000r 2               		.I8
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATOR16                  ; Set 16bit Index Registers
+000000r 2               		REP #$20 		; 16 bit Index registers
+000000r 2               		.A16
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATOR8                   ; Set 8bit Index Registers
+000000r 2               		SEP #$20 		; 8 bit Index registers
+000000r 2               		.A8
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATORINDEX16             ; Set 16bit Index Registers
+000000r 2               		REP #$30 		; 16 bit Index registers
+000000r 2               		.A16
+000000r 2                               .I16
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATORINDEX8              ; Set 8bit Index Registers
+000000r 2               		SEP #$30 		; 8 bit Index registers
+000000r 2               		.A8
+000000r 2                               .I8
+000000r 2               .endmacro
+000000r 2               
+000000r 1               
+000000r 1               ;
+000000r 1               ; Hardware port addresses. SBC65816 uses the $FExx block for ECB hardware.
+000000r 1               ;
+000000r 1               via1regb        = $FE10         ; Register
+000000r 1               via1rega        = $FE11         ; Register
+000000r 1               via1ddrb        = $FE12         ; Register
+000000r 1               via1ddra        = $FE13         ; Register
+000000r 1               via1t1cl        = $FE14         ; Register
+000000r 1               via1t1ch        = $FE15         ; Register
+000000r 1               via1t1ll        = $FE16         ; Register
+000000r 1               via1t1lh        = $FE17         ; Register
+000000r 1               via1t2cl        = $FE18         ; Register
+000000r 1               via1t2ch        = $FE19         ; Register
+000000r 1               via1sr          = $FE1A         ; Register
+000000r 1               via1acr         = $FE1B         ; Register
+000000r 1               via1pcr         = $FE1C         ; Register
+000000r 1               via1ifr         = $FE1D         ; Register
+000000r 1               via1ier         = $FE1E         ; Register
+000000r 1               via1ora         = $FE1F         ; Register
+000000r 1               
+000000r 1               ;
+000000r 1               ; CPU speed for delay scaling
+000000r 1               ;
+000000r 1               cpuspd          = 4             ; CPU speed in MHz
+000000r 1               ;
+000000r 1               ; BIOS JUMP TABLE
+000000r 1               ;
+000000r 1               PRINTVEC        = $FF71
+000000r 1               ;
+000000r 1               ;=============================================================================
+000000r 1               ; Code Section
+000000r 1               ;=============================================================================
+000000r 1               ;
+000000r 1                       .ORG    $0200
+000200  1               
+000200  1  38 31 36             .BYTE   "816"
+000203  1               ;load address
+000203  1               ;	.DB     $0B,$40,0,0
+000203  1  0B 02 00 00          .BYTE   <Start,>Start,0,0
+000207  1               
+000207  1               ;execute address
+000207  1               ;	.DB     $0B,$40,0,0
+000207  1  0B 02 00 00          .BYTE   <Start,>Start,0,0
+00020B  1               
+00020B  1               Start:
+00020B  1               ;   ensure CPU Context is in a known state
+00020B  1               ; LONG* are for the assembler context; the REP/SEP is for the code
+00020B  1               ;	$20=A  $10=I  $30=both
+00020B  1               ;	REP is ON; SEP is OFF
+00020B  1               ;
+00020B  1               
+00020B  1  D8                   CLD                     ; VERIFY DECIMAL MODE IS OFF
+00020C  1  18                   CLC
+00020D  1  FB                   XCE                     ; SET NATIVE MODE
+00020E  1  E2 30                SEP     #$30            ; 8 bit REGISTERS
+000210  1  48                   PHA                     ; Set Direct Register to 0
+000211  1  48                   PHA
+000212  1  2B                   PLD
+000213  1  48                   PHA                     ; set DBR to 0
+000214  1  AB                   PLB
+000215  1               
+000215  1  20 37 02             JSR     INITMESSAGE     ; let's say hello
+000218  1  20 05 03             JSR     psginit
+00021B  1  20 CB 02             JSR     tttpsg
+00021E  1  20 9A 02             JSR     clrpsg
+000221  1               lp1:
+000221  1  A9 00                LDA     #$00            ; start with channel 0
+000223  1  8D CB 03             STA     chan            ; init channel number
+000226  1               
+000226  1               chloop:
+000226  1               ; Test each channel
+000226  1  20 48 02             JSR     tstchan         ; test the current channel
+000229  1  AD CB 03             LDA     chan            ; get current channel
+00022C  1  1A                   INA                     ; bump to next
+00022D  1  8D CB 03             STA     chan            ; save it
+000230  1  C9 03                CMP     #$03            ; end of channels?
+000232  1  30 F2                BMI     chloop          ; loop if not done
+000234  1               Exit:
+000234  1  18                   CLC                     ; SET THE CPU TO NATIVE MODE
+000235  1  FB                   XCE
+000236  1  00                   BRK
+000237  1               
+000237  1               
+000237  1               ;__INITMESSAGE______________________________________________________________________________________
+000237  1               ;
+000237  1               ;   PRINT INIT MESSAGE
+000237  1               ;___________________________________________________________________________________________________
+000237  1               INITMESSAGE:
+000237  1  A0 00                LDY     #$00            ; LOAD $00 INTO Y
+000239  1               OUTSTRLP:
+000239  1  B9 AE 03             LDA     HELLO,Y         ; LOAD NEXT CHAR FROM STRING INTO ACC
+00023C  1  C9 00                CMP     #$00            ; IS NULL?
+00023E  1  F0 07                BEQ     ENDOUTSTR       ; YES, END PRINT OUT
+000240  1  20 71 FF             JSR     PRINTVEC        ; PRINT CHAR IN ACC
+000243  1               
+000243  1  C8                   INY                     ; Y=Y+1 (BUMP INDEX)
+000244  1  4C 39 02             JMP     OUTSTRLP        ; DO NEXT CHAR
+000247  1               ENDOUTSTR:
+000247  1  60                   RTS
+000248  1               
+000248  1               
+000248  1               tstchan:
+000248  1  A9 00                LDA     #$00
+00024A  1  8D CC 03             STA     pitch
+00024D  1  8D CD 03             STA     pitch+1
+000250  1               
+000250  1  A9 07                LDA     #$07
+000252  1  A0 F8                LDY     #$f8
+000254  1  20 61 03             JSR     psgwr
+000257  1               
+000257  1  A9 0D                LDA     #$0D
+000259  1  A0 18                LDY     #$18
+00025B  1  20 61 03             JSR     psgwr
+00025E  1               
+00025E  1               ; Setup mixer register
+00025E  1               
+00025E  1               mixloop:
+00025E  1  AD CB 03             LDA     chan
+000261  1  AC CC 03             LDY     pitch
+000264  1  20 61 03             JSR     psgwr
+000267  1  AD CB 03             LDA     chan
+00026A  1  1A                   INA
+00026B  1  AC CD 03             LDY     pitch+1
+00026E  1  20 61 03             JSR     psgwr
+000271  1               
+000271  1  C2 20                ACCUMULATOR16
+000273  1  AD CC 03             LDA     pitch
+000276  1  1A                   INA
+000277  1  8D CC 03             STA     pitch
+00027A  1  C9 00 10             CMP     #$1000
+00027D  1  F0 17                BEQ     MIXOUT
+00027F  1  E2 20                ACCUMULATOR8
+000281  1               
+000281  1               
+000281  1  AD CB 03             LDA     chan
+000284  1  18                   CLC
+000285  1  69 08                ADC     #$08
+000287  1  A0 0F                LDY     #$0f
+000289  1  20 61 03             JSR     psgwr
+00028C  1               
+00028C  1               
+00028C  1               ; Delay
+00028C  1               ;	ld	b,cpuspd	; cpu speed scalar
+00028C  1  A4 04                LDY     cpuspd
+00028E  1               dlyloop:
+00028E  1               ;	call	dly64		; arbitrary delay
+00028E  1               ;	djnz	dlyloop		; loop based on cpu speed
+00028E  1  20 EC 02             JSR     dly256
+000291  1  88                   DEY
+000292  1  D0 FA                BNE     dlyloop
+000294  1               
+000294  1  80 C8                BRA     mixloop
+000296  1               MIXOUT:
+000296  1               
+000296  1  20 9A 02             JSR     clrpsg
+000299  1  60                   RTS
+00029A  1               
+00029A  1               
+00029A  1               ;
+00029A  1               ; Clear PSG registers to default
+00029A  1               ;
+00029A  1               clrpsg:
+00029A  1  DA                   PHX
+00029B  1  5A                   PHY
+00029C  1  A2 00                LDX     #00
+00029E  1  A0 00                LDY     #00
+0002A0  1               
+0002A0  1               clrpsg1:
+0002A0  1  8A                   TXA
+0002A1  1  20 61 03             JSR     psgwr           ; set register X to 0
+0002A4  1  E8                   INX
+0002A5  1  E0 11                CPX     #17
+0002A7  1  D0 F7                BNE     clrpsg1
+0002A9  1  7A                   PLY
+0002AA  1  FA                   PLX
+0002AB  1  60                   RTS
+0002AC  1               
+0002AC  1               ;
+0002AC  1               ; Program PSG registers from list at HL
+0002AC  1               ;
+0002AC  1               setpsg:
+0002AC  1  DA                   PHX
+0002AD  1  5A                   PHY
+0002AE  1  20 05 03             JSR     psginit
+0002B1  1  A2 00                LDX     #$0
+0002B3  1               setpsg_lp:
+0002B3  1               ;	ld	a,(hl)		; get psg reg number
+0002B3  1               ;	inc	hl		; bump index
+0002B3  1               ;	cp	$FF		; check for end
+0002B3  1               ;	ret	z		; return if end marker $FF
+0002B3  1               ;	out	(rsel),a	; select psg register
+0002B3  1               ;	ld	a,(hl)		; get register value
+0002B3  1               ;	inc	hl		; bump index
+0002B3  1               ;	out	(rdat),a	; set register value
+0002B3  1               ;	jr	setpsg		; loop till done
+0002B3  1  BD CE 03             LDA     regno,x
+0002B6  1  C9 FF                CMP     #$FF
+0002B8  1  F0 0E                BEQ     setpsg1
+0002BA  1  48                   PHA
+0002BB  1  E8                   INX
+0002BC  1  BD CE 03             LDA     regno,x
+0002BF  1  A8                   TAY
+0002C0  1  E8                   INX
+0002C1  1  68                   PLA
+0002C2  1  20 61 03             JSR     psgwr
+0002C5  1  4C B3 02             JMP     setpsg_lp
+0002C8  1               setpsg1:
+0002C8  1  7A                   PLY
+0002C9  1  FA                   PLX
+0002CA  1  60                   RTS
+0002CB  1               
+0002CB  1               
+0002CB  1               
+0002CB  1               ;
+0002CB  1               ; test PSG registers to default
+0002CB  1               ;
+0002CB  1               tttpsg:
+0002CB  1  A2 00                LDX     #00
+0002CD  1               
+0002CD  1               tttpsg1:
+0002CD  1  8A                   TXA
+0002CE  1  9B                   TXY
+0002CF  1  20 61 03             JSR     psgwr           ; set register X to 0
+0002D2  1  E8                   INX
+0002D3  1  E0 11                CPX     #17
+0002D5  1  D0 F6                BNE     tttpsg1
+0002D7  1               
+0002D7  1  A2 00                LDX     #00
+0002D9  1               tttpsg2:
+0002D9  1  8A                   TXA
+0002DA  1  20 1C 03             JSR     psgrd           ; set register X to 0
+0002DD  1  98                   TYA
+0002DE  1  20 CF 03             JSR     binhex
+0002E1  1  A9 20                LDA     #' '
+0002E3  1  20 71 FF             JSR     PRINTVEC
+0002E6  1  E8                   INX
+0002E7  1  E0 11                CPX     #17
+0002E9  1  D0 EE                BNE     tttpsg2
+0002EB  1  60                   RTS
+0002EC  1               
+0002EC  1               
+0002EC  1               
+0002EC  1               ;
+0002EC  1               ; Short delay functions.  No clock speed compensation, so they
+0002EC  1               ; will run longer on slower systems.  The number indicates the
+0002EC  1               ; number of call/ret invocations.  A single call/ret is
+0002EC  1               ; 27 t-states on a z80, 25 t-states on a z180
+0002EC  1               ;
+0002EC  1               dly256:
+0002EC  1  20 EF 02             JSR     dly128
+0002EF  1               dly128:
+0002EF  1  20 F2 02             JSR     dly64
+0002F2  1               dly64:
+0002F2  1  20 F5 02             JSR     dly32
+0002F5  1               dly32:
+0002F5  1  20 F8 02             JSR     dly16
+0002F8  1               dly16:
+0002F8  1  20 FB 02             JSR     dly8
+0002FB  1               dly8:
+0002FB  1  20 FE 02             JSR     dly4
+0002FE  1               dly4:
+0002FE  1  20 01 03             JSR     dly2
+000301  1               dly2:
+000301  1  20 04 03             JSR     dly1
+000304  1               dly1:
+000304  1  60                   RTS
+000305  1               
+000305  1               
+000305  1               psginit:
+000305  1  48                   PHA
+000306  1  A9 1C                LDA     #%00011100
+000308  1  8D 13 FE             STA     via1ddra
+00030B  1  A9 10                LDA     #%00010000
+00030D  1  8D 11 FE             STA     via1rega
+000310  1  A9 FF                LDA     #$FF
+000312  1  8D 12 FE             STA     via1ddrb
+000315  1  A9 00                LDA     #$00
+000317  1  8D 10 FE             STA     via1regb
+00031A  1  68                   PLA
+00031B  1  60                   RTS
+00031C  1               
+00031C  1               psgrd:
+00031C  1  8D 10 FE             STA     via1regb        ; select register
+00031F  1  48                   PHA
+000320  1  A9 1C                LDA     #%00011100      ; latch address
+000322  1  8D 11 FE             STA     via1rega
+000325  1               
+000325  1  8D 11 FE             STA     via1rega
+000328  1  8D 11 FE             STA     via1rega
+00032B  1  8D 11 FE             STA     via1rega
+00032E  1  8D 11 FE             STA     via1rega
+000331  1               
+000331  1  A9 10                LDA     #%00010000      ; inact
+000333  1  8D 11 FE             STA     via1rega
+000336  1               
+000336  1  8D 11 FE             STA     via1rega
+000339  1  8D 11 FE             STA     via1rega
+00033C  1               
+00033C  1  A9 00                LDA     #$00
+00033E  1  8D 12 FE             STA     via1ddrb
+000341  1  A9 18                LDA     #%00011000      ; latch data
+000343  1  8D 11 FE             STA     via1rega
+000346  1               
+000346  1  8D 11 FE             STA     via1rega
+000349  1  8D 11 FE             STA     via1rega
+00034C  1  8D 11 FE             STA     via1rega
+00034F  1  8D 11 FE             STA     via1rega
+000352  1               
+000352  1  AC 10 FE             LDY     via1regb        ; get data
+000355  1  A9 FF                LDA     #$FF
+000357  1  8D 12 FE             STA     via1ddrb
+00035A  1  A9 10                LDA     #%00010000      ; inact
+00035C  1  8D 11 FE             STA     via1rega
+00035F  1  68                   PLA
+000360  1  60                   RTS
+000361  1               
+000361  1               
+000361  1               psgwr:
+000361  1  8D 10 FE             STA     via1regb        ; select register
+000364  1  48                   PHA
+000365  1  A9 1C                LDA     #%00011100      ; latch address
+000367  1  8D 11 FE             STA     via1rega
+00036A  1               
+00036A  1  8D 11 FE             STA     via1rega
+00036D  1  8D 11 FE             STA     via1rega
+000370  1  8D 11 FE             STA     via1rega
+000373  1  8D 11 FE             STA     via1rega
+000376  1               
+000376  1  A9 10                LDA     #%00010000      ; inact
+000378  1  8D 11 FE             STA     via1rega
+00037B  1               
+00037B  1  8D 11 FE             STA     via1rega
+00037E  1  8D 11 FE             STA     via1rega
+000381  1  8D 11 FE             STA     via1rega
+000384  1  8D 11 FE             STA     via1rega
+000387  1               
+000387  1  8C 10 FE             STY     via1regb        ; store data
+00038A  1               
+00038A  1  8C 10 FE             STY     via1regb        ; store data
+00038D  1  8C 10 FE             STY     via1regb        ; store data
+000390  1  8C 10 FE             STY     via1regb        ; store data
+000393  1  8C 10 FE             STY     via1regb        ; store data
+000396  1               
+000396  1  A9 14                LDA     #%00010100      ; latch data
+000398  1  8D 11 FE             STA     via1rega
+00039B  1               
+00039B  1  8D 11 FE             STA     via1rega
+00039E  1  8D 11 FE             STA     via1rega
+0003A1  1  8D 11 FE             STA     via1rega
+0003A4  1  8D 11 FE             STA     via1rega
+0003A7  1               
+0003A7  1  A9 10                LDA     #%00010000      ; inact
+0003A9  1  8D 11 FE             STA     via1rega
+0003AC  1  68                   PLA
+0003AD  1  60                   RTS
+0003AE  1               
+0003AE  1               
+0003AE  1               ;_Text Strings and Data____________________________________________________________________________________________________
+0003AE  1               ;
+0003AE  1               HELLO:
+0003AE  1  0A 0D                .BYTE   $0A, $0D        ; line feed and carriage return
+0003B0  1  0A 0D                .BYTE   $0A, $0D        ; line feed and carriage return
+0003B2  1  42 65 67 69          .BYTE   "Begin SCG Test Program"
+0003B6  1  6E 20 53 43  
+0003BA  1  47 20 54 65  
+0003C8  1  0A 0D 00             .BYTE   $0A, $0D, 00    ; line feed and carriage return
+0003CB  1               
+0003CB  1               chan:
+0003CB  1  00                   .BYTE   0               ; active audio channel
+0003CC  1               pitch:
+0003CC  1  00 00                .WORD   0               ; current pitch
+0003CE  1               regno:
+0003CE  1  00                   .BYTE   0               ; register number
+0003CF  1               lasta           = regno+1
+0003CF  1               ;_________________________________________________________________________________________________________________________
+0003CF  1               
+0003CF  1               
+0003CF  1               ;_________________________________________________________________________________________________________________________
+0003CF  1               
+0003CF  1               ;================================================================================
+0003CF  1               ;
+0003CF  1               ;binhex: CONVERT BINARY BYTE TO HEX ASCII CHARS
+0003CF  1               ;
+0003CF  1               ;   ————————————————————————————————————
+0003CF  1               ;   Preparatory Ops: .A: byte to convert
+0003CF  1               ;
+0003CF  1               ;   Returned Values: .A: MSN ASCII char
+0003CF  1               ;                    .X: LSN ASCII char
+0003CF  1               ;                    .Y: entry value
+0003CF  1               ;   ————————————————————————————————————
+0003CF  1               ;
+0003CF  1               binhex:
+0003CF  1  48                   PHA
+0003D0  1  DA                   PHX
+0003D1  1  5A                   PHY
+0003D2  1  48                   PHA                     ;save byte
+0003D3  1  29 0F                AND     #%00001111      ;extract LSN
+0003D5  1  AA                   TAX                     ;save it
+0003D6  1  68                   PLA                     ;recover byte
+0003D7  1  4A                   LSR                     ;extract...
+0003D8  1  4A                   LSR                     ;MSN
+0003D9  1  4A                   LSR
+0003DA  1  4A                   LSR
+0003DB  1  48                   PHA                     ;save MSN
+0003DC  1  8A                   TXA                     ;LSN
+0003DD  1  20 F6 03             JSR     _0000010        ;generate ASCII
+0003E0  1  AA                   TAX                     ;save
+0003E1  1  68                   PLA                     ;get MSN & fall thru
+0003E2  1  20 F6 03             JSR     _0000010        ;generate ASCII
+0003E5  1  48                   PHA
+0003E6  1  DA                   PHX
+0003E7  1  5A                   PHY
+0003E8  1  20 71 FF             JSR     PRINTVEC
+0003EB  1  7A                   PLY
+0003EC  1  FA                   PLX
+0003ED  1  68                   PLA
+0003EE  1  8A                   TXA
+0003EF  1  20 71 FF             JSR     PRINTVEC
+0003F2  1  7A                   PLY
+0003F3  1  FA                   PLX
+0003F4  1  68                   PLA
+0003F5  1  60                   RTS
+0003F6  1               ;
+0003F6  1               ;
+0003F6  1               ;   convert nybble to hex ASCII equivalent...
+0003F6  1               ;
+0003F6  1               _0000010:
+0003F6  1  C9 0A                CMP     #$0a
+0003F8  1  90 02                BCC     _0000020        ;in decimal range
+0003FA  1               ;
+0003FA  1  69 66                ADC     #$66            ;hex compensate
+0003FC  1               ;
+0003FC  1               _0000020:
+0003FC  1  49 30                EOR     #%00110000      ;finalize nybble
+0003FE  1               
+0003FE  1               
+0003FE  1  60                   RTS                     ;done
+0003FF  1               ;
+0003FF  1               
+0003FF  1                       .END

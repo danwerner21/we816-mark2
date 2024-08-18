@@ -1,0 +1,620 @@
+ca65 V2.18 - Ubuntu 2.19-1
+Main file   : testkbd.asm
+Current file: testkbd.asm
+
+000000r 1               .P816
+000000r 1               .A8
+000000r 1               .I8
+000000r 1               ;*****************************************************************************
+000000r 1               ;*****************************************************************************
+000000r 1               ;**                                                                         **
+000000r 1               ;**	HC2 Keyboard Test Program                                               **
+000000r 1               ;**	Author: Dan Werner -- 3/24/2021	                                        **
+000000r 1               ;**                                                                         **
+000000r 1               ;**                                                                         **
+000000r 1               ;*****************************************************************************
+000000r 1               ;*****************************************************************************
+000000r 1               ;
+000000r 1               ;=============================================================================
+000000r 1               ; Constants Section
+000000r 1               ;=============================================================================
+000000r 1                       .SEGMENT "MAINMEM"
+000000r 1                       .INCLUDE "macros.asm"
+000000r 2               ;___________________________________________________________________________________________________
+000000r 2               ;
+000000r 2               ;	USEFUL 65186 MACROS
+000000r 2               ;__________________________________________________________________________________________________
+000000r 2               
+000000r 2               .macro       STORECONTEXT             ; Store Complete Context at the beginning of a Sub
+000000r 2                       PHX
+000000r 2                       phy
+000000r 2                       pha
+000000r 2                       php
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       RESTORECONTEXT                 ; Restore Complete Context at the end of a Sub
+000000r 2                       plp
+000000r 2                       pla
+000000r 2                       ply
+000000r 2                       plx
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       INDEX16                         ; Set 16bit Index Registers
+000000r 2               		REP #$10 		; 16 bit Index registers
+000000r 2               		.I16
+000000r 2               .endmacro
+000000r 2               .macro       INDEX8                          ; Set 8bit Index Registers
+000000r 2               		SEP #$10 		; 8 bit Index registers
+000000r 2               		.I8
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATOR16                  ; Set 16bit Index Registers
+000000r 2               		REP #$20 		; 16 bit Index registers
+000000r 2               		.A16
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATOR8                   ; Set 8bit Index Registers
+000000r 2               		SEP #$20 		; 8 bit Index registers
+000000r 2               		.A8
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATORINDEX16             ; Set 16bit Index Registers
+000000r 2               		REP #$30 		; 16 bit Index registers
+000000r 2               		.A16
+000000r 2                               .I16
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATORINDEX8              ; Set 8bit Index Registers
+000000r 2               		SEP #$30 		; 8 bit Index registers
+000000r 2               		.A8
+000000r 2                               .I8
+000000r 2               .endmacro
+000000r 2               
+000000r 1               
+000000r 1               ;
+000000r 1               ; Hardware port addresses. SBC65816 uses the $FExx block for ECB hardware.
+000000r 1               ;
+000000r 1               via2regb        = $FE20         ; Register
+000000r 1               via2rega        = $FE21         ; Register
+000000r 1               via2ddrb        = $FE22         ; Register
+000000r 1               via2ddra        = $FE23         ; Register
+000000r 1               via2t1cl        = $FE24         ; Register
+000000r 1               via2t1ch        = $FE25         ; Register
+000000r 1               via2t1ll        = $FE26         ; Register
+000000r 1               via2t1lh        = $FE27         ; Register
+000000r 1               via2t2cl        = $FE28         ; Register
+000000r 1               via2t2ch        = $FE29         ; Register
+000000r 1               via2sr          = $FE2A         ; Register
+000000r 1               via2acr         = $FE2B         ; Register
+000000r 1               via2pcr         = $FE2C         ; Register
+000000r 1               via2ifr         = $FE2D         ; Register
+000000r 1               via2ier         = $FE2E         ; Register
+000000r 1               via2ora         = $FE2F         ; Register
+000000r 1               
+000000r 1               KBD_DELAY       = 64            ; keyboard delay in MS.   Set higher if keys bounce, set lower if keyboard feels slow
+000000r 1               LEDS            = $e2
+000000r 1               KeyLock         = $e3
+000000r 1               ScannedKey      = $e4
+000000r 1               TEMP            = $e5           ; TEMP AREA
+000000r 1               ;
+000000r 1               ; BIOS JUMP TABLE
+000000r 1               ;
+000000r 1               PRINTVEC        = $FF71
+000000r 1               ;INPVEC      =    $FF74
+000000r 1               ;INPWVEC     =    $FF77
+000000r 1               ;INITDISK    =    $FF7A
+000000r 1               ;READDISK    =    $FF7D
+000000r 1               ;WRITEDISK   =    $FF80
+000000r 1               ;RTC_WRITE   =    $FF83
+000000r 1               ;RTC_READ    =    $FF86
+000000r 1               ;
+000000r 1               ; Zero Page Work Vars
+000000r 1               ;
+000000r 1               ;
+000000r 1               ;=============================================================================
+000000r 1               ; Code Section
+000000r 1               ;=============================================================================
+000000r 1               ;
+000000r 1                       .ORG    $0200
+000200  1               
+000200  1  38 31 36             .BYTE   "816"
+000203  1               ;load address
+000203  1               ;	.BYTE     $0B,$40,0,0
+000203  1  0B 02 00 00          .BYTE   <Start,>Start,0,0
+000207  1               
+000207  1               ;execute address
+000207  1               ;	.BYTE     $0B,$40,0,0
+000207  1  0B 02 00 00          .BYTE   <Start,>Start,0,0
+00020B  1               
+00020B  1               Start:
+00020B  1               ;   ensure CPU Context is in a known state
+00020B  1               ; LONG* are for the assembler context; the REP/SEP is for the code
+00020B  1               ;	$20=A  $10=I  $30=both
+00020B  1               ;	REP is ON; SEP is OFF
+00020B  1               ;
+00020B  1               
+00020B  1  D8                   CLD                     ; VERIFY DECIMAL MODE IS OFF
+00020C  1  18                   CLC
+00020D  1  FB                   XCE                     ; SET NATIVE MODE
+00020E  1  E2 30                SEP     #$30            ; 8 bit REGISTERS
+000210  1  48                   PHA                     ; Set Direct Register to 0
+000211  1  48                   PHA
+000212  1  2B                   PLD
+000213  1  48                   PHA                     ; set DBR to 0
+000214  1  AB                   PLB
+000215  1               
+000215  1  20 95 04             JSR     INITMESSAGE     ; let's say hello
+000218  1  20 34 02             JSR     INITKEYBOARD
+00021B  1               
+00021B  1               ; allow prepopulate of screen
+00021B  1               ploop:
+00021B  1  20 43 02             JSR     GetKey
+00021E  1  C9 FF                CMP     #$FF
+000220  1  F0 F9                BEQ     ploop
+000222  1  48                   PHA
+000223  1  20 71 FF             JSR     PRINTVEC
+000226  1  68                   PLA
+000227  1  C9 0D                CMP     #13
+000229  1  F0 03                BEQ     pexit
+00022B  1               
+00022B  1  4C 1B 02             JMP     ploop
+00022E  1               
+00022E  1               
+00022E  1               
+00022E  1               pexit:
+00022E  1               
+00022E  1  18                   CLC                     ; SET THE CPU TO NATIVE MODE
+00022F  1  FB                   XCE
+000230  1  4C 00 80             JMP     $8000
+000233  1  00                   BRK
+000234  1               
+000234  1               ;___________________________________________________________________________________________________
+000234  1               ; Initialize Keyboard
+000234  1               ;___________________________________________________________________________________________________
+000234  1               
+000234  1               INITKEYBOARD:
+000234  1  08                   PHP
+000235  1  E2 30                SEP     #$30            ; NEED 8 bit ACCUMULATOR & INDEX
+000237  1                       .A8                     ;
+000237  1                       .I8                     ;
+000237  1  48                   PHA
+000238  1  A9 F0                LDA     #$F0
+00023A  1  85 E2                STA     LEDS
+00023C  1  A9 00                LDA     #00
+00023E  1  85 E3                STA     KeyLock
+000240  1  68                   PLA
+000241  1  28                   PLP
+000242  1  60                   RTS
+000243  1               
+000243  1               ;___________________________________________________________________________________________________
+000243  1               ; Get a key from Keyboard
+000243  1               ;
+000243  1               ; Returns Key in A
+000243  1               ;___________________________________________________________________________________________________
+000243  1               
+000243  1               GetKey:
+000243  1  08                   PHP
+000244  1  E2 30                SEP     #$30            ; NEED 8 bit ACCUMULATOR & INDEX
+000246  1                       .A8                     ;
+000246  1                       .I8                     ;
+000246  1  DA                   PHX
+000247  1  5A                   PHY
+000248  1               
+000248  1               GetKey_Loop:
+000248  1  20 7B 04             JSR     kbdDelay
+00024B  1  20 74 02             JSR     ScanKeyboard
+00024E  1  C9 FF                CMP     #$FF
+000250  1  F0 F6                BEQ     GetKey_Loop
+000252  1  85 E6                STA     TEMP+1
+000254  1  20 E6 02             JSR     ModifierKeyCheck
+000257  1  85 E4                STA     ScannedKey
+000259  1               GetKey_loop1:
+000259  1  20 7B 04             JSR     kbdDelay
+00025C  1  20 74 02             JSR     ScanKeyboard
+00025F  1  C5 E6                CMP     TEMP+1
+000261  1  F0 F6                BEQ     GetKey_loop1
+000263  1               
+000263  1  A5 E4                LDA     ScannedKey
+000265  1  20 21 03             JSR     DecodeKeyboard
+000268  1               
+000268  1  C9 FF                CMP     #$FF
+00026A  1  F0 DC                BEQ     GetKey_Loop
+00026C  1  C9 00                CMP     #$00
+00026E  1  F0 D8                BEQ     GetKey_Loop
+000270  1  7A                   PLY
+000271  1  FA                   PLX
+000272  1  28                   PLP
+000273  1  60                   RTS
+000274  1               
+000274  1               
+000274  1               ;___________________________________________________________________________________________________
+000274  1               ; Scan Keyboard
+000274  1               ;
+000274  1               ; Returns Scancode in A
+000274  1               ;
+000274  1               ;___________________________________________________________________________________________________
+000274  1               ScanKeyboard:
+000274  1  08                   PHP
+000275  1  E2 30                SEP     #$30            ; NEED 8 bit ACCUMULATOR & INDEX
+000277  1                       .A8                     ;
+000277  1                       .I8                     ;
+000277  1  DA                   PHX
+000278  1  5A                   PHY
+000279  1  A9 FF                LDA     #$ff            ; SET OUTPUT DIRECTION
+00027B  1  8D 22 FE             STA     via2ddrb        ; write value
+00027E  1  A9 00                LDA     #$00            ; SET INPUT DIRECTION
+000280  1  8D 23 FE             STA     via2ddra        ; write value
+000283  1               
+000283  1  A0 00                LDY     #$00            ; SET ROW AND LEDS
+000285  1               outerScanLoop:
+000285  1  C0 09                CPY     #09
+000287  1  F0 3D                BEQ     KeyNotFound
+000289  1  84 E5                STY     TEMP
+00028B  1  A5 E2                LDA     LEDS
+00028D  1  05 E5                ORA     TEMP
+00028F  1  8D 20 FE             STA     via2regb        ; write value
+000292  1               innerScanLoop:
+000292  1  AD 21 FE             LDA     via2rega        ; read value
+000295  1  A2 00                LDX     #$00
+000297  1  C9 FF                CMP     #$FF            ;NO KEY PRESSED
+000299  1  F0 27                BEQ     exitInnerScanLoop
+00029B  1  C9 FE                CMP     #$FE            ; COL 1 key Pressed
+00029D  1  F0 2D                BEQ     keyFound
+00029F  1  E8                   INX
+0002A0  1  C9 FD                CMP     #$FD            ; COL 2 key Pressed
+0002A2  1  F0 28                BEQ     keyFound
+0002A4  1  E8                   INX
+0002A5  1  C9 FB                CMP     #$FB            ; COL 3 key Pressed
+0002A7  1  F0 23                BEQ     keyFound
+0002A9  1  E8                   INX
+0002AA  1  C9 F7                CMP     #$F7            ; COL 4 key Pressed
+0002AC  1  F0 1E                BEQ     keyFound
+0002AE  1  E8                   INX
+0002AF  1  C9 EF                CMP     #$EF            ; COL 5 key Pressed
+0002B1  1  F0 19                BEQ     keyFound
+0002B3  1  E8                   INX
+0002B4  1  C9 DF                CMP     #$DF            ; COL 6 key Pressed
+0002B6  1  F0 14                BEQ     keyFound
+0002B8  1  E8                   INX
+0002B9  1  C9 BF                CMP     #$BF            ; COL 7 key Pressed
+0002BB  1  F0 0F                BEQ     keyFound
+0002BD  1  E8                   INX
+0002BE  1  C9 7F                CMP     #$7F            ; COL 8 key Pressed
+0002C0  1  F0 0A                BEQ     keyFound
+0002C2  1               exitInnerScanLoop:
+0002C2  1  C8                   INY
+0002C3  1  4C 85 02             JMP     outerScanLoop
+0002C6  1               KeyNotFound:
+0002C6  1  A9 FF                LDA     #$FF
+0002C8  1  7A                   PLY
+0002C9  1  FA                   PLX
+0002CA  1  28                   PLP
+0002CB  1  60                   RTS
+0002CC  1               keyFound:
+0002CC  1  86 E5                STX     TEMP
+0002CE  1  98                   TYA
+0002CF  1  18                   CLC
+0002D0  1  0A                   ASL
+0002D1  1  0A                   ASL
+0002D2  1  0A                   ASL
+0002D3  1  18                   CLC
+0002D4  1  65 E5                ADC     TEMP
+0002D6  1  C9 30                CMP     #48
+0002D8  1  F0 EC                BEQ     KeyNotFound
+0002DA  1  C9 31                CMP     #49
+0002DC  1  F0 E8                BEQ     KeyNotFound
+0002DE  1  C9 32                CMP     #50
+0002E0  1  F0 E4                BEQ     KeyNotFound
+0002E2  1  7A                   PLY
+0002E3  1  FA                   PLX
+0002E4  1  28                   PLP
+0002E5  1  60                   RTS
+0002E6  1               
+0002E6  1               ;___________________________________________________________________________________________________
+0002E6  1               ; Check for Modifier keys (Shift, Control, Graph/Alt)
+0002E6  1               ; Requires Scancode in A
+0002E6  1               ; Returns modified Scancode in A
+0002E6  1               ;
+0002E6  1               ;___________________________________________________________________________________________________
+0002E6  1               ModifierKeyCheck:
+0002E6  1  08                   PHP
+0002E7  1  E2 30                SEP     #$30            ; NEED 8 bit ACCUMULATOR & INDEX
+0002E9  1                       .A8                     ;
+0002E9  1                       .I8                     ;
+0002E9  1  48                   PHA
+0002EA  1               ; Check for Modifiers
+0002EA  1  A5 E2                LDA     LEDS
+0002EC  1  09 06                ORA     #06
+0002EE  1  8D 20 FE             STA     via2regb        ; write value
+0002F1  1  AD 21 FE             LDA     via2rega        ; read value
+0002F4  1  C9 FF                CMP     #$FF            ;NO KEY PRESSED
+0002F6  1  F0 26                BEQ     exit_Scan
+0002F8  1  C9 FE                CMP     #$FE            ; COL 1 key Pressed
+0002FA  1  D0 06                BNE     check_Ctrl
+0002FC  1  68                   PLA
+0002FD  1  18                   CLC
+0002FE  1  69 48                ADC     #72
+000300  1  28                   PLP
+000301  1  60                   RTS
+000302  1               check_Ctrl:
+000302  1  C9 FD                CMP     #$FD            ; COL 2 key Pressed
+000304  1  D0 0A                BNE     check_Graph
+000306  1  68                   PLA
+000307  1  C9 30                CMP     #48
+000309  1  B0 03                BCS     skip_Ctrl
+00030B  1  18                   CLC
+00030C  1  69 90                ADC     #144
+00030E  1               skip_Ctrl:
+00030E  1  28                   PLP
+00030F  1  60                   RTS
+000310  1               check_Graph:
+000310  1  C9 FB                CMP     #$FB            ; COL 3 key Pressed
+000312  1  D0 0A                BNE     exit_Scan
+000314  1               check_Graph1:
+000314  1  68                   PLA
+000315  1  C9 30                CMP     #48
+000317  1  B0 F5                BCS     skip_Ctrl
+000319  1  18                   CLC
+00031A  1  69 C0                ADC     #192
+00031C  1  28                   PLP
+00031D  1  60                   RTS
+00031E  1               exit_Scan:
+00031E  1  68                   PLA
+00031F  1  28                   PLP
+000320  1  60                   RTS
+000321  1               
+000321  1               
+000321  1               ;___________________________________________________________________________________________________
+000321  1               ; Decode Keyboard
+000321  1               ;
+000321  1               ; Scancode in A
+000321  1               ; Returns Decoded Ascii in A
+000321  1               ;
+000321  1               ;___________________________________________________________________________________________________
+000321  1               DecodeKeyboard:
+000321  1  08                   PHP
+000322  1  E2 30                SEP     #$30            ; NEED 8 bit ACCUMULATOR & INDEX
+000324  1                       .A8                     ;
+000324  1                       .I8                     ;
+000324  1  DA                   PHX
+000325  1  C9 33                CMP     #51             ; is CapsLock
+000327  1  F0 16                BEQ     is_CapsLock
+000329  1  C9 34                CMP     #52             ; is graphLock?
+00032B  1  F0 42                BEQ     is_GraphLock
+00032D  1  C9 30                CMP     #48
+00032F  1  B0 07                BCS     skip_Lock
+000331  1  C9 16                CMP     #22
+000333  1  90 03                BCC     skip_Lock
+000335  1  18                   CLC
+000336  1  65 E3                ADC     KeyLock
+000338  1               skip_Lock:
+000338  1  AA                   TAX
+000339  1  BD 8B 03             LDA     DecodeTable,X
+00033C  1  FA                   PLX
+00033D  1  28                   PLP
+00033E  1  60                   RTS
+00033F  1               is_CapsLock:
+00033F  1               ; check for toggle and set LEDs
+00033F  1  A5 E2                LDA     LEDS
+000341  1  29 10                AND     #$10
+000343  1  C9 00                CMP     #$00
+000345  1  F0 14                BEQ     Cap_off
+000347  1  A5 E2                LDA     LEDS
+000349  1  29 C0                AND     #$C0
+00034B  1  09 20                ORA     #$20
+00034D  1  85 E2                STA     LEDS
+00034F  1  8D 20 FE             STA     via2regb        ; write value
+000352  1  A9 48                LDA     #72
+000354  1  85 E3                STA     KeyLock
+000356  1  A9 FF                LDA     #$FF
+000358  1  FA                   PLX
+000359  1  28                   PLP
+00035A  1  60                   RTS
+00035B  1               Cap_off:
+00035B  1  A5 E2                LDA     LEDS
+00035D  1  29 C0                AND     #$C0
+00035F  1  09 30                ORA     #$30
+000361  1  85 E2                STA     LEDS
+000363  1  8D 20 FE             STA     via2regb        ; write value
+000366  1  A9 00                LDA     #0
+000368  1  85 E3                STA     KeyLock
+00036A  1  A9 FF                LDA     #$FF
+00036C  1  FA                   PLX
+00036D  1  28                   PLP
+00036E  1  60                   RTS
+00036F  1               is_GraphLock:
+00036F  1               ; check for toggle and set LEDs
+00036F  1  A5 E2                LDA     LEDS
+000371  1  29 20                AND     #$20
+000373  1  C9 00                CMP     #$00
+000375  1  F0 E4                BEQ     Cap_off
+000377  1  A5 E2                LDA     LEDS
+000379  1  29 C0                AND     #$C0
+00037B  1  09 10                ORA     #$10
+00037D  1  85 E2                STA     LEDS
+00037F  1  8D 20 FE             STA     via2regb        ; write value
+000382  1  A9 C0                LDA     #192
+000384  1  85 E3                STA     KeyLock
+000386  1  A9 FF                LDA     #$FF
+000388  1  FA                   PLX
+000389  1  28                   PLP
+00038A  1  60                   RTS
+00038B  1               
+00038B  1               DecodeTable:
+00038B  1  30 31 32 33          .BYTE   '0','1','2','3','4','5','6','7'; 0
+00038F  1  34 35 36 37  
+000393  1  38 39 2D 3D          .BYTE   '8','9','-','=','\','[',']',';'; 8
+000397  1  5C 5B 5D 3B  
+00039B  1  27 7E 2C 2E          .BYTE   39,'~',',','.','/',00,'a','b'; 16
+00039F  1  2F 00 61 62  
+0003A3  1  63 64 65 66          .BYTE   'c','d','e','f','g','h','i','j'; 24
+0003A7  1  67 68 69 6A  
+0003AB  1  6B 6C 6D 6E          .BYTE   'k','l','m','n','o','p','q','r'; 32
+0003AF  1  6F 70 71 72  
+0003B3  1  73 74 75 76          .BYTE   's','t','u','v','w','x','y','z'; 40
+0003B7  1  77 78 79 7A  
+0003BB  1  FF FF FF FF          .BYTE   $FF,$FF,$FF,$FF,$FF,11,12,14; 48
+0003BF  1  FF 0B 0C 0E  
+0003C3  1  0F 10 1B 09          .BYTE   15,16,27,09,03,08,17,13; 56
+0003C7  1  03 08 11 0D  
+0003CB  1  20 1C 1D 1E          .BYTE   32,28,29,30,31,01,02,04; 64
+0003CF  1  1F 01 02 04  
+0003D3  1               
+0003D3  1  29 21 40 23          .BYTE   ')','!','@','#','$','%','^','&'; 72  ; Shift
+0003D7  1  24 25 5E 26  
+0003DB  1  2A 28 5F 2B          .BYTE   '*','(','_','+','|','{','}',':'; 80
+0003DF  1  7C 7B 7D 3A  
+0003E3  1  22 7E 3C 3E          .BYTE   34,'~','<','>','?',00,'A','B'; 88
+0003E7  1  3F 00 41 42  
+0003EB  1  43 44 45 46          .BYTE   'C','D','E','F','G','H','I','J'; 96
+0003EF  1  47 48 49 4A  
+0003F3  1  4B 4C 4D 4E          .BYTE   'K','L','M','N','O','P','Q','R'; 104
+0003F7  1  4F 50 51 52  
+0003FB  1  53 54 55 56          .BYTE   'S','T','U','V','W','X','Y','Z'; 112
+0003FF  1  57 58 59 5A  
+000403  1  FF FF FF FF          .BYTE   $FF,$FF,$FF,$FF,$FF,18,19,20; 120
+000407  1  FF 12 13 14  
+00040B  1  15 16 1B 09          .BYTE   21,22,27,09,03,08,23,13; 128
+00040F  1  03 08 17 0D  
+000413  1  20 1C 1D 1E          .BYTE   32,28,29,30,31,01,02,04; 136
+000417  1  1F 01 02 04  
+00041B  1               
+00041B  1  30 31 32 33          .BYTE   '0','1','2','3','4','5','6','7'; 144 ; Control
+00041F  1  34 35 36 37  
+000423  1  38 39 EA E1          .BYTE   '8','9',234,225,224,248,249,000; 152
+000427  1  E0 F8 F9 00  
+00042B  1  FA FB FE B0          .BYTE   250,251,254,176,177,00,01,02; 160
+00042F  1  B1 00 01 02  
+000433  1  03 04 05 06          .BYTE   03,04,05,06,07,08,09,10; 168
+000437  1  07 08 09 0A  
+00043B  1  0B 0C 0D 0E          .BYTE   11,12,13,14,15,16,17,18; 176
+00043F  1  0F 10 11 12  
+000443  1  13 14 15 16          .BYTE   19,20,21,22,23,24,25,26; 184
+000447  1  17 18 19 1A  
+00044B  1               
+00044B  1  00 B2 B3 B4          .BYTE   000,178,179,180,181,182,183,184; 192 ; Graph
+00044F  1  B5 B6 B7 B8  
+000453  1  B9 BA BB BC          .BYTE   185,186,187,188,189,190,191,192; 200
+000457  1  BD BE BF C0  
+00045B  1  C1 C2 C3 C4          .BYTE   193,194,195,196,197,198,199,200; 208
+00045F  1  C5 C6 C7 C8  
+000463  1  C9 CA CB CC          .BYTE   201,202,203,204,205,206,207,208; 216
+000467  1  CD CE CF D0  
+00046B  1  D1 D2 D3 D4          .BYTE   209,210,211,212,213,214,215,216; 224
+00046F  1  D5 D6 D7 D8  
+000473  1  D9 DA DB DC          .BYTE   217,218,219,220,221,222,223,167; 232
+000477  1  DD DE DF A7  
+00047B  1               
+00047B  1               
+00047B  1               
+00047B  1               
+00047B  1               ;***********************************************************************************;
+00047B  1               ;
+00047B  1               ;  delay
+00047B  1               kbdDelay:
+00047B  1  08                   PHP
+00047C  1  E2 30                SEP     #$30            ; NEED 8 bit ACCUMULATOR & INDEX
+00047E  1                       .A8                     ;
+00047E  1                       .I8                     ;
+00047E  1  48                   PHA
+00047F  1  DA                   PHX
+000480  1  A2 40                LDX     #KBD_DELAY
+000482  1  A9 40                LDA     #$40            ; set for 1024 cycles (MHZ)
+000484  1  8D 29 FE             STA     via2t2ch        ; set VIA 2 T2C_h
+000487  1               kbdDelay_a:
+000487  1  AD 2D FE             LDA     via2ifr         ; get VIA 2 IFR
+00048A  1  29 20                AND     #$20            ; mask T2 interrupt
+00048C  1  F0 F9                BEQ     kbdDelay_a      ; loop until T2 interrupt
+00048E  1  CA                   DEX
+00048F  1  D0 F6                BNE     kbdDelay_a
+000491  1  FA                   PLX
+000492  1  68                   PLA
+000493  1  28                   PLP
+000494  1  60                   RTS
+000495  1               ;________________________________________________________________________________________
+000495  1               
+000495  1               
+000495  1               ;
+000495  1               ;__INITMESSAGE______________________________________________________________________________________
+000495  1               ;
+000495  1               ;   PRINT INIT MESSAGE
+000495  1               ;___________________________________________________________________________________________________
+000495  1               INITMESSAGE:
+000495  1  A0 00                LDY     #$00            ; LOAD $00 INTO Y
+000497  1               OUTSTRLP:
+000497  1  B9 A6 04             LDA     HELLO,Y         ; LOAD NEXT CHAR FROM STRING INTO ACC
+00049A  1  C9 00                CMP     #$00            ; IS NULL?
+00049C  1  F0 07                BEQ     ENDOUTSTR       ; YES, END PRINT OUT
+00049E  1  20 71 FF             JSR     PRINTVEC        ; PRINT CHAR IN ACC
+0004A1  1               
+0004A1  1  C8                   INY                     ; Y=Y+1 (BUMP INDEX)
+0004A2  1  4C 97 04             JMP     OUTSTRLP        ; DO NEXT CHAR
+0004A5  1               ENDOUTSTR:
+0004A5  1  60                   RTS
+0004A6  1               
+0004A6  1               
+0004A6  1               ;_Text Strings and Data____________________________________________________________________________________________________
+0004A6  1               ;
+0004A6  1               HELLO:
+0004A6  1  0A 0D                .BYTE   $0A, $0D        ; line feed and carriage return
+0004A8  1  0A 0D                .BYTE   $0A, $0D        ; line feed and carriage return
+0004AA  1  42 65 67 69          .BYTE   "Begin Keyboard Test Program"
+0004AE  1  6E 20 4B 65  
+0004B2  1  79 62 6F 61  
+0004C5  1  0A 0D 00             .BYTE   $0A, $0D, 00    ; line feed and carriage return
+0004C8  1               
+0004C8  1               ;_________________________________________________________________________________________________________________________
+0004C8  1               
+0004C8  1               ;================================================================================
+0004C8  1               ;
+0004C8  1               ;binhex: CONVERT BINARY BYTE TO HEX ASCII CHARS
+0004C8  1               ;
+0004C8  1               ;   ————————————————————————————————————
+0004C8  1               ;   Preparatory Ops: .A: byte to convert
+0004C8  1               ;
+0004C8  1               ;   Returned Values: .A: MSN ASCII char
+0004C8  1               ;                    .X: LSN ASCII char
+0004C8  1               ;                    .Y: entry value
+0004C8  1               ;   ————————————————————————————————————
+0004C8  1               ;
+0004C8  1               binhex:
+0004C8  1  DA 5A 48 08          STORECONTEXT
+0004CC  1  48                   PHA                     ;save byte
+0004CD  1  29 0F                AND     #%00001111      ;extract LSN
+0004CF  1  AA                   TAX                     ;save it
+0004D0  1  68                   PLA                     ;recover byte
+0004D1  1  4A                   LSR                     ;extract...
+0004D2  1  4A                   LSR                     ;MSN
+0004D3  1  4A                   LSR
+0004D4  1  4A                   LSR
+0004D5  1  48                   PHA                     ;save MSN
+0004D6  1  8A                   TXA                     ;LSN
+0004D7  1  20 F3 04             JSR     _0000010        ;generate ASCII
+0004DA  1  AA                   TAX                     ;save
+0004DB  1  68                   PLA                     ;get MSN & fall thru
+0004DC  1  20 F3 04             JSR     _0000010        ;generate ASCII
+0004DF  1  DA 5A 48 08          STORECONTEXT
+0004E3  1  20 71 FF             JSR     PRINTVEC
+0004E6  1  28 68 7A FA          RESTORECONTEXT
+0004EA  1  8A                   TXA
+0004EB  1  20 71 FF             JSR     PRINTVEC
+0004EE  1  28 68 7A FA          RESTORECONTEXT
+0004F2  1  60                   RTS
+0004F3  1               ;
+0004F3  1               ;
+0004F3  1               ;   convert nybble to hex ASCII equivalent...
+0004F3  1               ;
+0004F3  1               _0000010:
+0004F3  1  C9 0A                CMP     #$0a
+0004F5  1  90 02                BCC     _0000020        ;in decimal range
+0004F7  1               ;
+0004F7  1  69 66                ADC     #$66            ;hex compensate
+0004F9  1               ;
+0004F9  1               _0000020:
+0004F9  1  49 30                EOR     #%00110000      ;finalize nybble
+0004FB  1               
+0004FB  1               
+0004FB  1  60                   RTS                     ;done
+0004FC  1               ;
+0004FC  1               
+0004FC  1                       .END

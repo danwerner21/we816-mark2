@@ -16,7 +16,6 @@ PIN   14  = a20         ; /*                                 */
 PIN   23  = a23         ; /*                                 */
 PIN   21  = a8          ; /*                                 */
 PIN   22  = a9          ; /*                                 */
-PIN   20  = small       ; /* 1=small (16K), 0=large (32K)    */
 
 
 /* *************** OUTPUT PINS *********************/
@@ -36,11 +35,7 @@ FF0000..FFFFFF OPTION ROM
 
 Revised:
  00FE00..00FEFF	I/O ARES -- FIXED; DOES NOT DEPEND ON ROM SIZE
-ROMSTRT..00FFFF	ROM:  EXCLUDING THE I/O AREA
-
-LARGE ROMSTRT = 008000	32K
-SMALL ROMSTRT = 00C000	16K
-
+ 00C000..00FFFF	ROM:  EXCLUDING THE I/O AREA
 ************************ */
 
 z1	=	!a23 & !a22 & !a21 & !a20			;
@@ -48,7 +43,7 @@ z0	=	!a19 & !a18 & !a17 & !a16			;
 
 hi_ram	=	z1 & !a19 & (a18 # a17 # a16)		;	/* 010000..07FFFF */
 
-rom_area	=  a15 & (!small #  small & a14 & a13)	;    /*  8k small ROM */
+rom_area	=  a15 &  a14 	;
 
 io_area	=  a15 & a14 & a13 & a12 & a11 & a10 & a9 & !a8		;
 

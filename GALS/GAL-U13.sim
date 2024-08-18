@@ -20,7 +20,6 @@ PIN  15 = !cs_rom
 PIN  18 = !fbus 
 PIN  17 = !io 
 PIN  19 = !o_rom 
-PIN  20 =  small 
 %END
 
 %FIELD
@@ -28,16 +27,14 @@ PIN  20 =  small
 
 %EQUATION
 cs_ram =>
-    !a15 & !a19 & !a20 & !a21 & !a22 & !a23
+    !a14 & !a19 & !a20 & !a21 & !a22 & !a23
+  # !a15 & !a19 & !a20 & !a21 & !a22 & !a23
   # a16 & !a19 & !a20 & !a21 & !a22 & !a23
   # a17 & !a19 & !a20 & !a21 & !a22 & !a23
   # a18 & !a19 & !a20 & !a21 & !a22 & !a23
-  # !a13 & !a19 & !a20 & !a21 & !a22 & !a23 & small
-  # !a14 & !a19 & !a20 & !a21 & !a22 & !a23 & small
 
 cs_rom =>
-    a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23 & io & !small
-  # a13 & a14 & a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23 & io
+    a14 & a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23 & io
 
 fbus =>
     a19
@@ -61,8 +58,7 @@ o_rom =>
     a20 & a21 & a22 & a23
 
 rom_area =>
-    a13 & a14 & a15 & small
-  # a15 & !small
+    a14 & a15
 
 z0 =>
     !a16 & !a17 & !a18 & !a19
@@ -96,8 +92,5 @@ io.oe  =>
 
 o_rom.oe  =>
     1 
-
-small.oe  =>
-    0 
 
 %END

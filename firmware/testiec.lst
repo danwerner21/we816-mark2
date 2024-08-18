@@ -1,0 +1,442 @@
+ca65 V2.18 - Ubuntu 2.19-1
+Main file   : testiec.asm
+Current file: testiec.asm
+
+000000r 1               .P816
+000000r 1               .A8
+000000r 1               .I8
+000000r 1               ;*****************************************************************************
+000000r 1               ;*****************************************************************************
+000000r 1               ;**                                                                         **
+000000r 1               ;**	HC2 IEC Test Program                                               **
+000000r 1               ;**	Author: Dan Werner -- 4/9/2021	                                        **
+000000r 1               ;**                                                                         **
+000000r 1               ;**                                                                         **
+000000r 1               ;*****************************************************************************
+000000r 1               ;*****************************************************************************
+000000r 1               ;
+000000r 1               ;=============================================================================
+000000r 1               ; Constants Section
+000000r 1               ;=============================================================================
+000000r 1               
+000000r 1                       .SEGMENT "MAINMEM"
+000000r 1                       .INCLUDE "macros.asm"
+000000r 2               ;___________________________________________________________________________________________________
+000000r 2               ;
+000000r 2               ;	USEFUL 65186 MACROS
+000000r 2               ;__________________________________________________________________________________________________
+000000r 2               
+000000r 2               .macro       STORECONTEXT             ; Store Complete Context at the beginning of a Sub
+000000r 2                       PHX
+000000r 2                       phy
+000000r 2                       pha
+000000r 2                       php
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       RESTORECONTEXT                 ; Restore Complete Context at the end of a Sub
+000000r 2                       plp
+000000r 2                       pla
+000000r 2                       ply
+000000r 2                       plx
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       INDEX16                         ; Set 16bit Index Registers
+000000r 2               		REP #$10 		; 16 bit Index registers
+000000r 2               		.I16
+000000r 2               .endmacro
+000000r 2               .macro       INDEX8                          ; Set 8bit Index Registers
+000000r 2               		SEP #$10 		; 8 bit Index registers
+000000r 2               		.I8
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATOR16                  ; Set 16bit Index Registers
+000000r 2               		REP #$20 		; 16 bit Index registers
+000000r 2               		.A16
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATOR8                   ; Set 8bit Index Registers
+000000r 2               		SEP #$20 		; 8 bit Index registers
+000000r 2               		.A8
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATORINDEX16             ; Set 16bit Index Registers
+000000r 2               		REP #$30 		; 16 bit Index registers
+000000r 2               		.A16
+000000r 2                               .I16
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       ACCUMULATORINDEX8              ; Set 8bit Index Registers
+000000r 2               		SEP #$30 		; 8 bit Index registers
+000000r 2               		.A8
+000000r 2                               .I8
+000000r 2               .endmacro
+000000r 2               
+000000r 1               
+000000r 1               ;
+000000r 1               ; Hardware port addresses. SBC65816 uses the $FExx block for ECB hardware.
+000000r 1               ;
+000000r 1               
+000000r 1               
+000000r 1               
+000000r 1               ; BIOS JUMP TABLE
+000000r 1               ;
+000000r 1               PRINTVEC        = $FF71
+000000r 1               OUTCH           = $FF71
+000000r 1               outch           = $FF71
+000000r 1               INPVEC          = $FF74
+000000r 1               INPWVEC         = $FF77
+000000r 1               ;INITDISK    =    $FF7A
+000000r 1               ;READDISK    =    $FF7D
+000000r 1               ;WRITEDISK   =    $FF80
+000000r 1               ;RTC_WRITE   =    $FF83
+000000r 1               ;RTC_READ    =    $FF86
+000000r 1               SETLFS          = $FFA4
+000000r 1               SETNAM          = $FFA7
+000000r 1               LOAD            = $FFAA
+000000r 1               SAVE            = $FFAD
+000000r 1               IECINIT         = $FFB0
+000000r 1               
+000000r 1               IECCLCH         = $FFB3         ; close input and output channels
+000000r 1               IECOUTC         = $FFB6         ; open a channel for output
+000000r 1               IECINPC         = $FFB9         ; open a channel for input
+000000r 1               IECOPNLF        = $FFBC         ; open a logical file
+000000r 1               IECCLSLF        = $FFBF         ; close a specified logical file
+000000r 1               IECREAD         = $FF92         ; READ AN IEC BUS BYTE
+000000r 1               IECWRITE        = $FF95         ; WRITE AN IEC BUS BYTE
+000000r 1               
+000000r 1               IECSTW          = $0317         ; Status word
+000000r 1               IECMSGM         = $031F         ; message mode flag,
+000000r 1               ; $C0 = both control and kernal messages,
+000000r 1               ; $80 = control messages only,
+000000r 1               ; $40 = kernal messages only,
+000000r 1               ; $00 = neither control or kernal messages
+000000r 1               IECFNPL         = $0320         ; File Name Pointer Low,
+000000r 1               IECFNPH         = $0321         ; File Name Pointer High,
+000000r 1               LOADBUFL        = $0322         ; low byte IEC buffer Pointer
+000000r 1               LOADBUFH        = $0323         ; High byte IEC buffer Pointer
+000000r 1               LOADBANK        = $0324         ; BANK buffer Pointer
+000000r 1               ; ADDED
+000000r 1               IECOPENF        = $0325         ; OPEN FILE COUNT
+000000r 1               IECLFN          = $0326         ; IEC LOGICAL FILE NUMBER
+000000r 1               IECIDN          = $0327         ; input device number
+000000r 1               IECODN          = $0328         ; output device number
+000000r 1               
+000000r 1               PTRLFT          = $03B0         ; .. to LAB_0262 logical file table
+000000r 1               PTRDNT          = $03BA         ; .. to LAB_026C device number table
+000000r 1               PTRSAT          = $03C4         ; .. to LAB_0276 secondary address table
+000000r 1               FREESPC         = $03CE
+000000r 1               ;
+000000r 1               ;=============================================================================
+000000r 1               ; Code Section
+000000r 1               ;=============================================================================
+000000r 1               ;
+000000r 1                       .ORG    $0200
+000200  1               
+000200  1  38 31 36             .BYTE   "816"
+000203  1               ;load address
+000203  1               ;	.BYTE     $0B,$40,0,0
+000203  1  0B 02 00 00          .BYTE   <Start,>Start,0,0
+000207  1               
+000207  1               ;execute address
+000207  1               ;	.BYTE     $0B,$40,0,0
+000207  1  0B 02 00 00          .BYTE   <Start,>Start,0,0
+00020B  1               
+00020B  1               Start:
+00020B  1               ;   ensure CPU Context is in a known state
+00020B  1               ; LONG* are for the assembler context; the REP/SEP is for the code
+00020B  1               ;	$20=A  $10=I  $30=both
+00020B  1               ;	REP is ON; SEP is OFF
+00020B  1               ;
+00020B  1               
+00020B  1  D8                   CLD                     ; VERIFY DECIMAL MODE IS OFF
+00020C  1  18                   CLC
+00020D  1  FB                   XCE                     ; SET NATIVE MODE
+00020E  1  E2 30                SEP     #$30            ; 8 bit REGISTERS
+000210  1  48                   PHA                     ; Set Direct Register to 0
+000211  1  48                   PHA
+000212  1  2B                   PLD
+000213  1  48                   PHA                     ; set DBR to 0
+000214  1  AB                   PLB
+000215  1               
+000215  1  20 33 03             JSR     INITMESSAGE     ; let's say hello
+000218  1  E2 30                ACCUMULATORINDEX8
+00021A  1  20 B0 FF             JSR     IECINIT
+00021D  1  A9 C0                LDA     #$C0
+00021F  1  8D 1F 03             STA     IECMSGM
+000222  1               
+000222  1               
+000222  1               ;; this will generate an error
+000222  1  A2 08                LDX#8                   ; Device Number
+000224  1  A0 01                LDY#1                   ; secondary address
+000226  1  20 A4 FF             JSR     SETLFS          ;setlfs
+000229  1  A9 01                LDA#1                   ; fn length
+00022B  1  A2 2B                LDX#<FNPOINTER
+00022D  1  A0 03                LDY#>FNPOINTER
+00022F  1  20 A7 FF             JSR     SETNAM          ; setnam
+000232  1  A9 50                LDA#$50
+000234  1  8D 23 03             STA     LOADBUFH
+000237  1  A9 00                LDA#$00
+000239  1  8D 22 03             STA     LOADBUFL
+00023C  1  A9 02                LDA#02
+00023E  1  8D 24 03             STA     LOADBANK
+000241  1  20 AA FF             JSR     LOAD
+000244  1               
+000244  1  A9 08                LDA     #8
+000246  1  20 54 02             JSR     GETIECSTATUS
+000249  1               
+000249  1  A9 08                LDA     #8
+00024B  1  20 99 02             JSR     GETIECDIRECTORY
+00024E  1               
+00024E  1               
+00024E  1               
+00024E  1               
+00024E  1               ;     ldx#8           ; Device Number
+00024E  1               ;     ldy#1           ; secondary address
+00024E  1               ;     jsr     LAB_FE50 ;setlfs
+00024E  1               ;     lda#4           ; fn length
+00024E  1               ;     ldx#<FNPOINTER1
+00024E  1               ;     ldy#>FNPOINTER1
+00024E  1               ;     jsr     LAB_FE49 ; setnam
+00024E  1               ;     lda#$50
+00024E  1               ;     sta IECSTRTH
+00024E  1               ;     lda#$0
+00024E  1               ;     sta IECSTRTL
+00024E  1               ;     lda#$55
+00024E  1               ;     sta LOADBUFH
+00024E  1               ;     lda#$00
+00024E  1               ;     sta LOADBUFL
+00024E  1               ;     lda#02
+00024E  1               ;     sta LOADBANK
+00024E  1               ;     jsr     IECSAVERAM
+00024E  1               
+00024E  1               
+00024E  1               ;    ldx#8           ; Device Number
+00024E  1               ;    ldy#1           ; secondary address
+00024E  1               ;    jsr     LAB_FE50 ;setlfs
+00024E  1               ;    lda#1           ; fn length
+00024E  1               ;    ldx#<FNPOINTER
+00024E  1               ;    ldy#>FNPOINTER
+00024E  1               ;    jsr     LAB_FE49 ; setnam
+00024E  1               ;    lda#$60
+00024E  1               ;    sta LOADBUFH
+00024E  1               ;    lda#$00
+00024E  1               ;    sta LOADBUFL
+00024E  1               ;    lda#02
+00024E  1               ;    sta LOADBANK
+00024E  1               ;    jsr     LOADTORAM
+00024E  1               
+00024E  1               
+00024E  1               Exit:
+00024E  1  18                   CLC                     ; SET THE CPU TO NATIVE MODE
+00024F  1  FB                   XCE
+000250  1  4C 00 80             JMP     $8000
+000253  1  00                   BRK
+000254  1               
+000254  1               
+000254  1               GETIECSTATUS:
+000254  1  48                   PHA
+000255  1  A9 0D                LDA     #13
+000257  1  20 71 FF             JSR     OUTCH
+00025A  1  A9 0A                LDA     #10
+00025C  1  20 71 FF             JSR     OUTCH
+00025F  1               
+00025F  1  A9 00                LDA     #0              ; fn length
+000261  1  A2 00                LDX     #0
+000263  1  A0 00                LDY     #0
+000265  1  20 A7 FF             JSR     SETNAM          ; setnam
+000268  1  68                   PLA
+000269  1  AA                   TAX                     ; Device Number
+00026A  1  A0 0F                LDY     #15             ; secondary address
+00026C  1  A9 0F                LDA     #15             ; LFN NUMBER
+00026E  1  20 A4 FF             JSR     SETLFS          ;setlfs
+000271  1  20 BC FF             JSR     IECOPNLF
+000274  1  A2 0F                LDX     #15
+000276  1  20 B9 FF             JSR     IECINPC
+000279  1               GETIECSTATUS_1:
+000279  1  20 92 FF             JSR     IECREAD         ; input a byte from the serial bus
+00027C  1  20 71 FF             JSR     OUTCH
+00027F  1  AD 17 03             LDA     IECSTW          ; get serial status byte
+000282  1  4A                   LSR                     ; shift time out read ..
+000283  1  4A                   LSR                     ; .. into carry bit
+000284  1  90 F3                BCC     GETIECSTATUS_1  ; all ok, do another
+000286  1  20 B3 FF             JSR     IECCLCH         ; close input and output channels
+000289  1  A9 0F                LDA     #15
+00028B  1  20 BF FF             JSR     IECCLSLF        ; close a specified logical file
+00028E  1  A9 0D                LDA     #13
+000290  1  20 71 FF             JSR     OUTCH
+000293  1  A9 0A                LDA     #10
+000295  1  20 71 FF             JSR     OUTCH
+000298  1  60                   RTS
+000299  1               
+000299  1               GETIECDIRECTORY:
+000299  1  48                   PHA
+00029A  1  A9 0D                LDA     #13
+00029C  1  20 71 FF             JSR     OUTCH
+00029F  1  A9 0A                LDA     #10
+0002A1  1  20 71 FF             JSR     OUTCH
+0002A4  1               
+0002A4  1  A9 01                LDA     #1              ; fn length
+0002A6  1  A2 2B                LDX     #<FNPOINTER
+0002A8  1  A0 03                LDY     #>FNPOINTER
+0002AA  1  20 A7 FF             JSR     SETNAM          ; setnam
+0002AD  1  68                   PLA
+0002AE  1  AA                   TAX                     ; Device Number
+0002AF  1  A0 00                LDY     #0              ; secondary address
+0002B1  1  A9 0F                LDA     #15             ; LFN NUMBER
+0002B3  1  20 A4 FF             JSR     SETLFS          ;setlfs
+0002B6  1  20 BC FF             JSR     IECOPNLF
+0002B9  1  A2 0F                LDX     #15
+0002BB  1  20 B9 FF             JSR     IECINPC
+0002BE  1               ;        Index16
+0002BE  1               ;        LDY     #$6000
+0002BE  1               ;        STY     $50F0
+0002BE  1               ;        Index8
+0002BE  1               GETIECDIRECTORY_1:
+0002BE  1  20 92 FF             JSR     IECREAD         ; input a byte from the serial bus
+0002C1  1  20 61 03             JSR     binhex
+0002C4  1  20 25 03             JSR     space
+0002C7  1  20 92 FF             JSR     IECREAD         ; input a byte from the serial bus
+0002CA  1  20 61 03             JSR     binhex
+0002CD  1  20 25 03             JSR     space
+0002D0  1  20 92 FF             JSR     IECREAD         ; input a byte from the serial bus
+0002D3  1  20 61 03             JSR     binhex
+0002D6  1  20 25 03             JSR     space
+0002D9  1  20 92 FF             JSR     IECREAD         ; input a byte from the serial bus
+0002DC  1  20 61 03             JSR     binhex
+0002DF  1  20 25 03             JSR     space
+0002E2  1               
+0002E2  1  20 92 FF             JSR     IECREAD         ; input SIZE LOW byte from the serial bus
+0002E5  1  20 61 03             JSR     binhex
+0002E8  1  20 25 03             JSR     space
+0002EB  1  20 92 FF             JSR     IECREAD         ; input SIZE HIGH byte from the serial bus
+0002EE  1  20 61 03             JSR     binhex
+0002F1  1  20 25 03             JSR     space
+0002F4  1               
+0002F4  1               GETIECDIRECTORY_2:
+0002F4  1  20 92 FF             JSR     IECREAD         ; input ENTRY TEXT byte from the serial bus
+0002F7  1  20 71 FF             JSR     OUTCH
+0002FA  1  C9 00                CMP     #$00
+0002FC  1  F0 1A                BEQ     GETIECDIRECTORY_3; END ENTRY
+0002FE  1               ;       Index16
+0002FE  1               ;       LDY     $50F0
+0002FE  1               ;       STA     0,Y
+0002FE  1               ;       INY
+0002FE  1               ;       STY     $50F0
+0002FE  1               ;       Index8
+0002FE  1  AD 17 03             LDA     IECSTW          ; get serial status byte
+000301  1  4A                   LSR                     ; shift time out read ..
+000302  1  4A                   LSR                     ; .. into carry bit
+000303  1  90 EF                BCC     GETIECDIRECTORY_2; all ok, do another
+000305  1  20 B3 FF             JSR     IECCLCH         ; close input and output channels
+000308  1  A9 0F                LDA     #15
+00030A  1  20 BF FF             JSR     IECCLSLF        ; close a specified logical file
+00030D  1  A9 0D                LDA     #13
+00030F  1  20 71 FF             JSR     OUTCH
+000312  1  A9 0A                LDA     #10
+000314  1  20 71 FF             JSR     OUTCH
+000317  1  60                   RTS
+000318  1               GETIECDIRECTORY_3:
+000318  1  A9 0D                LDA     #13
+00031A  1  20 71 FF             JSR     OUTCH
+00031D  1  A9 0A                LDA     #10
+00031F  1  20 71 FF             JSR     OUTCH
+000322  1  4C BE 02             JMP     GETIECDIRECTORY_1
+000325  1               
+000325  1               
+000325  1               space:
+000325  1  A9 20                LDA     #' '
+000327  1  20 71 FF             JSR     OUTCH
+00032A  1  60                   RTS
+00032B  1               
+00032B  1               FNPOINTER:
+00032B  1  24                   .BYTE   '$'
+00032C  1               FNPOINTER1:
+00032C  1  6E 6F 74 54          .BYTE   "notTEST"
+000330  1  45 53 54     
+000333  1               
+000333  1               ;__INITMESSAGE______________________________________________________________________________________
+000333  1               ;
+000333  1               ;   PRINT INIT MESSAGE
+000333  1               ;___________________________________________________________________________________________________
+000333  1               INITMESSAGE:
+000333  1  A0 00                LDY     #$00            ; LOAD $00 INTO Y
+000335  1               OUTSTRLP:
+000335  1  B9 44 03             LDA     HELLO,Y         ; LOAD NEXT CHAR FROM STRING INTO ACC
+000338  1  C9 00                CMP     #$00            ; IS NULL?
+00033A  1  F0 07                BEQ     ENDOUTSTR       ; YES, END PRINT OUT
+00033C  1  20 71 FF             JSR     PRINTVEC        ; PRINT CHAR IN ACC
+00033F  1               
+00033F  1  C8                   INY                     ; Y=Y+1 (BUMP INDEX)
+000340  1  4C 35 03             JMP     OUTSTRLP        ; DO NEXT CHAR
+000343  1               ENDOUTSTR:
+000343  1  60                   RTS
+000344  1               
+000344  1               
+000344  1               
+000344  1               ;_Text Strings and Data____________________________________________________________________________________________________
+000344  1               ;
+000344  1               HELLO:
+000344  1  0A 0D                .BYTE   $0A, $0D        ; line feed and carriage return
+000346  1  0A 0D                .BYTE   $0A, $0D        ; line feed and carriage return
+000348  1  42 65 67 69          .BYTE   "Begin IEC Test Program"
+00034C  1  6E 20 49 45  
+000350  1  43 20 54 65  
+00035E  1  0A 0D 00             .BYTE   $0A, $0D, 00    ; line feed and carriage return
+000361  1               
+000361  1               ;_________________________________________________________________________________________________________________________
+000361  1               
+000361  1               ;================================================================================
+000361  1               ;
+000361  1               ;binhex: CONVERT BINARY BYTE TO HEX ASCII CHARS
+000361  1               ;
+000361  1               ;   ————————————————————————————————————
+000361  1               ;   Preparatory Ops: .A: byte to convert
+000361  1               ;
+000361  1               ;   Returned Values: .A: MSN ASCII char
+000361  1               ;                    .X: LSN ASCII char
+000361  1               ;                    .Y: entry value
+000361  1               ;   ————————————————————————————————————
+000361  1               ;
+000361  1               binhex:
+000361  1  DA 5A 48 08          STORECONTEXT
+000365  1  48                   PHA                     ;save byte
+000366  1  29 0F                AND     #%00001111      ;extract LSN
+000368  1  AA                   TAX                     ;save it
+000369  1  68                   PLA                     ;recover byte
+00036A  1  4A                   LSR                     ;extract...
+00036B  1  4A                   LSR                     ;MSN
+00036C  1  4A                   LSR
+00036D  1  4A                   LSR
+00036E  1  48                   PHA                     ;save MSN
+00036F  1  8A                   TXA                     ;LSN
+000370  1  20 8C 03             JSR     _0000010        ;generate ASCII
+000373  1  AA                   TAX                     ;save
+000374  1  68                   PLA                     ;get MSN & fall thru
+000375  1  20 8C 03             JSR     _0000010        ;generate ASCII
+000378  1  DA 5A 48 08          STORECONTEXT
+00037C  1  20 71 FF             JSR     outch
+00037F  1  28 68 7A FA          RESTORECONTEXT
+000383  1  8A                   TXA
+000384  1  20 71 FF             JSR     outch
+000387  1  28 68 7A FA          RESTORECONTEXT
+00038B  1  60                   RTS
+00038C  1               ;
+00038C  1               ;
+00038C  1               ;   convert nybble to hex ASCII equivalent...
+00038C  1               ;
+00038C  1               _0000010:
+00038C  1  C9 0A                CMP     #$0a
+00038E  1  90 02                BCC     _0000020        ;in decimal range
+000390  1               ;
+000390  1  69 66                ADC     #$66            ;hex compensate
+000392  1               ;
+000392  1               _0000020:
+000392  1  49 30                EOR     #%00110000      ;finalize nybble
+000394  1               
+000394  1               
+000394  1  60                   RTS                     ;done
+000395  1               ;
+000395  1               
+000395  1               TMPPOINTER:
+000395  1  00                   .BYTE   0
+000396  1                       .END

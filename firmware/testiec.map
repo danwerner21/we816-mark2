@@ -1,0 +1,26 @@
+Modules list:
+-------------
+testiec.o:
+    MAINMEM           Offs=000000  Size=000196  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+MAINMEM               000200  000395  000196  00001
+
+
+Exports list by name:
+---------------------
+
+
+
+Exports list by value:
+----------------------
+
+
+
+Imports list:
+-------------
+
