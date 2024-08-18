@@ -25,7 +25,7 @@
 
 
         .SEGMENT "HIGHMEM"
-        ;.ORG    0FF1000H
+;.ORG    0FF1000H
         .ORG    1000H
 BASICORG:
         JMP     BASICBEGIN
@@ -33,25 +33,25 @@ BASICORG:
 ;
 ; MACROS
 
-        .include "macros.asm"
+        .INCLUDE "macros.asm"
 
 ; ZERO PAGE DEFINITIONS
-        .include "zeropage.asm"
+        .INCLUDE "zeropage.asm"
 
 ; BASIC TOKENS
-        .include "tokens.asm"
+        .INCLUDE "tokens.asm"
 
 ; DEFINITIONS
-        .include "definitions.asm"
+        .INCLUDE "definitions.asm"
 
 ; MESSAGES
-        .include "messages.asm"
+        .INCLUDE "messages.asm"
 
 ; NUMERIC CONSTANTS
-        .include "numconst.asm"
+        .INCLUDE "numconst.asm"
 
 ; I/O VECTORS
-        .include "iovect.asm"
+        .INCLUDE "iovect.asm"
 ;
 ;____________________________________________________________________________________________
 
@@ -70,7 +70,7 @@ BASICBEGIN:
         PHA                     ; Set Direct Register to 0
         PLD                     ;
 
-        .IF      PROGRAMBANK=DATABANK
+        .IF     PROGRAMBANK=DATABANK
 
         .ELSE
             LDX     #$1000
@@ -948,7 +948,7 @@ LAB_14E2:
         CPX     <Itempl         ; compare with temporary integer low byte
         BEQ     LAB_1501        ; branch if = last line to do (< will pass next branch)
 
-LAB_14FF:                        ; else ..
+LAB_14FF:                       ; else ..
         BCS     LAB_152B        ; if greater all done so exit
 
 LAB_1501:
@@ -3288,7 +3288,7 @@ LAB_1D38:
 ; if it's an array of type. this would plug in a%(b[,c[,d]])) integer arrays nicely
 
 
-LAB_1D47:                        ; gets here with character after var name in A
+LAB_1D47:                       ; gets here with character after var name in A
         STX     <Varnm2         ; save 2nd character
         ORA     <Sufnxf         ; or with subscript/FNX flag (or FN name)
         CMP     #'('            ; compare with "("
@@ -7367,7 +7367,7 @@ LAB_PI:
 
 AA_end_basic:
 ENDOFBASIC:
-        .BYTE     "DERIVED FROM ehBASIC"
+        .BYTE   "DERIVED FROM ehBASIC"
 
 
 

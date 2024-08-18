@@ -59,7 +59,7 @@ LAB_2CC9:
         .BYTE   $7E,$4C,$B9,$73 ; 0.199926
         .BYTE   $7F,$AA,$AA,$53 ;-0.333331
 
-LAB_1D96        = *+1        ; $00,$00 used for undefined variables
+LAB_1D96        = *+1           ; $00,$00 used for undefined variables
 LAB_259C:
         .BYTE   $81,$00,$00,$00 ; 1.000000, used for INC
 LAB_2AFD:

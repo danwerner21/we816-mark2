@@ -334,29 +334,29 @@ SETUPMODE4_2:
         RTS
 
 Mode0Parameters:
-        .BYTE     $00,$C0,$05,$80,$01,$20,$00,$01
-        .BYTE     $10             ; Sprite attribute table
-        .BYTE     $00             ; Sprite Pattern Table
+        .BYTE   $00,$C0,$05,$80,$01,$20,$00,$01
+        .BYTE   $10             ; Sprite attribute table
+        .BYTE   $00             ; Sprite Pattern Table
 
 Mode1Parameters:
-        .BYTE     $00,$CB,$01,$80,$01,$0E,$00,$F1
-        .BYTE     $07             ; Sprite attribute table
-        .BYTE     $00             ; Sprite Pattern Table
+        .BYTE   $00,$CB,$01,$80,$01,$0E,$00,$F1
+        .BYTE   $07             ; Sprite attribute table
+        .BYTE   $00             ; Sprite Pattern Table
 
 Mode2Parameters:
-        .BYTE     $00,$D0,$01,$80,$01,$0E,$00,$F4
-        .BYTE     $07             ; Sprite attribute table
-        .BYTE     $00             ; Sprite Pattern Table
+        .BYTE   $00,$D0,$01,$80,$01,$0E,$00,$F4
+        .BYTE   $07             ; Sprite attribute table
+        .BYTE   $00             ; Sprite Pattern Table
 
 Mode3Parameters:
-        .BYTE     $02,$C2,$0E,$9F,$00,$76,$03,$F0
-        .BYTE     $3b             ; Sprite attribute table
-        .BYTE     $18             ; Sprite Pattern Table
+        .BYTE   $02,$C2,$0E,$9F,$00,$76,$03,$F0
+        .BYTE   $3b             ; Sprite attribute table
+        .BYTE   $18             ; Sprite Pattern Table
 
 Mode4Parameters:
-        .BYTE     $02,$C2,$0E,$FF,$03,$76,$03,$F0
-        .BYTE     $3b             ; Sprite attribute table
-        .BYTE     $18             ; Sprite Pattern Table
+        .BYTE   $02,$C2,$0E,$FF,$03,$76,$03,$F0
+        .BYTE   $3b             ; Sprite attribute table
+        .BYTE   $18             ; Sprite Pattern Table
 
 Set9918Parms:
 ; copy parms and set sprite table vectors
@@ -802,7 +802,7 @@ PLOT_GRII_2:
         STA     >DATAP          ; STORE COLOR
         RTS
 BITPATTERN:
-        .BYTE     $80,$40,$20,$10,$08,$04,$02,$01
+        .BYTE   $80,$40,$20,$10,$08,$04,$02,$01
 ; GR-1 && 3 Plot
 PLOT_GRI:
         JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (X)

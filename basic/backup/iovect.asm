@@ -24,36 +24,36 @@ LSETNAM         = $00FD48
 LLOAD           = $00FD4C
 LSAVE           = $00FD50
 LIECINIT        = $00FD54
-LIECCLCH        = $00FD58    ; close input and output channels
-LIECOUTC        = $00FD5C    ; open a channel for output
-LIECINPC        = $00FD60    ; open a channel for input
-LIECOPNLF       = $00FD64    ; open a logical file
-LIECCLSLF       = $00FD68    ; close a specified logical file
-LClearScrVec    = $00FD6C    ; clear the 9918 Screen
-LLOADFONTVec    = $00FD70    ; load the 9918 font
+LIECCLCH        = $00FD58       ; close input and output channels
+LIECOUTC        = $00FD5C       ; open a channel for output
+LIECINPC        = $00FD60       ; open a channel for input
+LIECOPNLF       = $00FD64       ; open a logical file
+LIECCLSLF       = $00FD68       ; close a specified logical file
+LClearScrVec    = $00FD6C       ; clear the 9918 Screen
+LLOADFONTVec    = $00FD70       ; load the 9918 font
 
 
-CSRX            = $0330      ; CURRENT X POSITION
-CSRY            = $0331      ; CURRENT Y POSITION
-ConsoleDevice   = $0341      ; Current Console Device
+CSRX            = $0330         ; CURRENT X POSITION
+CSRY            = $0331         ; CURRENT Y POSITION
+ConsoleDevice   = $0341         ; Current Console Device
 VIDEOWIDTH      = $0343
 SpriteAttrs     = $0344
 SpritePatterns  = $0345
 IECSTW          = $000317
-IECMSGM         = $00031F    ; message mode flag,
+IECMSGM         = $00031F       ; message mode flag,
 ; $C0 = both control and kernal messages,
 ; $80 = control messages only,
 ; $40 = kernal messages only,
 ; $00 = neither control or kernal messages
-LOADBUFL        = $000322    ; IEC buffer Pointer
+LOADBUFL        = $000322       ; IEC buffer Pointer
 LOADBUFH        = LOADBUFL+1
-LOADBANK        = LOADBUFL+2 ; BANK buffer Pointer
-IECSTRTL        = $00031D    ; IEC Start Address Pointer
+LOADBANK        = LOADBUFL+2    ; BANK buffer Pointer
+IECSTRTL        = $00031D       ; IEC Start Address Pointer
 IECSTRTH        = IECSTRTL+1
-LINEFLGS        = $03D0      ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one extra for scrolling)
+LINEFLGS        = $03D0         ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one extra for scrolling)
 
-CMDP           = $FE0B      ; 	VDP COMMAND port
-DATAP          = $FE0A      ; 	VDP Data port
+CMDP            = $FE0B         ; 	VDP COMMAND port
+DATAP           = $FE0A         ; 	VDP Data port
 
 ;__________________________________________________________
 
