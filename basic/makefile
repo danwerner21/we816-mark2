@@ -11,6 +11,7 @@ dbasic816.hex: dbasic816.out
 	srec_cat  dbasic816.out -binary -offset 0x1000  -o  dbasic816.s19  -data-only -address-length=3
 	srec_cat  dbasic816.out -binary -offset 0x1000  -o  dbasic816.hex  -intel -address-length=2
 	sed -i -e '$$aS8' dbasic816.s19
+	cp dbasic816.hex ../bin/
 
 
 pretty:

@@ -27,23 +27,28 @@ rombios816.hex: rombios816.out
 	srec_cat  rombios816.out -binary -offset 0x0200 -exclude 0x0000 0xE000 -o  rombios816.s19  -data-only -address-length=3
 	srec_cat  rombios816.out -binary -offset 0x0200 -exclude 0x0000 0xE000 -o  rombios816.hex  -intel -address-length=2
 	sed -i -e '$$aS8' rombios816.s19
+	cp rombios816.hex ../bin/
 
 scrm816.hex: scrm816.out
 	srec_cat  scrm816.out -binary -offset 0x0200 -exclude 0x0000 0xE000 -o  scrm816.s19  -data-only -address-length=3
 	srec_cat  scrm816.out -binary -offset 0x0200 -exclude 0x0000 0xE000 -o  scrm816.hex  -intel -address-length=2
 	sed -i -e '$$aS8' scrm816.s19
+	cp scrm816.hex ../bin/
 
 testiec.s19: testiec.out
 	srec_cat  testiec.out -binary -offset 0x0200  -o  testiec.s19  -data-only -address-length=3
 	sed -i -e '$$aS8' testiec.s19
+	cp testiec.s19 ../bin/
 
 testkbd.s19: testkbd.out
 	srec_cat  testkbd.out -binary -offset 0x0200  -o  testkbd.s19  -data-only -address-length=3
 	sed -i -e '$$aS8' testiec.s19
+	cp testkbd.s19 ../bin/
 
 testsnd.s19: testsnd.out
 	srec_cat  testsnd.out -binary -offset 0x0200  -o  testsnd.s19  -data-only -address-length=3
 	sed -i -e '$$aS8' testsnd.s19
+	cp testsnd.s19 ../bin/
 
 pretty:
 	cp *.asm ./backup
