@@ -38,11 +38,10 @@ cs_rom =>
     a13 & a14 & a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23 & io
 
 fbus =>
-    a19
-  # a20
-  # a21
-  # a22
-  # a23
+    !cs_ram
+  # !cs_rom
+  # !io
+  # !o_rom
 
 hi_ram =>
     a18 & !a19 & !a20 & !a21 & !a22 & !a23
@@ -56,7 +55,7 @@ io_area =>
     !a8 & a9 & a10 & a11 & a12 & a13 & a14 & a15
 
 o_rom =>
-    a20 & a21 & a22 & a23
+    a16 & a17 & a18 & a19 & a20 & a21 & a22 & a23
 
 rom_area =>
     a13 & a14 & a15

@@ -18,7 +18,6 @@ PIN   21  = a8          ; /*                                 */
 PIN   22  = a9          ; /*                                 */
 
 
-
 /* *************** OUTPUT PINS *********************/
 PIN   15  = !cs_rom     ; /*                                 */
 PIN   16  = !cs_ram     ; /*                                 */
@@ -51,9 +50,9 @@ cs_ram	=	z1 & z0 & !rom_area   #
 		hi_ram			;
 
 cs_rom	=	z1 & z0 & rom_area & !io		;
-o_rom	=	a23 & a22 & a21 & a20;
+o_rom	=  	a23 & a22 & a21 & a20 & a19 & a18 & a17 & a16 ;
 
 io	=	z1 & z0 & io_area		;
 
-/*fbus =  !(cs_rom # cs_ram # io) ; */
-fbus	=	!z1 # a19					;
+fbus =  !(cs_rom # cs_ram # io # o_rom) ;
+/*fbus	=	!z1 # a19					;*/

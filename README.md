@@ -13,6 +13,7 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
 ## Bugs:
 * V0.08 board
         U13 should be a 22V10 rather than a 20V8  (no patches required)
+        U31 should be 74ALS245 rather than 74AC245 (no patches required)
 
 
 ## To Do:
