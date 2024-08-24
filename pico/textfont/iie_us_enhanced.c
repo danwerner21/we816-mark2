@@ -4,658 +4,9 @@
 
 const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     //
-    // Inverse control (upper) Set
-    //
-
-    // Inverse control (upper) character 0x00
-    0b01100011,
-    0b01011101,
-    0b01010101,
-    0b01000101,
-    0b01100101,
-    0b01111101,
-    0b01000011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x01
-    0b01110111,
-    0b01101011,
-    0b01011101,
-    0b01011101,
-    0b01000001,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x02
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x03
-    0b01100011,
-    0b01011101,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x04
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x05
-    0b01000001,
-    0b01111101,
-    0b01111101,
-    0b01100001,
-    0b01111101,
-    0b01111101,
-    0b01000001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x06
-    0b01000001,
-    0b01111101,
-    0b01111101,
-    0b01100001,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x07
-    0b01000011,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01001101,
-    0b01011101,
-    0b01000011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x08
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01000001,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x09
-    0b01100011,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01100011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x0a
-    0b01011111,
-    0b01011111,
-    0b01011111,
-    0b01011111,
-    0b01011111,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x0b
-    0b01011101,
-    0b01101101,
-    0b01110101,
-    0b01111001,
-    0b01110101,
-    0b01101101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x0c
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01000001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x0d
-    0b01011101,
-    0b01001001,
-    0b01010101,
-    0b01010101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x0e
-    0b01011101,
-    0b01011101,
-    0b01011001,
-    0b01010101,
-    0b01001101,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x0f
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x10
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x11
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01010101,
-    0b01101101,
-    0b01010011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x12
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01110101,
-    0b01101101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x13
-    0b01100011,
-    0b01011101,
-    0b01111101,
-    0b01100011,
-    0b01011111,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x14
-    0b01000001,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01111111,
-
-    // Inverse control (upper) character 0x15
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse control (upper) character 0x16
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01101011,
-    0b01110111,
-    0b01111111,
-
-    // Inverse control (upper) character 0x17
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01010101,
-    0b01010101,
-    0b01001001,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x18
-    0b01011101,
-    0b01011101,
-    0b01101011,
-    0b01110111,
-    0b01101011,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse control (upper) character 0x19
-    0b01011101,
-    0b01011101,
-    0b01101011,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01111111,
-
-    // Inverse control (upper) character 0x1a
-    0b01000001,
-    0b01011111,
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01111101,
-    0b01000001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x1b
-    0b01000001,
-    0b01111001,
-    0b01111001,
-    0b01111001,
-    0b01111001,
-    0b01111001,
-    0b01000001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x1c
-    0b01111111,
-    0b01111101,
-    0b01111011,
-    0b01110111,
-    0b01101111,
-    0b01011111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse control (upper) character 0x1d
-    0b01000001,
-    0b01001111,
-    0b01001111,
-    0b01001111,
-    0b01001111,
-    0b01001111,
-    0b01000001,
-    0b01111111,
-
-    // Inverse control (upper) character 0x1e
-    0b01111111,
-    0b01111111,
-    0b01110111,
-    0b01101011,
-    0b01011101,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse control (upper) character 0x1f
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b00000000,
-
-    //
-    // Inverse special Set
-    //
-
-    // Inverse special character 0x20
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x21
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01111111,
-    0b01110111,
-    0b01111111,
-
-    // Inverse special character 0x22
-    0b01101011,
-    0b01101011,
-    0b01101011,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x23
-    0b01101011,
-    0b01101011,
-    0b01000001,
-    0b01101011,
-    0b01000001,
-    0b01101011,
-    0b01101011,
-    0b01111111,
-
-    // Inverse special character 0x24
-    0b01110111,
-    0b01000011,
-    0b01110101,
-    0b01100011,
-    0b01010111,
-    0b01100001,
-    0b01110111,
-    0b01111111,
-
-    // Inverse special character 0x25
-    0b01111001,
-    0b01011001,
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01001101,
-    0b01001111,
-    0b01111111,
-
-    // Inverse special character 0x26
-    0b01111011,
-    0b01110101,
-    0b01110101,
-    0b01111011,
-    0b01010101,
-    0b01101101,
-    0b01010011,
-    0b01111111,
-
-    // Inverse special character 0x27
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x28
-    0b01110111,
-    0b01111011,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111011,
-    0b01110111,
-    0b01111111,
-
-    // Inverse special character 0x29
-    0b01110111,
-    0b01101111,
-    0b01011111,
-    0b01011111,
-    0b01011111,
-    0b01101111,
-    0b01110111,
-    0b01111111,
-
-    // Inverse special character 0x2a
-    0b01110111,
-    0b01010101,
-    0b01100011,
-    0b01110111,
-    0b01100011,
-    0b01010101,
-    0b01110111,
-    0b01111111,
-
-    // Inverse special character 0x2b
-    0b01111111,
-    0b01110111,
-    0b01110111,
-    0b01000001,
-    0b01110111,
-    0b01110111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x2c
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01110111,
-    0b01110111,
-    0b01111011,
-    0b01111111,
-
-    // Inverse special character 0x2d
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01000001,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x2e
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01110111,
-    0b01111111,
-
-    // Inverse special character 0x2f
-    0b01111111,
-    0b01011111,
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01111101,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x30
-    0b01100011,
-    0b01011101,
-    0b01001101,
-    0b01010101,
-    0b01011001,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse special character 0x31
-    0b01110111,
-    0b01110011,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01100011,
-    0b01111111,
-
-    // Inverse special character 0x32
-    0b01100011,
-    0b01011101,
-    0b01011111,
-    0b01100111,
-    0b01111011,
-    0b01111101,
-    0b01000001,
-    0b01111111,
-
-    // Inverse special character 0x33
-    0b01000001,
-    0b01011111,
-    0b01101111,
-    0b01100111,
-    0b01011111,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse special character 0x34
-    0b01101111,
-    0b01100111,
-    0b01101011,
-    0b01101101,
-    0b01000001,
-    0b01101111,
-    0b01101111,
-    0b01111111,
-
-    // Inverse special character 0x35
-    0b01000001,
-    0b01111101,
-    0b01100001,
-    0b01011111,
-    0b01011111,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse special character 0x36
-    0b01000111,
-    0b01111011,
-    0b01111101,
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse special character 0x37
-    0b01000001,
-    0b01011111,
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01111011,
-    0b01111011,
-    0b01111111,
-
-    // Inverse special character 0x38
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse special character 0x39
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01000011,
-    0b01011111,
-    0b01101111,
-    0b01110001,
-    0b01111111,
-
-    // Inverse special character 0x3a
-    0b01111111,
-    0b01111111,
-    0b01110111,
-    0b01111111,
-    0b01110111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x3b
-    0b01111111,
-    0b01111111,
-    0b01110111,
-    0b01111111,
-    0b01110111,
-    0b01110111,
-    0b01111011,
-    0b01111111,
-
-    // Inverse special character 0x3c
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01111101,
-    0b01111011,
-    0b01110111,
-    0b01101111,
-    0b01111111,
-
-    // Inverse special character 0x3d
-    0b01111111,
-    0b01111111,
-    0b01000001,
-    0b01111111,
-    0b01000001,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse special character 0x3e
-    0b01111011,
-    0b01110111,
-    0b01101111,
-    0b01011111,
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01111111,
-
-    // Inverse special character 0x3f
-    0b01100011,
-    0b01011101,
-    0b01101111,
-    0b01110111,
-    0b01110111,
-    0b01111111,
-    0b01110111,
-    0b01111111,
-
-    //
     // Mousetext Set
     //
-
-    // Mousetext character 0x40
+    // Mousetext character 0x00
     0b00010000,
     0b00001000,
     0b00110110,
@@ -665,7 +16,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01111110,
     0b00110110,
 
-    // Mousetext character 0x41
+    // Mousetext character 0x01
     0b00010000,
     0b00001000,
     0b00110110,
@@ -675,7 +26,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01001010,
     0b00110110,
 
-    // Mousetext character 0x42
+    // Mousetext character 0x02
     0b00000000,
     0b00000000,
     0b00000010,
@@ -685,7 +36,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00110110,
     0b01000010,
 
-    // Mousetext character 0x43
+    // Mousetext character 0x03
     0b01111111,
     0b00100010,
     0b00010100,
@@ -695,7 +46,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00101010,
     0b01111111,
 
-    // Mousetext character 0x44
+    // Mousetext character 0x04
     0b00000000,
     0b01000000,
     0b00100000,
@@ -705,7 +56,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b00000000,
 
-    // Mousetext character 0x45
+    // Mousetext character 0x05
     0b01111111,
     0b00111111,
     0b01011111,
@@ -715,7 +66,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01111011,
     0b01111111,
 
-    // Mousetext character 0x46
+    // Mousetext character 0x06
     0b01110000,
     0b01100000,
     0b01111110,
@@ -725,7 +76,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111111,
     0b00000010,
 
-    // Mousetext character 0x47
+    // Mousetext character 0x07
     0b00000000,
     0b00011000,
     0b00000111,
@@ -735,7 +86,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b01110000,
 
-    // Mousetext character 0x48
+    // Mousetext character 0x08
     0b00001000,
     0b00000100,
     0b00000010,
@@ -745,7 +96,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Mousetext character 0x49
+    // Mousetext character 0x09
     0b00000000,
     0b00000000,
     0b00000000,
@@ -755,7 +106,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00101010,
 
-    // Mousetext character 0x4a
+    // Mousetext character 0x0a
     0b00001000,
     0b00001000,
     0b00001000,
@@ -765,7 +116,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00001000,
 
-    // Mousetext character 0x4b
+    // Mousetext character 0x0b
     0b00001000,
     0b00011100,
     0b00101010,
@@ -775,7 +126,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00001000,
 
-    // Mousetext character 0x4c
+    // Mousetext character 0x0c
     0b01111111,
     0b00000000,
     0b00000000,
@@ -785,7 +136,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Mousetext character 0x4d
+    // Mousetext character 0x0d
     0b01000000,
     0b01000000,
     0b01000000,
@@ -795,7 +146,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000110,
     0b00000100,
 
-    // Mousetext character 0x4e
+    // Mousetext character 0x0e
     0b00111111,
     0b00111111,
     0b00111111,
@@ -805,7 +156,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111111,
     0b00111111,
 
-    // Mousetext character 0x4f
+    // Mousetext character 0x0f
     0b00010011,
     0b00011000,
     0b00011100,
@@ -815,7 +166,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00010000,
     0b01101111,
 
-    // Mousetext character 0x50
+    // Mousetext character 0x10
     0b01100100,
     0b00001100,
     0b00011100,
@@ -825,7 +176,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b01111011,
 
-    // Mousetext character 0x51
+    // Mousetext character 0x11
     0b01000000,
     0b01001000,
     0b00001000,
@@ -835,7 +186,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01001000,
     0b01000000,
 
-    // Mousetext character 0x52
+    // Mousetext character 0x12
     0b01000000,
     0b01001000,
     0b00011100,
@@ -845,7 +196,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01001000,
     0b01000000,
 
-    // Mousetext character 0x53
+    // Mousetext character 0x13
     0b00000000,
     0b00000000,
     0b00000000,
@@ -855,7 +206,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Mousetext character 0x54
+    // Mousetext character 0x14
     0b00000001,
     0b00000001,
     0b00000001,
@@ -865,7 +216,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000001,
     0b01111111,
 
-    // Mousetext character 0x55
+    // Mousetext character 0x15
     0b00001000,
     0b00010000,
     0b00100000,
@@ -875,7 +226,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Mousetext character 0x56
+    // Mousetext character 0x16
     0b00101010,
     0b01010101,
     0b00101010,
@@ -885,7 +236,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00101010,
     0b01010101,
 
-    // Mousetext character 0x57
+    // Mousetext character 0x17
     0b01010101,
     0b00101010,
     0b01010101,
@@ -895,7 +246,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01010101,
     0b00101010,
 
-    // Mousetext character 0x58
+    // Mousetext character 0x18
     0b00000000,
     0b00111110,
     0b01000001,
@@ -905,7 +256,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01111111,
     0b00000000,
 
-    // Mousetext character 0x59
+    // Mousetext character 0x19
     0b00000000,
     0b00000000,
     0b00111111,
@@ -915,7 +266,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01111111,
     0b00000000,
 
-    // Mousetext character 0x5a
+    // Mousetext character 0x1a
     0b01000000,
     0b01000000,
     0b01000000,
@@ -925,7 +276,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01000000,
     0b01000000,
 
-    // Mousetext character 0x5b
+    // Mousetext character 0x1b
     0b00001000,
     0b00011100,
     0b00111110,
@@ -935,7 +286,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Mousetext character 0x5c
+    // Mousetext character 0x1c
     0b01111111,
     0b00000000,
     0b00000000,
@@ -945,7 +296,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b01111111,
 
-    // Mousetext character 0x5d
+    // Mousetext character 0x1d
     0b00010100,
     0b00010100,
     0b01110111,
@@ -955,7 +306,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00010100,
     0b00000000,
 
-    // Mousetext character 0x5e
+    // Mousetext character 0x1e
     0b01111111,
     0b01000000,
     0b01000000,
@@ -965,7 +316,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b01000000,
     0b01111111,
 
-    // Mousetext character 0x5f
+    // Mousetext character 0x1f
     0b00000001,
     0b00000001,
     0b00000001,
@@ -974,660 +325,12 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000001,
     0b00000001,
     0b00000001,
-
-    //
-    // Inverse lower Set
-    //
-
-    // Inverse lower character 0x60
-    0b01111011,
-    0b01110111,
-    0b01101111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse lower character 0x61
-    0b01111111,
-    0b01111111,
-    0b01100011,
-    0b01011111,
-    0b01000011,
-    0b01011101,
-    0b01000011,
-    0b01111111,
-
-    // Inverse lower character 0x62
-    0b01111101,
-    0b01111101,
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01111111,
-
-    // Inverse lower character 0x63
-    0b01111111,
-    0b01111111,
-    0b01000011,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01000011,
-    0b01111111,
-
-    // Inverse lower character 0x64
-    0b01011111,
-    0b01011111,
-    0b01000011,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01000011,
-    0b01111111,
-
-    // Inverse lower character 0x65
-    0b01111111,
-    0b01111111,
-    0b01100011,
-    0b01011101,
-    0b01000001,
-    0b01111101,
-    0b01000011,
-    0b01111111,
-
-    // Inverse lower character 0x66
-    0b01100111,
-    0b01011011,
-    0b01111011,
-    0b01100001,
-    0b01111011,
-    0b01111011,
-    0b01111011,
-    0b01111111,
-
-    // Inverse lower character 0x67
-    0b01111111,
-    0b01111111,
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01000011,
-    0b01011111,
-    0b01100011,
-
-    // Inverse lower character 0x68
-    0b01111101,
-    0b01111101,
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse lower character 0x69
-    0b01110111,
-    0b01111111,
-    0b01110011,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01100011,
-    0b01111111,
-
-    // Inverse lower character 0x6a
-    0b01101111,
-    0b01111111,
-    0b01100111,
-    0b01101111,
-    0b01101111,
-    0b01101111,
-    0b01101101,
-    0b01110011,
-
-    // Inverse lower character 0x6b
-    0b01111101,
-    0b01111101,
-    0b01011101,
-    0b01101101,
-    0b01110001,
-    0b01101101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse lower character 0x6c
-    0b01110011,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01100011,
-    0b01111111,
-
-    // Inverse lower character 0x6d
-    0b01111111,
-    0b01111111,
-    0b01001001,
-    0b01010101,
-    0b01010101,
-    0b01010101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse lower character 0x6e
-    0b01111111,
-    0b01111111,
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01111111,
-
-    // Inverse lower character 0x6f
-    0b01111111,
-    0b01111111,
-    0b01100011,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01100011,
-    0b01111111,
-
-    // Inverse lower character 0x70
-    0b01111111,
-    0b01111111,
-    0b01100001,
-    0b01011101,
-    0b01011101,
-    0b01100001,
-    0b01111101,
-    0b01111101,
-
-    // Inverse lower character 0x71
-    0b01111111,
-    0b01111111,
-    0b01000011,
-    0b01011101,
-    0b01011101,
-    0b01000011,
-    0b01011111,
-    0b01011111,
-
-    // Inverse lower character 0x72
-    0b01111111,
-    0b01111111,
-    0b01000101,
-    0b01111001,
-    0b01111101,
-    0b01111101,
-    0b01111101,
-    0b01111111,
-
-    // Inverse lower character 0x73
-    0b01111111,
-    0b01111111,
-    0b01000011,
-    0b01111101,
-    0b01100011,
-    0b01011111,
-    0b01100001,
-    0b01111111,
-
-    // Inverse lower character 0x74
-    0b01111011,
-    0b01111011,
-    0b01100001,
-    0b01111011,
-    0b01111011,
-    0b01011011,
-    0b01100111,
-    0b01111111,
-
-    // Inverse lower character 0x75
-    0b01111111,
-    0b01111111,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01001101,
-    0b01010011,
-    0b01111111,
-
-    // Inverse lower character 0x76
-    0b01111111,
-    0b01111111,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01101011,
-    0b01110111,
-    0b01111111,
-
-    // Inverse lower character 0x77
-    0b01111111,
-    0b01111111,
-    0b01011101,
-    0b01011101,
-    0b01010101,
-    0b01010101,
-    0b01001001,
-    0b01111111,
-
-    // Inverse lower character 0x78
-    0b01111111,
-    0b01111111,
-    0b01011101,
-    0b01101011,
-    0b01110111,
-    0b01101011,
-    0b01011101,
-    0b01111111,
-
-    // Inverse lower character 0x79
-    0b01111111,
-    0b01111111,
-    0b01011101,
-    0b01011101,
-    0b01011101,
-    0b01000011,
-    0b01011111,
-    0b01100011,
-
-    // Inverse lower character 0x7a
-    0b01111111,
-    0b01111111,
-    0b01000001,
-    0b01101111,
-    0b01110111,
-    0b01111011,
-    0b01000001,
-    0b01111111,
-
-    // Inverse lower character 0x7b
-    0b01000111,
-    0b01110011,
-    0b01110011,
-    0b01111001,
-    0b01110011,
-    0b01110011,
-    0b01000111,
-    0b01111111,
-
-    // Inverse lower character 0x7c
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-    0b01110111,
-
-    // Inverse lower character 0x7d
-    0b01110001,
-    0b01100111,
-    0b01100111,
-    0b01001111,
-    0b01100111,
-    0b01100111,
-    0b01110001,
-    0b01111111,
-
-    // Inverse lower character 0x7e
-    0b01010011,
-    0b01100101,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-    0b01111111,
-
-    // Inverse lower character 0x7f
-    0b01111111,
-    0b01010101,
-    0b01101011,
-    0b01010101,
-    0b01101011,
-    0b01010101,
-    0b01111111,
-    0b01111111,
-
-    //
-    // Normal control (upper) Set
-    //
-
-    // Normal control (upper) character 0x80
-    0b00011100,
-    0b00100010,
-    0b00101010,
-    0b00111010,
-    0b00011010,
-    0b00000010,
-    0b00111100,
-    0b00000000,
-
-    // Normal control (upper) character 0x81
-    0b00001000,
-    0b00010100,
-    0b00100010,
-    0b00100010,
-    0b00111110,
-    0b00100010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x82
-    0b00011110,
-    0b00100010,
-    0b00100010,
-    0b00011110,
-    0b00100010,
-    0b00100010,
-    0b00011110,
-    0b00000000,
-
-    // Normal control (upper) character 0x83
-    0b00011100,
-    0b00100010,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00100010,
-    0b00011100,
-    0b00000000,
-
-    // Normal control (upper) character 0x84
-    0b00011110,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00011110,
-    0b00000000,
-
-    // Normal control (upper) character 0x85
-    0b00111110,
-    0b00000010,
-    0b00000010,
-    0b00011110,
-    0b00000010,
-    0b00000010,
-    0b00111110,
-    0b00000000,
-
-    // Normal control (upper) character 0x86
-    0b00111110,
-    0b00000010,
-    0b00000010,
-    0b00011110,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00000000,
-
-    // Normal control (upper) character 0x87
-    0b00111100,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00110010,
-    0b00100010,
-    0b00111100,
-    0b00000000,
-
-    // Normal control (upper) character 0x88
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00111110,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x89
-    0b00011100,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00011100,
-    0b00000000,
-
-    // Normal control (upper) character 0x8a
-    0b00100000,
-    0b00100000,
-    0b00100000,
-    0b00100000,
-    0b00100000,
-    0b00100010,
-    0b00011100,
-    0b00000000,
-
-    // Normal control (upper) character 0x8b
-    0b00100010,
-    0b00010010,
-    0b00001010,
-    0b00000110,
-    0b00001010,
-    0b00010010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x8c
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00111110,
-    0b00000000,
-
-    // Normal control (upper) character 0x8d
-    0b00100010,
-    0b00110110,
-    0b00101010,
-    0b00101010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x8e
-    0b00100010,
-    0b00100010,
-    0b00100110,
-    0b00101010,
-    0b00110010,
-    0b00100010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x8f
-    0b00011100,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00011100,
-    0b00000000,
-
-    // Normal control (upper) character 0x90
-    0b00011110,
-    0b00100010,
-    0b00100010,
-    0b00011110,
-    0b00000010,
-    0b00000010,
-    0b00000010,
-    0b00000000,
-
-    // Normal control (upper) character 0x91
-    0b00011100,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00101010,
-    0b00010010,
-    0b00101100,
-    0b00000000,
-
-    // Normal control (upper) character 0x92
-    0b00011110,
-    0b00100010,
-    0b00100010,
-    0b00011110,
-    0b00001010,
-    0b00010010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x93
-    0b00011100,
-    0b00100010,
-    0b00000010,
-    0b00011100,
-    0b00100000,
-    0b00100010,
-    0b00011100,
-    0b00000000,
-
-    // Normal control (upper) character 0x94
-    0b00111110,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00000000,
-
-    // Normal control (upper) character 0x95
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00011100,
-    0b00000000,
-
-    // Normal control (upper) character 0x96
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00010100,
-    0b00001000,
-    0b00000000,
-
-    // Normal control (upper) character 0x97
-    0b00100010,
-    0b00100010,
-    0b00100010,
-    0b00101010,
-    0b00101010,
-    0b00110110,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x98
-    0b00100010,
-    0b00100010,
-    0b00010100,
-    0b00001000,
-    0b00010100,
-    0b00100010,
-    0b00100010,
-    0b00000000,
-
-    // Normal control (upper) character 0x99
-    0b00100010,
-    0b00100010,
-    0b00010100,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00001000,
-    0b00000000,
-
-    // Normal control (upper) character 0x9a
-    0b00111110,
-    0b00100000,
-    0b00010000,
-    0b00001000,
-    0b00000100,
-    0b00000010,
-    0b00111110,
-    0b00000000,
-
-    // Normal control (upper) character 0x9b
-    0b00111110,
-    0b00000110,
-    0b00000110,
-    0b00000110,
-    0b00000110,
-    0b00000110,
-    0b00111110,
-    0b00000000,
-
-    // Normal control (upper) character 0x9c
-    0b00000000,
-    0b00000010,
-    0b00000100,
-    0b00001000,
-    0b00010000,
-    0b00100000,
-    0b00000000,
-    0b00000000,
-
-    // Normal control (upper) character 0x9d
-    0b00111110,
-    0b00110000,
-    0b00110000,
-    0b00110000,
-    0b00110000,
-    0b00110000,
-    0b00111110,
-    0b00000000,
-
-    // Normal control (upper) character 0x9e
-    0b00000000,
-    0b00000000,
-    0b00001000,
-    0b00010100,
-    0b00100010,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-
-    // Normal control (upper) character 0x9f
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b00000000,
-    0b01111111,
 
     //
     // Normal special Set
     //
 
-    // Normal special character 0xa0
+    // Normal special character 0x20
     0b00000000,
     0b00000000,
     0b00000000,
@@ -1637,7 +340,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xa1
+    // Normal special character 0x21
     0b00001000,
     0b00001000,
     0b00001000,
@@ -1647,7 +350,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal special character 0xa2
+    // Normal special character 0x22
     0b00010100,
     0b00010100,
     0b00010100,
@@ -1657,7 +360,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xa3
+    // Normal special character 0x23
     0b00010100,
     0b00010100,
     0b00111110,
@@ -1667,7 +370,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00010100,
     0b00000000,
 
-    // Normal special character 0xa4
+    // Normal special character 0x24
     0b00001000,
     0b00111100,
     0b00001010,
@@ -1677,7 +380,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal special character 0xa5
+    // Normal special character 0x25
     0b00000110,
     0b00100110,
     0b00010000,
@@ -1687,7 +390,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00110000,
     0b00000000,
 
-    // Normal special character 0xa6
+    // Normal special character 0x26
     0b00000100,
     0b00001010,
     0b00001010,
@@ -1697,7 +400,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00101100,
     0b00000000,
 
-    // Normal special character 0xa7
+    // Normal special character 0x27
     0b00001000,
     0b00001000,
     0b00001000,
@@ -1707,7 +410,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xa8
+    // Normal special character 0x28
     0b00001000,
     0b00000100,
     0b00000010,
@@ -1717,7 +420,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal special character 0xa9
+    // Normal special character 0x29
     0b00001000,
     0b00010000,
     0b00100000,
@@ -1727,7 +430,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal special character 0xaa
+    // Normal special character 0x2a
     0b00001000,
     0b00101010,
     0b00011100,
@@ -1737,7 +440,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal special character 0xab
+    // Normal special character 0x2b
     0b00000000,
     0b00001000,
     0b00001000,
@@ -1747,7 +450,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xac
+    // Normal special character 0x2c
     0b00000000,
     0b00000000,
     0b00000000,
@@ -1757,7 +460,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b00000000,
 
-    // Normal special character 0xad
+    // Normal special character 0x2d
     0b00000000,
     0b00000000,
     0b00000000,
@@ -1767,7 +470,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xae
+    // Normal special character 0x2e
     0b00000000,
     0b00000000,
     0b00000000,
@@ -1777,7 +480,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal special character 0xaf
+    // Normal special character 0x2f
     0b00000000,
     0b00100000,
     0b00010000,
@@ -1787,7 +490,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xb0
+    // Normal special character 0x30
     0b00011100,
     0b00100010,
     0b00110010,
@@ -1797,7 +500,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal special character 0xb1
+    // Normal special character 0x31
     0b00001000,
     0b00001100,
     0b00001000,
@@ -1807,7 +510,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal special character 0xb2
+    // Normal special character 0x32
     0b00011100,
     0b00100010,
     0b00100000,
@@ -1817,7 +520,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal special character 0xb3
+    // Normal special character 0x33
     0b00111110,
     0b00100000,
     0b00010000,
@@ -1827,7 +530,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal special character 0xb4
+    // Normal special character 0x34
     0b00010000,
     0b00011000,
     0b00010100,
@@ -1837,7 +540,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00010000,
     0b00000000,
 
-    // Normal special character 0xb5
+    // Normal special character 0x35
     0b00111110,
     0b00000010,
     0b00011110,
@@ -1847,7 +550,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal special character 0xb6
+    // Normal special character 0x36
     0b00111000,
     0b00000100,
     0b00000010,
@@ -1857,7 +560,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal special character 0xb7
+    // Normal special character 0x37
     0b00111110,
     0b00100000,
     0b00010000,
@@ -1867,7 +570,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b00000000,
 
-    // Normal special character 0xb8
+    // Normal special character 0x38
     0b00011100,
     0b00100010,
     0b00100010,
@@ -1876,8 +579,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00011100,
     0b00000000,
-
-    // Normal special character 0xb9
+    // Normal special character 0x39
     0b00011100,
     0b00100010,
     0b00100010,
@@ -1887,7 +589,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001110,
     0b00000000,
 
-    // Normal special character 0xba
+    // Normal special character 0x3a
     0b00000000,
     0b00000000,
     0b00001000,
@@ -1897,7 +599,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xbb
+    // Normal special character 0x3b
     0b00000000,
     0b00000000,
     0b00001000,
@@ -1907,7 +609,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b00000000,
 
-    // Normal special character 0xbc
+    // Normal special character 0x3c
     0b00010000,
     0b00001000,
     0b00000100,
@@ -1917,7 +619,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00010000,
     0b00000000,
 
-    // Normal special character 0xbd
+    // Normal special character 0x3d
     0b00000000,
     0b00000000,
     0b00111110,
@@ -1927,7 +629,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal special character 0xbe
+    // Normal special character 0x3e
     0b00000100,
     0b00001000,
     0b00010000,
@@ -1937,7 +639,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b00000000,
 
-    // Normal special character 0xbf
+    // Normal special character 0x3f
     0b00011100,
     0b00100010,
     0b00010000,
@@ -1948,10 +650,10 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
 
     //
-    // Normal upper Set
+    // Normal control (upper) Set
     //
 
-    // Normal upper character 0xc0
+    // Normal control (upper) character 0x40
     0b00011100,
     0b00100010,
     0b00101010,
@@ -1961,7 +663,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111100,
     0b00000000,
 
-    // Normal upper character 0xc1
+    // Normal control (upper) character 0x41
     0b00001000,
     0b00010100,
     0b00100010,
@@ -1971,7 +673,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xc2
+    // Normal control (upper) character 0x42
     0b00011110,
     0b00100010,
     0b00100010,
@@ -1981,7 +683,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011110,
     0b00000000,
 
-    // Normal upper character 0xc3
+    // Normal control (upper) character 0x43
     0b00011100,
     0b00100010,
     0b00000010,
@@ -1991,7 +693,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal upper character 0xc4
+    // Normal control (upper) character 0x44
     0b00011110,
     0b00100010,
     0b00100010,
@@ -2001,7 +703,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011110,
     0b00000000,
 
-    // Normal upper character 0xc5
+    // Normal control (upper) character 0x45
     0b00111110,
     0b00000010,
     0b00000010,
@@ -2011,7 +713,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal upper character 0xc6
+    // Normal control (upper) character 0x46
     0b00111110,
     0b00000010,
     0b00000010,
@@ -2021,7 +723,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000010,
     0b00000000,
 
-    // Normal upper character 0xc7
+    // Normal control (upper) character 0x47
     0b00111100,
     0b00000010,
     0b00000010,
@@ -2031,7 +733,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111100,
     0b00000000,
 
-    // Normal upper character 0xc8
+    // Normal control (upper) character 0x48
     0b00100010,
     0b00100010,
     0b00100010,
@@ -2041,7 +743,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xc9
+    // Normal control (upper) character 0x49
     0b00011100,
     0b00001000,
     0b00001000,
@@ -2051,7 +753,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal upper character 0xca
+    // Normal control (upper) character 0x4a
     0b00100000,
     0b00100000,
     0b00100000,
@@ -2061,7 +763,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal upper character 0xcb
+    // Normal control (upper) character 0x4b
     0b00100010,
     0b00010010,
     0b00001010,
@@ -2071,7 +773,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xcc
+    // Normal control (upper) character 0x4c
     0b00000010,
     0b00000010,
     0b00000010,
@@ -2081,7 +783,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal upper character 0xcd
+    // Normal control (upper) character 0x4d
     0b00100010,
     0b00110110,
     0b00101010,
@@ -2091,7 +793,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xce
+    // Normal control (upper) character 0x4e
     0b00100010,
     0b00100010,
     0b00100110,
@@ -2101,7 +803,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xcf
+    // Normal control (upper) character 0x4f
     0b00011100,
     0b00100010,
     0b00100010,
@@ -2111,7 +813,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal upper character 0xd0
+    // Normal control (upper) character 0x50
     0b00011110,
     0b00100010,
     0b00100010,
@@ -2121,7 +823,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000010,
     0b00000000,
 
-    // Normal upper character 0xd1
+    // Normal control (upper) character 0x51
     0b00011100,
     0b00100010,
     0b00100010,
@@ -2131,7 +833,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00101100,
     0b00000000,
 
-    // Normal upper character 0xd2
+    // Normal control (upper) character 0x52
     0b00011110,
     0b00100010,
     0b00100010,
@@ -2141,7 +843,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xd3
+    // Normal control (upper) character 0x53
     0b00011100,
     0b00100010,
     0b00000010,
@@ -2151,7 +853,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal upper character 0xd4
+    // Normal control (upper) character 0x54
     0b00111110,
     0b00001000,
     0b00001000,
@@ -2161,7 +863,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal upper character 0xd5
+    // Normal control (upper) character 0x55
     0b00100010,
     0b00100010,
     0b00100010,
@@ -2171,7 +873,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal upper character 0xd6
+    // Normal control (upper) character 0x56
     0b00100010,
     0b00100010,
     0b00100010,
@@ -2181,7 +883,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal upper character 0xd7
+    // Normal control (upper) character 0x57
     0b00100010,
     0b00100010,
     0b00100010,
@@ -2191,7 +893,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xd8
+    // Normal control (upper) character 0x58
     0b00100010,
     0b00100010,
     0b00010100,
@@ -2201,7 +903,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal upper character 0xd9
+    // Normal control (upper) character 0x59
     0b00100010,
     0b00100010,
     0b00010100,
@@ -2211,7 +913,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal upper character 0xda
+    // Normal control (upper) character 0x5a
     0b00111110,
     0b00100000,
     0b00010000,
@@ -2221,7 +923,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal upper character 0xdb
+    // Normal control (upper) character 0x5b
     0b00111110,
     0b00000110,
     0b00000110,
@@ -2231,7 +933,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal upper character 0xdc
+    // Normal control (upper) character 0x5c
     0b00000000,
     0b00000010,
     0b00000100,
@@ -2241,7 +943,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal upper character 0xdd
+    // Normal control (upper) character 0x5d
     0b00111110,
     0b00110000,
     0b00110000,
@@ -2251,7 +953,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal upper character 0xde
+    // Normal control (upper) character 0x5e
     0b00000000,
     0b00000000,
     0b00001000,
@@ -2261,7 +963,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal upper character 0xdf
+    // Normal control (upper) character 0x5f
     0b00000000,
     0b00000000,
     0b00000000,
@@ -2275,7 +977,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     // Normal lower Set
     //
 
-    // Normal lower character 0xe0
+    // Normal lower character 0x60
     0b00000100,
     0b00001000,
     0b00010000,
@@ -2285,7 +987,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal lower character 0xe1
+    // Normal lower character 0x61
     0b00000000,
     0b00000000,
     0b00011100,
@@ -2295,7 +997,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111100,
     0b00000000,
 
-    // Normal lower character 0xe2
+    // Normal lower character 0x62
     0b00000010,
     0b00000010,
     0b00011110,
@@ -2305,7 +1007,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011110,
     0b00000000,
 
-    // Normal lower character 0xe3
+    // Normal lower character 0x63
     0b00000000,
     0b00000000,
     0b00111100,
@@ -2315,7 +1017,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111100,
     0b00000000,
 
-    // Normal lower character 0xe4
+    // Normal lower character 0x64
     0b00100000,
     0b00100000,
     0b00111100,
@@ -2325,7 +1027,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111100,
     0b00000000,
 
-    // Normal lower character 0xe5
+    // Normal lower character 0x65
     0b00000000,
     0b00000000,
     0b00011100,
@@ -2335,7 +1037,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111100,
     0b00000000,
 
-    // Normal lower character 0xe6
+    // Normal lower character 0x66
     0b00011000,
     0b00100100,
     0b00000100,
@@ -2345,7 +1047,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000100,
     0b00000000,
 
-    // Normal lower character 0xe7
+    // Normal lower character 0x67
     0b00000000,
     0b00000000,
     0b00011100,
@@ -2355,7 +1057,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100000,
     0b00011100,
 
-    // Normal lower character 0xe8
+    // Normal lower character 0x68
     0b00000010,
     0b00000010,
     0b00011110,
@@ -2365,7 +1067,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal lower character 0xe9
+    // Normal lower character 0x69
     0b00001000,
     0b00000000,
     0b00001100,
@@ -2375,7 +1077,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal lower character 0xea
+    // Normal lower character 0x6a
     0b00010000,
     0b00000000,
     0b00011000,
@@ -2385,7 +1087,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00010010,
     0b00001100,
 
-    // Normal lower character 0xeb
+    // Normal lower character 06eb
     0b00000010,
     0b00000010,
     0b00100010,
@@ -2395,7 +1097,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal lower character 0xec
+    // Normal lower character 0x6c
     0b00001100,
     0b00001000,
     0b00001000,
@@ -2405,7 +1107,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal lower character 0xed
+    // Normal lower character 0x6d
     0b00000000,
     0b00000000,
     0b00110110,
@@ -2415,7 +1117,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal lower character 0xee
+    // Normal lower character 0x6e
     0b00000000,
     0b00000000,
     0b00011110,
@@ -2425,7 +1127,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal lower character 0xef
+    // Normal lower character 0x6f
     0b00000000,
     0b00000000,
     0b00011100,
@@ -2435,7 +1137,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011100,
     0b00000000,
 
-    // Normal lower character 0xf0
+    // Normal lower character 0x70
     0b00000000,
     0b00000000,
     0b00011110,
@@ -2445,7 +1147,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000010,
     0b00000010,
 
-    // Normal lower character 0xf1
+    // Normal lower character 0x71
     0b00000000,
     0b00000000,
     0b00111100,
@@ -2455,7 +1157,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100000,
     0b00100000,
 
-    // Normal lower character 0xf2
+    // Normal lower character 0x72
     0b00000000,
     0b00000000,
     0b00111010,
@@ -2465,7 +1167,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000010,
     0b00000000,
 
-    // Normal lower character 0xf3
+    // Normal lower character 0x73
     0b00000000,
     0b00000000,
     0b00111100,
@@ -2475,7 +1177,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011110,
     0b00000000,
 
-    // Normal lower character 0xf4
+    // Normal lower character 0x74
     0b00000100,
     0b00000100,
     0b00011110,
@@ -2485,7 +1187,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00011000,
     0b00000000,
 
-    // Normal lower character 0xf5
+    // Normal lower character 0x75
     0b00000000,
     0b00000000,
     0b00100010,
@@ -2495,7 +1197,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00101100,
     0b00000000,
 
-    // Normal lower character 0xf6
+    // Normal lower character 0x76
     0b00000000,
     0b00000000,
     0b00100010,
@@ -2505,7 +1207,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00000000,
 
-    // Normal lower character 0xf7
+    // Normal lower character 0x77
     0b00000000,
     0b00000000,
     0b00100010,
@@ -2515,7 +1217,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00110110,
     0b00000000,
 
-    // Normal lower character 0xf8
+    // Normal lower character 0x78
     0b00000000,
     0b00000000,
     0b00100010,
@@ -2525,7 +1227,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100010,
     0b00000000,
 
-    // Normal lower character 0xf9
+    // Normal lower character 0x79
     0b00000000,
     0b00000000,
     0b00100010,
@@ -2535,7 +1237,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00100000,
     0b00011100,
 
-    // Normal lower character 0xfa
+    // Normal lower character 0x7a
     0b00000000,
     0b00000000,
     0b00111110,
@@ -2545,7 +1247,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111110,
     0b00000000,
 
-    // Normal lower character 0xfb
+    // Normal lower character 0x7b
     0b00111000,
     0b00001100,
     0b00001100,
@@ -2555,7 +1257,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00111000,
     0b00000000,
 
-    // Normal lower character 0xfc
+    // Normal lower character 0x7c
     0b00001000,
     0b00001000,
     0b00001000,
@@ -2565,7 +1267,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001000,
     0b00001000,
 
-    // Normal lower character 0xfd
+    // Normal lower character 0x7d
     0b00001110,
     0b00011000,
     0b00011000,
@@ -2575,7 +1277,7 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00001110,
     0b00000000,
 
-    // Normal lower character 0xfe
+    // Normal lower character 0x7e
     0b00101100,
     0b00011010,
     0b00000000,
@@ -2585,7 +1287,1307 @@ const uint8_t __in_flash("chr_rom") textfont_iie_us_enhanced[256 * 8] = {
     0b00000000,
     0b00000000,
 
-    // Normal lower character 0xff
+    // Normal lower character 0x7f
+    0b00000000,
+    0b00101010,
+    0b00010100,
+    0b00101010,
+    0b00010100,
+    0b00101010,
+    0b00000000,
+    0b00000000,
+
+
+    // REPEAT, FIX LATER
+    // REPEAT, FIX LATER
+    // REPEAT, FIX LATER
+    // REPEAT, FIX LATER
+
+    //
+    // Mousetext Set
+    //
+    // Mousetext character 0x00
+    0b00010000,
+    0b00001000,
+    0b00110110,
+    0b01111111,
+    0b00111111,
+    0b00111111,
+    0b01111110,
+    0b00110110,
+
+    // Mousetext character 0x01
+    0b00010000,
+    0b00001000,
+    0b00110110,
+    0b01000001,
+    0b00100001,
+    0b00100001,
+    0b01001010,
+    0b00110110,
+
+    // Mousetext character 0x02
+    0b00000000,
+    0b00000000,
+    0b00000010,
+    0b00000110,
+    0b00001110,
+    0b00011110,
+    0b00110110,
+    0b01000010,
+
+    // Mousetext character 0x03
+    0b01111111,
+    0b00100010,
+    0b00010100,
+    0b00001000,
+    0b00001000,
+    0b00010100,
+    0b00101010,
+    0b01111111,
+
+    // Mousetext character 0x04
+    0b00000000,
+    0b01000000,
+    0b00100000,
+    0b00010001,
+    0b00001010,
+    0b00000100,
+    0b00000100,
+    0b00000000,
+
+    // Mousetext character 0x05
+    0b01111111,
+    0b00111111,
+    0b01011111,
+    0b01101100,
+    0b01110101,
+    0b01111011,
+    0b01111011,
+    0b01111111,
+
+    // Mousetext character 0x06
+    0b01110000,
+    0b01100000,
+    0b01111110,
+    0b00110001,
+    0b01111001,
+    0b00110000,
+    0b00111111,
+    0b00000010,
+
+    // Mousetext character 0x07
+    0b00000000,
+    0b00011000,
+    0b00000111,
+    0b00000000,
+    0b00000111,
+    0b00001100,
+    0b00001000,
+    0b01110000,
+
+    // Mousetext character 0x08
+    0b00001000,
+    0b00000100,
+    0b00000010,
+    0b01111111,
+    0b00000010,
+    0b00000100,
+    0b00001000,
+    0b00000000,
+
+    // Mousetext character 0x09
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00101010,
+
+    // Mousetext character 0x0a
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b01001001,
+    0b00101010,
+    0b00011100,
+    0b00001000,
+
+    // Mousetext character 0x0b
+    0b00001000,
+    0b00011100,
+    0b00101010,
+    0b01001001,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+
+    // Mousetext character 0x0c
+    0b01111111,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Mousetext character 0x0d
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000100,
+    0b01000110,
+    0b01111111,
+    0b00000110,
+    0b00000100,
+
+    // Mousetext character 0x0e
+    0b00111111,
+    0b00111111,
+    0b00111111,
+    0b00111111,
+    0b00111111,
+    0b00111111,
+    0b00111111,
+    0b00111111,
+
+    // Mousetext character 0x0f
+    0b00010011,
+    0b00011000,
+    0b00011100,
+    0b01111110,
+    0b00011100,
+    0b00011000,
+    0b00010000,
+    0b01101111,
+
+    // Mousetext character 0x10
+    0b01100100,
+    0b00001100,
+    0b00011100,
+    0b00111111,
+    0b00011100,
+    0b00001100,
+    0b00000100,
+    0b01111011,
+
+    // Mousetext character 0x11
+    0b01000000,
+    0b01001000,
+    0b00001000,
+    0b01111111,
+    0b00111110,
+    0b00011100,
+    0b01001000,
+    0b01000000,
+
+    // Mousetext character 0x12
+    0b01000000,
+    0b01001000,
+    0b00011100,
+    0b00111110,
+    0b01111111,
+    0b00001000,
+    0b01001000,
+    0b01000000,
+
+    // Mousetext character 0x13
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b01111111,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Mousetext character 0x14
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b01111111,
+
+    // Mousetext character 0x15
+    0b00001000,
+    0b00010000,
+    0b00100000,
+    0b01111111,
+    0b00100000,
+    0b00010000,
+    0b00001000,
+    0b00000000,
+
+    // Mousetext character 0x16
+    0b00101010,
+    0b01010101,
+    0b00101010,
+    0b01010101,
+    0b00101010,
+    0b01010101,
+    0b00101010,
+    0b01010101,
+
+    // Mousetext character 0x17
+    0b01010101,
+    0b00101010,
+    0b01010101,
+    0b00101010,
+    0b01010101,
+    0b00101010,
+    0b01010101,
+    0b00101010,
+
+    // Mousetext character 0x18
+    0b00000000,
+    0b00111110,
+    0b01000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b01111111,
+    0b00000000,
+
+    // Mousetext character 0x19
+    0b00000000,
+    0b00000000,
+    0b00111111,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01111111,
+    0b00000000,
+
+    // Mousetext character 0x1a
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+    0b01000000,
+
+    // Mousetext character 0x1b
+    0b00001000,
+    0b00011100,
+    0b00111110,
+    0b01111111,
+    0b00111110,
+    0b00011100,
+    0b00001000,
+    0b00000000,
+
+    // Mousetext character 0x1c
+    0b01111111,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b01111111,
+
+    // Mousetext character 0x1d
+    0b00010100,
+    0b00010100,
+    0b01110111,
+    0b00000000,
+    0b01110111,
+    0b00010100,
+    0b00010100,
+    0b00000000,
+
+    // Mousetext character 0x1e
+    0b01111111,
+    0b01000000,
+    0b01000000,
+    0b01001100,
+    0b01001100,
+    0b01000000,
+    0b01000000,
+    0b01111111,
+
+    // Mousetext character 0x1f
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+    0b00000001,
+
+    //
+    // Normal special Set
+    //
+
+    // Normal special character 0x20
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x21
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00000000,
+    0b00001000,
+    0b00000000,
+
+    // Normal special character 0x22
+    0b00010100,
+    0b00010100,
+    0b00010100,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x23
+    0b00010100,
+    0b00010100,
+    0b00111110,
+    0b00010100,
+    0b00111110,
+    0b00010100,
+    0b00010100,
+    0b00000000,
+
+    // Normal special character 0x24
+    0b00001000,
+    0b00111100,
+    0b00001010,
+    0b00011100,
+    0b00101000,
+    0b00011110,
+    0b00001000,
+    0b00000000,
+
+    // Normal special character 0x25
+    0b00000110,
+    0b00100110,
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00110010,
+    0b00110000,
+    0b00000000,
+
+    // Normal special character 0x26
+    0b00000100,
+    0b00001010,
+    0b00001010,
+    0b00000100,
+    0b00101010,
+    0b00010010,
+    0b00101100,
+    0b00000000,
+
+    // Normal special character 0x27
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x28
+    0b00001000,
+    0b00000100,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000100,
+    0b00001000,
+    0b00000000,
+
+    // Normal special character 0x29
+    0b00001000,
+    0b00010000,
+    0b00100000,
+    0b00100000,
+    0b00100000,
+    0b00010000,
+    0b00001000,
+    0b00000000,
+
+    // Normal special character 0x2a
+    0b00001000,
+    0b00101010,
+    0b00011100,
+    0b00001000,
+    0b00011100,
+    0b00101010,
+    0b00001000,
+    0b00000000,
+
+    // Normal special character 0x2b
+    0b00000000,
+    0b00001000,
+    0b00001000,
+    0b00111110,
+    0b00001000,
+    0b00001000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x2c
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00001000,
+    0b00001000,
+    0b00000100,
+    0b00000000,
+
+    // Normal special character 0x2d
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00111110,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x2e
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00001000,
+    0b00000000,
+
+    // Normal special character 0x2f
+    0b00000000,
+    0b00100000,
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00000010,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x30
+    0b00011100,
+    0b00100010,
+    0b00110010,
+    0b00101010,
+    0b00100110,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal special character 0x31
+    0b00001000,
+    0b00001100,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00011100,
+    0b00000000,
+
+    // Normal special character 0x32
+    0b00011100,
+    0b00100010,
+    0b00100000,
+    0b00011000,
+    0b00000100,
+    0b00000010,
+    0b00111110,
+    0b00000000,
+
+    // Normal special character 0x33
+    0b00111110,
+    0b00100000,
+    0b00010000,
+    0b00011000,
+    0b00100000,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal special character 0x34
+    0b00010000,
+    0b00011000,
+    0b00010100,
+    0b00010010,
+    0b00111110,
+    0b00010000,
+    0b00010000,
+    0b00000000,
+
+    // Normal special character 0x35
+    0b00111110,
+    0b00000010,
+    0b00011110,
+    0b00100000,
+    0b00100000,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal special character 0x36
+    0b00111000,
+    0b00000100,
+    0b00000010,
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal special character 0x37
+    0b00111110,
+    0b00100000,
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00000100,
+    0b00000100,
+    0b00000000,
+
+    // Normal special character 0x38
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+    // Normal special character 0x39
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00111100,
+    0b00100000,
+    0b00010000,
+    0b00001110,
+    0b00000000,
+
+    // Normal special character 0x3a
+    0b00000000,
+    0b00000000,
+    0b00001000,
+    0b00000000,
+    0b00001000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x3b
+    0b00000000,
+    0b00000000,
+    0b00001000,
+    0b00000000,
+    0b00001000,
+    0b00001000,
+    0b00000100,
+    0b00000000,
+
+    // Normal special character 0x3c
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00000010,
+    0b00000100,
+    0b00001000,
+    0b00010000,
+    0b00000000,
+
+    // Normal special character 0x3d
+    0b00000000,
+    0b00000000,
+    0b00111110,
+    0b00000000,
+    0b00111110,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal special character 0x3e
+    0b00000100,
+    0b00001000,
+    0b00010000,
+    0b00100000,
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00000000,
+
+    // Normal special character 0x3f
+    0b00011100,
+    0b00100010,
+    0b00010000,
+    0b00001000,
+    0b00001000,
+    0b00000000,
+    0b00001000,
+    0b00000000,
+
+    //
+    // Normal control (upper) Set
+    //
+
+    // Normal control (upper) character 0x40
+    0b00011100,
+    0b00100010,
+    0b00101010,
+    0b00111010,
+    0b00011010,
+    0b00000010,
+    0b00111100,
+    0b00000000,
+
+    // Normal control (upper) character 0x41
+    0b00001000,
+    0b00010100,
+    0b00100010,
+    0b00100010,
+    0b00111110,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x42
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00000000,
+
+    // Normal control (upper) character 0x43
+    0b00011100,
+    0b00100010,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal control (upper) character 0x44
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00000000,
+
+    // Normal control (upper) character 0x45
+    0b00111110,
+    0b00000010,
+    0b00000010,
+    0b00011110,
+    0b00000010,
+    0b00000010,
+    0b00111110,
+    0b00000000,
+
+    // Normal control (upper) character 0x46
+    0b00111110,
+    0b00000010,
+    0b00000010,
+    0b00011110,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000000,
+
+    // Normal control (upper) character 0x47
+    0b00111100,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00110010,
+    0b00100010,
+    0b00111100,
+    0b00000000,
+
+    // Normal control (upper) character 0x48
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00111110,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x49
+    0b00011100,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00011100,
+    0b00000000,
+
+    // Normal control (upper) character 0x4a
+    0b00100000,
+    0b00100000,
+    0b00100000,
+    0b00100000,
+    0b00100000,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal control (upper) character 0x4b
+    0b00100010,
+    0b00010010,
+    0b00001010,
+    0b00000110,
+    0b00001010,
+    0b00010010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x4c
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00111110,
+    0b00000000,
+
+    // Normal control (upper) character 0x4d
+    0b00100010,
+    0b00110110,
+    0b00101010,
+    0b00101010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x4e
+    0b00100010,
+    0b00100010,
+    0b00100110,
+    0b00101010,
+    0b00110010,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x4f
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal control (upper) character 0x50
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000000,
+
+    // Normal control (upper) character 0x51
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00101010,
+    0b00010010,
+    0b00101100,
+    0b00000000,
+
+    // Normal control (upper) character 0x52
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00001010,
+    0b00010010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x53
+    0b00011100,
+    0b00100010,
+    0b00000010,
+    0b00011100,
+    0b00100000,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal control (upper) character 0x54
+    0b00111110,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00000000,
+
+    // Normal control (upper) character 0x55
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal control (upper) character 0x56
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00010100,
+    0b00001000,
+    0b00000000,
+
+    // Normal control (upper) character 0x57
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00101010,
+    0b00101010,
+    0b00110110,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x58
+    0b00100010,
+    0b00100010,
+    0b00010100,
+    0b00001000,
+    0b00010100,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal control (upper) character 0x59
+    0b00100010,
+    0b00100010,
+    0b00010100,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00000000,
+
+    // Normal control (upper) character 0x5a
+    0b00111110,
+    0b00100000,
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00000010,
+    0b00111110,
+    0b00000000,
+
+    // Normal control (upper) character 0x5b
+    0b00111110,
+    0b00000110,
+    0b00000110,
+    0b00000110,
+    0b00000110,
+    0b00000110,
+    0b00111110,
+    0b00000000,
+
+    // Normal control (upper) character 0x5c
+    0b00000000,
+    0b00000010,
+    0b00000100,
+    0b00001000,
+    0b00010000,
+    0b00100000,
+    0b00000000,
+    0b00000000,
+
+    // Normal control (upper) character 0x5d
+    0b00111110,
+    0b00110000,
+    0b00110000,
+    0b00110000,
+    0b00110000,
+    0b00110000,
+    0b00111110,
+    0b00000000,
+
+    // Normal control (upper) character 0x5e
+    0b00000000,
+    0b00000000,
+    0b00001000,
+    0b00010100,
+    0b00100010,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal control (upper) character 0x5f
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b01111111,
+
+    //
+    // Normal lower Set
+    //
+
+    // Normal lower character 0x60
+    0b00000100,
+    0b00001000,
+    0b00010000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal lower character 0x61
+    0b00000000,
+    0b00000000,
+    0b00011100,
+    0b00100000,
+    0b00111100,
+    0b00100010,
+    0b00111100,
+    0b00000000,
+
+    // Normal lower character 0x62
+    0b00000010,
+    0b00000010,
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00000000,
+
+    // Normal lower character 0x63
+    0b00000000,
+    0b00000000,
+    0b00111100,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00111100,
+    0b00000000,
+
+    // Normal lower character 0x64
+    0b00100000,
+    0b00100000,
+    0b00111100,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00111100,
+    0b00000000,
+
+    // Normal lower character 0x65
+    0b00000000,
+    0b00000000,
+    0b00011100,
+    0b00100010,
+    0b00111110,
+    0b00000010,
+    0b00111100,
+    0b00000000,
+
+    // Normal lower character 0x66
+    0b00011000,
+    0b00100100,
+    0b00000100,
+    0b00011110,
+    0b00000100,
+    0b00000100,
+    0b00000100,
+    0b00000000,
+
+    // Normal lower character 0x67
+    0b00000000,
+    0b00000000,
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00111100,
+    0b00100000,
+    0b00011100,
+
+    // Normal lower character 0x68
+    0b00000010,
+    0b00000010,
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal lower character 0x69
+    0b00001000,
+    0b00000000,
+    0b00001100,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00011100,
+    0b00000000,
+
+    // Normal lower character 0x6a
+    0b00010000,
+    0b00000000,
+    0b00011000,
+    0b00010000,
+    0b00010000,
+    0b00010000,
+    0b00010010,
+    0b00001100,
+
+    // Normal lower character 06eb
+    0b00000010,
+    0b00000010,
+    0b00100010,
+    0b00010010,
+    0b00001110,
+    0b00010010,
+    0b00100010,
+    0b00000000,
+
+    // Normal lower character 0x6c
+    0b00001100,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00011100,
+    0b00000000,
+
+    // Normal lower character 0x6d
+    0b00000000,
+    0b00000000,
+    0b00110110,
+    0b00101010,
+    0b00101010,
+    0b00101010,
+    0b00100010,
+    0b00000000,
+
+    // Normal lower character 0x6e
+    0b00000000,
+    0b00000000,
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00000000,
+
+    // Normal lower character 0x6f
+    0b00000000,
+    0b00000000,
+    0b00011100,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00011100,
+    0b00000000,
+
+    // Normal lower character 0x70
+    0b00000000,
+    0b00000000,
+    0b00011110,
+    0b00100010,
+    0b00100010,
+    0b00011110,
+    0b00000010,
+    0b00000010,
+
+    // Normal lower character 0x71
+    0b00000000,
+    0b00000000,
+    0b00111100,
+    0b00100010,
+    0b00100010,
+    0b00111100,
+    0b00100000,
+    0b00100000,
+
+    // Normal lower character 0x72
+    0b00000000,
+    0b00000000,
+    0b00111010,
+    0b00000110,
+    0b00000010,
+    0b00000010,
+    0b00000010,
+    0b00000000,
+
+    // Normal lower character 0x73
+    0b00000000,
+    0b00000000,
+    0b00111100,
+    0b00000010,
+    0b00011100,
+    0b00100000,
+    0b00011110,
+    0b00000000,
+
+    // Normal lower character 0x74
+    0b00000100,
+    0b00000100,
+    0b00011110,
+    0b00000100,
+    0b00000100,
+    0b00100100,
+    0b00011000,
+    0b00000000,
+
+    // Normal lower character 0x75
+    0b00000000,
+    0b00000000,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00110010,
+    0b00101100,
+    0b00000000,
+
+    // Normal lower character 0x76
+    0b00000000,
+    0b00000000,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00010100,
+    0b00001000,
+    0b00000000,
+
+    // Normal lower character 0x77
+    0b00000000,
+    0b00000000,
+    0b00100010,
+    0b00100010,
+    0b00101010,
+    0b00101010,
+    0b00110110,
+    0b00000000,
+
+    // Normal lower character 0x78
+    0b00000000,
+    0b00000000,
+    0b00100010,
+    0b00010100,
+    0b00001000,
+    0b00010100,
+    0b00100010,
+    0b00000000,
+
+    // Normal lower character 0x79
+    0b00000000,
+    0b00000000,
+    0b00100010,
+    0b00100010,
+    0b00100010,
+    0b00111100,
+    0b00100000,
+    0b00011100,
+
+    // Normal lower character 0x7a
+    0b00000000,
+    0b00000000,
+    0b00111110,
+    0b00010000,
+    0b00001000,
+    0b00000100,
+    0b00111110,
+    0b00000000,
+
+    // Normal lower character 0x7b
+    0b00111000,
+    0b00001100,
+    0b00001100,
+    0b00000110,
+    0b00001100,
+    0b00001100,
+    0b00111000,
+    0b00000000,
+
+    // Normal lower character 0x7c
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+    0b00001000,
+
+    // Normal lower character 0x7d
+    0b00001110,
+    0b00011000,
+    0b00011000,
+    0b00110000,
+    0b00011000,
+    0b00011000,
+    0b00001110,
+    0b00000000,
+
+    // Normal lower character 0x7e
+    0b00101100,
+    0b00011010,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+
+    // Normal lower character 0x7f
     0b00000000,
     0b00101010,
     0b00010100,

@@ -70,6 +70,28 @@ Current file: testkbd.asm
 000000r 2                               .I8
 000000r 2               .endmacro
 000000r 2               
+000000r 2               .macro       LBEQ PARM1
+000000r 2                    bne *+5
+000000r 2                    jmp PARM1
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       LBNE PARM1
+000000r 2                    beq *+5
+000000r 2                    jmp PARM1
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       LBCC PARM1
+000000r 2                    bcc *+4
+000000r 2                    bra *+5
+000000r 2                    jmp PARM1
+000000r 2               .endmacro
+000000r 2               
+000000r 2               .macro       LBCS PARM1
+000000r 2                    bcs *+4
+000000r 2                    bra *+5
+000000r 2                    jmp PARM1
+000000r 2               .endmacro
+000000r 2               
 000000r 1               
 000000r 1               ;
 000000r 1               ; Hardware port addresses. SBC65816 uses the $FExx block for ECB hardware.

@@ -18,6 +18,7 @@ PIN   21  = a8          ; /*                                 */
 PIN   22  = a9          ; /*                                 */
 
 
+
 /* *************** OUTPUT PINS *********************/
 PIN   15  = !cs_rom     ; /*                                 */
 PIN   16  = !cs_ram     ; /*                                 */
@@ -28,14 +29,13 @@ PIN   19  = !o_rom      ; /*                                 */
 
 /* ****  MEMORY MAP ******
 
-000000..007FFF	LOW RAM < 32K
+000000..00DFFF	LOW RAM < 32K
+00E000..00FFFF  LOW ROM
 010000..07FFFF	HIGH RAM > 64K
 080000..FEFFFF	EXTERNAL ECB BUS RAM
 FF0000..FFFFFF OPTION ROM
 
-Revised:
- 00FE00..00FEFF	I/O ARES -- FIXED; DOES NOT DEPEND ON ROM SIZE
- 00C000..00FFFF	ROM:  EXCLUDING THE I/O AREA
+00FE00..00FEFF	I/O AREA -- FIXED; DOES NOT DEPEND ON ROM SIZE
 ************************ */
 
 z1	=	!a23 & !a22 & !a21 & !a20			;
@@ -43,7 +43,7 @@ z0	=	!a19 & !a18 & !a17 & !a16			;
 
 hi_ram	=	z1 & !a19 & (a18 # a17 # a16)		;	/* 010000..07FFFF */
 
-rom_area	=  a15 &  a14 	;
+rom_area	=  a15 &  a14 & a13	;
 
 io_area	=  a15 & a14 & a13 & a12 & a11 & a10 & a9 & !a8		;
 
@@ -55,4 +55,5 @@ o_rom	=	a23 & a22 & a21 & a20;
 
 io	=	z1 & z0 & io_area		;
 
+/*fbus =  !(cs_rom # cs_ram # io) ; */
 fbus	=	!z1 # a19					;

@@ -47,3 +47,25 @@
 		.A8
                 .I8
 .endmacro
+
+.macro       LBEQ PARM1
+     bne *+5
+     jmp PARM1
+.endmacro
+
+.macro       LBNE PARM1
+     beq *+5
+     jmp PARM1
+.endmacro
+
+.macro       LBCC PARM1
+     bcc *+4
+     bra *+5
+     jmp PARM1
+.endmacro
+
+.macro       LBCS PARM1
+     bcs *+4
+     bra *+5
+     jmp PARM1
+.endmacro

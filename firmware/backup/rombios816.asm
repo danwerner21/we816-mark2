@@ -26,9 +26,6 @@ UART6           = $FE06         ;   MODEM STATUS
 
 RTC             = $FE08         ;   RTC REG.
 
-DATAP           = $FE0A         ; 	VDP Data port
-CMDP            = $FE0B         ; 	VDP Command port
-
 via1regb        = $FE10         ; Register
 via1rega        = $FE11         ; Register
 via1ddrb        = $FE12         ; Register
@@ -66,7 +63,7 @@ via2ier         = $FE2E         ; Register
 via2ora         = $FE2F         ; Register
 
 
-STACK           = $7FFF         ;   POINTER TO TOP OF STACK
+STACK           = $DFFF         ;   POINTER TO TOP OF STACK
 
 ;
 KEYBUFF         = $0200         ; 256 BYTE KEYBOARD BUFFER
@@ -131,7 +128,7 @@ PTRLFT          = $03B0         ; .. to $03B9 logical file table
 PTRDNT          = $03BA         ; .. to $03C3 device number table
 PTRSAT          = $03C4         ; .. to $03CD secondary address table
 LINEFLGS        = $03D0         ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one extra for scrolling)
-
+DEFAULT_COLOR   = $03E9         ; DEFAULT COLOR FOR PRINTING
 
 TRUE            = 1
 FALSE           = 0
@@ -230,14 +227,13 @@ CONSOLE_INIT:
         ACCUMULATORINDEX8
 
         JSR     SERIAL_CONSOLE_INIT
-;      JSR     Setup9918
-;      JSR     LoadFont
-;      JSR     ClearScreen
-;       LDA     #$F0
-;       JSR     SetColor
-        LDA     #$01
+        JSR     SETUPVIDEO
+        JSR     ClearScreen
+        LDA     #$F0
+        JSR     SetColor
+        LDA     #$00
         STA     ConsoleDevice
-;     JSR     INITKEYBOARD
+        JSR     INITKEYBOARD
 
         PLP
         RTS
@@ -257,20 +253,20 @@ OUTCH:
         PHY
         PHP
         ACCUMULATORINDEX8
-;      TAX
-;      LDA     ConsoleDevice
-;      CMP     #$01
-;      BNE     OUTCH2
-;      TXA
-;      JSR     Outch9918
-;      PLP
-;      PLY
-;      PLX
-;      RTS
+        TAX
+        LDA     ConsoleDevice
+        CMP     #$01
+        BNE     OUTCH2
+        TXA
+        JSR     OutVideoCh
+        PLP
+        PLY
+        PLX
+        RTS
 
 ; Default (serial)
 OUTCH2:
-;     TXA
+        TXA
         JSR     SERIAL_OUTCH
         PLP
         PLY
@@ -355,6 +351,7 @@ nothere:
 ;__Device_Driver_Code___________________________________________
 ;
         .INCLUDE "conserial.asm"
+        .INCLUDE "conlocal.asm"
         .INCLUDE "iec.asm"
 
 

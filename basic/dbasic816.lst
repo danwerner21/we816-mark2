@@ -1580,7 +1580,7 @@ Current file: dbasic816.asm
 0015F8  2               PROGRAMBANK     = $FF           ; BANK THAT THE INTREPRETER LIVES IN
 0015F8  2               DATABANK        = $02           ; BANK THAT THE DATA LIVES IN
 0015F8  2               
-0015F8  2               FNBUFFER        = $001000       ; FILE NAME BUFFER, MUST BE IN ZERO BANK!
+0015F8  2               FNBUFFER        = $000F00       ; FILE NAME BUFFER, MUST BE IN ZERO BANK!
 0015F8  2               
 0015F8  2               
 0015F8  2               
@@ -1591,8 +1591,8 @@ Current file: dbasic816.asm
 0015F8  2               PLUS_2          = $02           ; X or Y plus 2
 0015F8  2               PLUS_3          = $03           ; X or Y plus 3
 0015F8  2               
-0015F8  2               STACK_BOTTOM    = $4000         ; stack bottom, no offset
-0015F8  2               STACK           = $7FFF         ; stack top, no offset
+0015F8  2               STACK_BOTTOM    = $D000         ; stack bottom, no offset
+0015F8  2               STACK           = $DFFF         ; stack top, no offset
 0015F8  2               
 0015F8  2               ccflag          = $000200       ; BASIC CTRL-C flag, 00 = enabled, 01 = dis
 0015F8  2               ccbyte          = ccflag+1      ; BASIC CTRL-C byte
@@ -2000,7 +2000,7 @@ Current file: dbasic816.asm
 001902  3  B5 B8 C9 00  
 001906  3  D0 04 A2 00  
 001914  3  BB                   TYX
-001915  3  95 10                STA     >FNBUFFER,X
+001915  3  95 0F                STA     >FNBUFFER,X
 001917  3  C9 00                CMP     #$00
 001919  3  F0 07                BEQ     V_SAVE_2
 00191B  3  C9 22                CMP     #'"'
@@ -2010,7 +2010,7 @@ Current file: dbasic816.asm
 001922  3               V_SAVE_2:
 001922  3  98                   TYA                     ; fn length
 001923  3  A2 00                LDX     #<FNBUFFER
-001925  3  A0 10                LDY     #>FNBUFFER
+001925  3  A0 0F                LDY     #>FNBUFFER
 001927  3  8B                   PHB
 001928  3  DA A2 00 DA          SETBANK 0
 00192C  3  AB FA        
@@ -2070,7 +2070,7 @@ Current file: dbasic816.asm
 00198B  3  B5 B8 C9 00  
 00198F  3  D0 04 A2 00  
 00199D  3  BB                   TYX
-00199E  3  95 10                STA     >FNBUFFER,X
+00199E  3  95 0F                STA     >FNBUFFER,X
 0019A0  3  C9 00                CMP     #$00
 0019A2  3  F0 07                BEQ     V_LOAD_2
 0019A4  3  C9 22                CMP     #'"'
@@ -2080,7 +2080,7 @@ Current file: dbasic816.asm
 0019AB  3               V_LOAD_2:
 0019AB  3  98                   TYA                     ; fn length
 0019AC  3  A2 00                LDX     #<FNBUFFER
-0019AE  3  A0 10                LDY     #>FNBUFFER
+0019AE  3  A0 0F                LDY     #>FNBUFFER
 0019B0  3  8B                   PHB
 0019B1  3  DA A2 00 DA          SETBANK 0
 0019B5  3  AB FA        
@@ -2190,7 +2190,7 @@ Current file: dbasic816.asm
 001A7B  3  8B                   PHB
 001A7C  3  DA                   PHX
 001A7D  3  A9 24                LDA     #'$'
-001A7F  3  85 10                STA     >FNBUFFER
+001A7F  3  85 0F                STA     >FNBUFFER
 001A81  3  DA A2 00 DA          SETBANK 0
 001A85  3  AB FA        
 001A87  3  A9 0D                LDA     #13
@@ -2199,7 +2199,7 @@ Current file: dbasic816.asm
 001A8F  3  22 00 FD 00          JSL     LPRINTVEC
 001A93  3  A9 01                LDA     #1              ; fn length
 001A95  3  A2 00                LDX     #<FNBUFFER
-001A97  3  A0 10                LDY     #>FNBUFFER
+001A97  3  A0 0F                LDY     #>FNBUFFER
 001A99  3  22 48 FD 00          JSL     LSETNAM         ; setnam
 001A9D  3  FA                   PLX                     ; Device Number
 001A9E  3  A0 00                LDY     #0              ; secondary address
@@ -2303,7 +2303,7 @@ Current file: dbasic816.asm
 001B68  3  D0 04 A2 00  
 001B76  3  DA                   PHX
 001B77  3  BB                   TYX
-001B78  3  95 10                STA     >FNBUFFER,X
+001B78  3  95 0F                STA     >FNBUFFER,X
 001B7A  3  FA                   PLX
 001B7B  3  CA                   DEX
 001B7C  3  E0 00                CPX     #$00
@@ -2313,7 +2313,7 @@ Current file: dbasic816.asm
 001B83  3               V_DISKCMD_2:
 001B83  3  BB                   TYX
 001B84  3  A9 00                LDA     #0
-001B86  3  95 11                STA     >FNBUFFER+1,X
+001B86  3  95 10                STA     >FNBUFFER+1,X
 001B88  3  8B                   PHB
 001B89  3  DA A2 00 DA          SETBANK 0
 001B8D  3  AB FA        
@@ -2336,7 +2336,7 @@ Current file: dbasic816.asm
 001BB7  3  22 5C FD 00          JSL     LIECOUTC
 001BBB  3  A2 00                LDX     #$00
 001BBD  3               V_DISKCMD_3:
-001BBD  3  B5 10                LDA     >FNBUFFER,X
+001BBD  3  B5 0F                LDA     >FNBUFFER,X
 001BBF  3  C9 00                CMP     #$00
 001BC1  3  F0 09                BEQ     V_DISKCMD_4
 001BC3  3  22 30 FD 00          JSL     LIECOUT         ; OUTPUT a byte To the serial bus
@@ -2412,7 +2412,7 @@ Current file: dbasic816.asm
 001C3C  3  D0 04 A2 00  
 001C4A  3  DA                   PHX
 001C4B  3  BB                   TYX
-001C4C  3  95 10                STA     >FNBUFFER,X
+001C4C  3  95 0F                STA     >FNBUFFER,X
 001C4E  3  FA                   PLX
 001C4F  3  CA                   DEX
 001C50  3  E0 00                CPX     #$00
@@ -2423,7 +2423,7 @@ Current file: dbasic816.asm
 001C57  3  C8                   INY
 001C58  3  98                   TYA                     ; fn length
 001C59  3  A2 00                LDX     #<FNBUFFER
-001C5B  3  A0 10                LDY     #>FNBUFFER
+001C5B  3  A0 0F                LDY     #>FNBUFFER
 001C5D  3  DA A2 00 DA          SETBANK 0
 001C61  3  AB FA        
 001C63  3  22 48 FD 00          JSL     LSETNAM         ; setnam
@@ -4191,7 +4191,7 @@ Current file: dbasic816.asm
 00266A  2  DA A2 00 DA          SETBANK 0
 00266E  2  AB FA        
 002670  2  C2 30                ACCUMULATORINDEX16
-002672  2  A9 FF 7F             LDA     #STACK          ; get the stack address
+002672  2  A9 FF DF             LDA     #STACK          ; get the stack address
 002675  2  1B                   TCS                     ; and set the stack to it
 002676  2  5C 00 80 00          JML     $008000
 00267A  2               
@@ -4207,7 +4207,7 @@ Current file: dbasic816.asm
 00267C  1  18                   CLC                     ;
 00267D  1  FB                   XCE                     ; SET NATIVE MODE
 00267E  1  C2 30                ACCUMULATORINDEX16
-002680  1  A9 FF 7F             LDA     #STACK          ; get the stack address
+002680  1  A9 FF DF             LDA     #STACK          ; get the stack address
 002683  1  1B                   TCS                     ; and set the stack to it
 002684  1  A9 00 00             LDA     #$0000          ;
 002687  1  48                   PHA                     ; Set Direct Register to 0
@@ -4416,7 +4416,7 @@ Current file: dbasic816.asm
 0027BF  1  C2 20                ACCUMULATOR16
 0027C1  1  29 FF 00             AND     #$00FF
 0027C4  1  18                   CLC
-0027C5  1  69 00 40             ADC     #STACK_BOTTOM
+0027C5  1  69 00 D0             ADC     #STACK_BOTTOM
 0027C8  1  85 FD                STA     <TEMPW
 0027CA  1  3B                   TSC
 0027CB  1  C5 FD                CMP     <TEMPW
@@ -5023,7 +5023,7 @@ Current file: dbasic816.asm
 002A7F  1  86 65                STX     <next_s         ; save descriptor stack pointer
 002A81  1  C2 30                ACCUMULATORINDEX16
 002A83  1  FA                   PLX                     ; pull return address low byte
-002A84  1  A9 FF 7F             LDA     #STACK          ; get the stack address
+002A84  1  A9 FF DF             LDA     #STACK          ; get the stack address
 002A87  1  1B                   TCS                     ; and set the stack to it
 002A88  1  DA                   PHX
 002A89  1  E2 30                ACCUMULATORINDEX8

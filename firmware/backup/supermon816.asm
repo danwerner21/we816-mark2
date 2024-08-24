@@ -238,8 +238,6 @@
 ;	keystroke" routine works differently than described.
 ;	------------------------------------------------------------------------
 getcha          = $FF74
-CURSOR          = nothere
-UNCURSOR        = nothere
 ;------------------------------------------------------------------------
 ;putcha   print character on console...
 ;

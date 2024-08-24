@@ -47,6 +47,6 @@ target_link_libraries(vga PUBLIC
 pico_add_extra_outputs(vga)
 
 add_custom_command(TARGET vga POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:vga> ../../bin/vga.uf2
+    COMMAND ${CMAKE_COMMAND} -E copy vga.uf2 ../../bin/vga.uf2
     COMMENT "Created ../../bin/vga.uf2"
 )

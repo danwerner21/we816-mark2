@@ -1,7 +1,7 @@
 PROGRAMBANK     = $FF           ; BANK THAT THE INTREPRETER LIVES IN
 DATABANK        = $02           ; BANK THAT THE DATA LIVES IN
 
-FNBUFFER        = $001000       ; FILE NAME BUFFER, MUST BE IN ZERO BANK!
+FNBUFFER        = $000F00       ; FILE NAME BUFFER, MUST BE IN ZERO BANK!
 
 
 
@@ -12,8 +12,8 @@ PLUS_1          = $01           ; X or Y plus 1
 PLUS_2          = $02           ; X or Y plus 2
 PLUS_3          = $03           ; X or Y plus 3
 
-STACK_BOTTOM    = $4000         ; stack bottom, no offset
-STACK           = $7FFF         ; stack top, no offset
+STACK_BOTTOM    = $D000         ; stack bottom, no offset
+STACK           = $DFFF         ; stack top, no offset
 
 ccflag          = $000200       ; BASIC CTRL-C flag, 00 = enabled, 01 = dis
 ccbyte          = ccflag+1      ; BASIC CTRL-C byte
