@@ -76,7 +76,7 @@ BASICBEGIN:
             LDX     #$1000
             LDY     #$1000
             LDA     #$1000
-            MVN     PROGRAMBANK,DATABANK; COPY TABLES $1000 THROUGH $2000 PLUS OR MINUS :) TO WORKING BANK
+            MVN     #PROGRAMBANK,#DATABANK; COPY TABLES $1000 THROUGH $2000 PLUS OR MINUS :) TO WORKING BANK
         .ENDIF
         ACCUMULATORINDEX8
         LDA     #PROGRAMBANK    ; SET DATA BANK = TO PROGRAM BANK TO ALLOW FOR INITIALIZATION FROM ROM
@@ -93,7 +93,7 @@ LAB_2D13:
         LDY     #00             ; SET DATA BANK = TO ZERO BANK
         PHY
         PLB                     ;
-        STA     >ccflag,X       ; store in page 2
+        STA     f:ccflag,X      ; store in page 2
         LDY     #PROGRAMBANK    ; SET DATA BANK = TO PROGRAM BANK TO ALLOW FOR INITIALIZATION FROM ROM
         PHY
         PLB                     ;
@@ -125,10 +125,6 @@ TabLoop:
         STX     <PLUS_0,Y       ; save byte in page zero
         DEY                     ; decrement count
         BPL     TabLoop         ; loop if not all done
-
-; DO TITLE SCREEN
-        JSR     TitleScreen
-
 
 ; set-up start values
         LDA     #DATABANK       ; SET DATA BANK = TO DATA BANK, ALL PROGRAM DATA IN THIS AREA
@@ -167,6 +163,9 @@ TabLoop:
         STA     (<Smeml),Y      ; clear first byte
         INC     <Smeml          ; increment start of mem low byte
 LAB_2E05:
+; DO TITLE SCREEN
+        JSR     TitleScreen
+
         JSR     LAB_CRLF        ; print CR/LF
         JSR     LAB_1463        ; do "NEW" and "CLEAR"
         LDA     <Ememl          ; get end of mem low byte
@@ -559,7 +558,7 @@ LAB_134B:
 
 ; call for BASIC input (main entry point)
 LAB_1357:
-        LDA     >ConsoleDevice
+        LDA     f:ConsoleDevice
         CMP     #$00
         BEQ     SimpleSerialEditor
 ;	do screen editor
@@ -2360,7 +2359,7 @@ LAB_11A6:
         LDA     #$00            ; WANT TO ACCESS ZERO BANK FOR STACK
         PHA
         PLB
-        LDA     1,X             ; get token byte from stack
+        LDA     a:1,X           ; get token byte from stack
         PLB
         CMP     #TK_FOR         ; is it FOR token
         BNE     LAB_11CE        ; exit if not FOR token
@@ -2373,9 +2372,9 @@ LAB_11A6:
         LDA     #$00            ; WANT TO ACCESS ZERO BANK FOR STACK
         PHA
         PLB
-        LDA     2,X             ; get FOR variable pointer low byte
+        LDA     a:2,X           ; get FOR variable pointer low byte
         STA     <Frnxtl         ; save var pointer for FOR/NEXT low byte
-        LDA     3,X             ; get FOR variable pointer high byte
+        LDA     a:3,X           ; get FOR variable pointer high byte
         STA     <Frnxth         ; save var pointer for FOR/NEXT high byte
         PLB
 LAB_11BB:
@@ -2383,7 +2382,7 @@ LAB_11BB:
         LDA     #$00            ; WANT TO ACCESS ZERO BANK FOR STACK
         PHA
         PLB
-        LDA     3,X
+        LDA     a:3,X
         STA     <TMPFLG
         PLB
         CMP     <TMPFLG         ; compare var pointer with stacked var pointer (high byte)
@@ -2394,7 +2393,7 @@ LAB_11BB:
         LDA     #$00            ; WANT TO ACCESS ZERO BANK FOR STACK
         PHA
         PLB
-        LDA     2,X
+        LDA     a:2,X
         STA     <TMPFLG
         PLB
         CMP     <TMPFLG         ; compare var pointer with stacked var pointer (high byte)
@@ -6939,29 +6938,29 @@ LAB_EXCH:
 ; now also the code that checks to see if an interrupt has occurred
 
 CTRLC:
-        LDA     >ccflag         ; get [CTRL-C] check flag
+        LDA     f:ccflag        ; get [CTRL-C] check flag
         BNE     LAB_FBA2        ; exit if inhibited
 
         JSR     V_INPT          ; scan input device
         BCS     LAB_FBA0        ; exit if buffer empty
 
-        STA     >ccbyte         ; save received byte
+        STA     f:ccbyte        ; save received byte
         LDA     #$20            ; "life" timer for bytes
-        STA     >ccnull         ; set countdown
-        LDA     >ccbyte
+        STA     f:ccnull        ; set countdown
+        LDA     f:ccbyte
         JMP     LAB_1636        ; return to BASIC
 
 LAB_FBA0:
-        LDA     >ccnull         ; get countdown byte
+        LDA     f:ccnull        ; get countdown byte
         BEQ     LAB_FBA2        ; exit if finished
         DEC     A
-        STA     >ccnull         ; else decrement countdown
+        STA     f:ccnull        ; else decrement countdown
 LAB_FBA2:
         LDX     #<NmiBase       ; set pointer to NMI values
         JSR     LAB_CKIN        ; go check interrupt
         LDX     #<IrqBase       ; set pointer to IRQ values
         JSR     LAB_CKIN        ; go check interrupt
-        LDA     >ccbyte
+        LDA     f:ccbyte
 LAB_CRTS:
         RTS
 
@@ -7017,15 +7016,15 @@ INGET:
         JSR     V_INPT          ; call scan input device
         BCC     LAB_FB95        ; if byte go reset timer
 
-        LDA     >ccnull         ; get countdown
+        LDA     f:ccnull        ; get countdown
         BEQ     LAB_FB96        ; exit if empty
 
-        LDA     >ccbyte         ; get last received byte
+        LDA     f:ccbyte        ; get last received byte
         SEC                     ; flag we got a byte
 LAB_FB95:
         LDA     #$00            ; clear X
-        STA     >ccnull         ; clear timer because we got a byte
-        LDA     >ccbyte         ; get last received byte
+        STA     f:ccnull        ; clear timer because we got a byte
+        LDA     f:ccbyte        ; get last received byte
 LAB_FB96:
         RTS
 

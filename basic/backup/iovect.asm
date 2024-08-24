@@ -55,6 +55,18 @@ LINEFLGS        = $03D0         ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one ext
 CMDP            = $FE0B         ; 	VDP COMMAND port
 DATAP           = $FE0A         ; 	VDP Data port
 
+VideoDisplayPage = $fe31
+VideoTextMode   = $fe35
+VideoLoresMode  = $fe36
+VideoDoubleLores = $fe37
+VideoHiresMode  = $fe38
+VideoDoubleHires = $fe39
+Video80col      = $fe3A
+VideoMixedMode  = $fe3b
+VideoQuadLores  = $fe3c
+VideoMonoLores  = $fe3d
+
+
 ;__________________________________________________________
 
 
@@ -128,10 +140,10 @@ V_OUTP1:
 TitleScreen:
         JSR     psginit
         LDA     #40
-        STA     >VIDEOWIDTH
+        STA     f:VIDEOWIDTH
         LDA     #2
         STA     <VIDEOMODE
-        LDA     >ConsoleDevice
+        LDA     f:ConsoleDevice
         CMP     #$00
         BNE     TitleScreen_1
         LDA     #<LAB_SMSG1     ; point to sign-on message (low addr)
@@ -243,10 +255,10 @@ pexit:
 
         LDX     #81
         LDA     #$00
-        STA     >LIbuffs,X
+        STA     f:LIbuffs,X
 TERMLOOP:
         DEX
-        LDA     >LIbuffs,X
+        LDA     f:LIbuffs,X
         CMP     #32
         BEQ     TERMLOOP_B
         CMP     #00
@@ -254,7 +266,7 @@ TERMLOOP:
         BRA     TERMLOOP_A
 TERMLOOP_B:
         LDA     #00
-        STA     >LIbuffs,X
+        STA     f:LIbuffs,X
 TERMLOOP_C:
         CPX     #00
         BNE     TERMLOOP
@@ -277,7 +289,7 @@ LdKbBuffer:
         LDX     #81
 clloop:
         LDA     #00
-        STA     >LIbuffs-1,X
+        STA     f:LIbuffs-1,X
         DEX
         BNE     clloop
 
@@ -317,9 +329,8 @@ LdKbBuffer_1b:
         JSL     LSetXYVEC
         TAY
 LdKbBuffer_2:
-        JSR     DELAY9918
         LDA     DATAP
-        STA     >LIbuffs-1,X
+        STA     f:LIbuffs-1,X
         INX
         DEY
         CPY     #00
@@ -352,4 +363,4 @@ LAB_MONITOR:
         ACCUMULATORINDEX16
         LDA     #STACK          ; get the stack address
         TCS                     ; and set the stack to it
-        JML     $008000
+        JML     $00E000

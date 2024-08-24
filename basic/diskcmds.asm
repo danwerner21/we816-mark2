@@ -1,3 +1,4 @@
+.P816
 ;___V_SAVE_________________________________________________
 ;
 ; UTILIZE BIOS TO SAVE BASIC RAM
@@ -18,12 +19,12 @@ V_SAVE_ERR:
 V_SAVE_GO:
         JSL     LIECINIT        ; INIT IEC BUS
         LDA     #$C0
-        STA     >IECMSGM
+        STA     f:IECMSGM
         LDY     #$00
 V_SAVE_1:
         LDAINDIRECTY ssptr_l
         TYX
-        STA     >FNBUFFER,X
+        STA     F:FNBUFFER,X
         CMP     #$00
         BEQ     V_SAVE_2
         CMP     #'"'
@@ -84,12 +85,12 @@ V_LOAD_ERR:
 V_LOAD_GO:
         JSL     LIECINIT        ; INIT IEC BUS
         LDA     #$C0
-        STA     <IECMSGM
+        STA     f:IECMSGM
         LDY     #$00
 V_LOAD_1:
         LDAINDIRECTY ssptr_l
         TYX
-        STA     >FNBUFFER,X
+        STA     F:FNBUFFER,X
         CMP     #$00
         BEQ     V_LOAD_2
         CMP     #'"'
@@ -139,7 +140,7 @@ V_LOAD_2:
 V_ERR:
         JSL     LIECINIT        ; INIT IEC BUS
         LDA     #$C0
-        STA     >IECMSGM
+        STA     f:IECMSGM
         LDY     #$00
         JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
 GETIECSTATUS:
@@ -169,7 +170,7 @@ GETIECSTATUS_1:
         CMP     #13
         BEQ     IECERROR
         JSL     LPRINTVEC       ; OUTCHAR
-        LDA     >IECSTW         ; get serial status byte
+        LDA     f:IECSTW        ; get serial status byte
         LSR                     ; shift time out read ..
         LSR                     ; .. into carry bit
         BCC     GETIECSTATUS_1  ; all ok, do another
@@ -200,13 +201,13 @@ IECERROR:
 V_DIR:
         JSL     LIECINIT        ; INIT IEC BUS
         LDA     #$C0
-        STA     >IECMSGM
+        STA     f:IECMSGM
         LDY     #$00
         JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
         PHB
         PHX
         LDA     #'$'
-        STA     >FNBUFFER
+        STA     f:FNBUFFER
         SETBANK 0
         LDA     #13
         JSL     LPRINTVEC
@@ -255,7 +256,7 @@ GETIECDIRECTORY_2:
         CMP     #$00
         BEQ     GETIECDIRECTORY_3; END ENTRY
 
-        LDA     >IECSTW         ; get serial status byte
+        LDA     f:IECSTW        ; get serial status byte
         LSR                     ; shift time out read ..
         LSR                     ; .. into carry bit
         BCC     GETIECDIRECTORY_2; all ok, do another
@@ -303,7 +304,7 @@ V_DISKCMD_ERR:
 V_DISKCMD_GO:
         JSL     LIECINIT        ; INIT IEC BUS
         LDA     #$C0
-        STA     >IECMSGM
+        STA     f:IECMSGM
         JSR     LAB_22B6        ; pop string off descriptor stack, or from top of string
 ; space returns with A = length, X=$71=pointer low byte,
 ; Y=$72=pointer high byte
@@ -315,7 +316,7 @@ V_DISKCMD_1:
         LDAINDIRECTY ssptr_l
         PHX
         TYX
-        STA     >FNBUFFER,X
+        STA     f:FNBUFFER,X
         PLX
         DEX
         CPX     #$00
@@ -325,7 +326,7 @@ V_DISKCMD_1:
 V_DISKCMD_2:
         TYX
         LDA     #0
-        STA     >FNBUFFER+1,X
+        STA     f:FNBUFFER+1,X
         PHB
         SETBANK 0
         LDA     #0              ; fn length
@@ -346,7 +347,7 @@ V_DISKCMD_2:
         JSL     LIECOUTC
         LDX     #$00
 V_DISKCMD_3:
-        LDA     >FNBUFFER,X
+        LDA     f:FNBUFFER,X
         CMP     #$00
         BEQ     V_DISKCMD_4
         JSL     LIECOUT         ; OUTPUT a byte To the serial bus
@@ -391,7 +392,7 @@ V_OPEN:
         PHB
         JSL     LIECINIT        ; INIT IEC BUS
         LDA     #$C0
-        STA     >IECMSGM
+        STA     f:IECMSGM
         LDY     #$00
         JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (FILE#)
         PHX
@@ -420,7 +421,7 @@ V_OPEN_1:
         LDAINDIRECTY ssptr_l
         PHX
         TYX
-        STA     >FNBUFFER,X
+        STA     f:FNBUFFER,X
         PLX
         DEX
         CPX     #$00
@@ -562,7 +563,7 @@ V_PUTN_2:
 ;__________________________________________________________
 LAB_IECST:
         PHA
-        LDA     >IECSTW         ; get IECSTW into low byte
+        LDA     f:IECSTW        ; get IECSTW into low byte
         TAY
         PLA
         LDA     #0              ; NO high byte

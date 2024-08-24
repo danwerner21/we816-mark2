@@ -213,13 +213,13 @@ LAB_CON:
 ;___utility functions____________________________________________
 psginit:
         LDA     #%10011100
-        STA     >via1ddra
+        STA     f:via1ddra
         LDA     #%00010000
-        STA     >via1rega
+        STA     f:via1rega
         LDA     #$FF
-        STA     >via1ddrb
+        STA     f:via1ddrb
         LDA     #$00
-        STA     >via1regb
+        STA     f:via1regb
         RTS
         JSR     clrpsg
 
@@ -229,62 +229,62 @@ psginit:
         RTS
 
 psgrd:
-        STA     >via1regb       ; select register
+        STA     f:via1regb      ; select register
         LDA     #%00011100      ; latch address
-        STA     >via1rega
+        STA     f:via1rega
 
-        STA     >via1rega
-        STA     >via1rega
+        STA     f:via1rega
+        STA     f:via1rega
 
         LDA     #%00010000      ; inact
-        STA     >via1rega
+        STA     f:via1rega
 
-        STA     >via1rega
+        STA     f:via1rega
 
         LDA     #$00
-        STA     >via1ddrb
+        STA     f:via1ddrb
         LDA     #%00011000      ; latch data
-        STA     >via1rega
+        STA     f:via1rega
 
-        STA     >via1rega
-        STA     >via1rega
+        STA     f:via1rega
+        STA     f:via1rega
 
-        LDA     >via1regb       ; get data
+        LDA     f:via1regb      ; get data
         TAY
         LDA     #$FF
-        STA     >via1ddrb
+        STA     f:via1ddrb
         LDA     #%00010000      ; inact
-        STA     >via1rega
+        STA     f:via1rega
         RTS
 
 
 psgwr:
-        STA     >via1regb       ; select register
+        STA     f:via1regb      ; select register
         LDA     #%00011100      ; latch address
-        STA     >via1rega
+        STA     f:via1rega
 
-        STA     >via1rega
-        STA     >via1rega
+        STA     f:via1rega
+        STA     f:via1rega
 
         LDA     #%00010000      ; inact
-        STA     >via1rega
+        STA     f:via1rega
 
-        STA     >via1rega
-        STA     >via1rega
+        STA     f:via1rega
+        STA     f:via1rega
         TYA
-        STA     >via1regb       ; store data
+        STA     f:via1regb      ; store data
 
-        STA     >via1regb       ; store data
-        STA     >via1regb       ; store data
+        STA     f:via1regb      ; store data
+        STA     f:via1regb      ; store data
 
         LDA     #%00010100      ; latch data
-        STA     >via1rega
+        STA     f:via1rega
 
-        STA     >via1rega
-        STA     >via1rega
+        STA     f:via1rega
+        STA     f:via1rega
 
         LDA     #%00010000      ; inact
-        STA     >via1rega
+        STA     f:via1rega
         RTS
 
 ;

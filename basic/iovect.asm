@@ -29,14 +29,15 @@ LIECOUTC        = $00FD5C       ; open a channel for output
 LIECINPC        = $00FD60       ; open a channel for input
 LIECOPNLF       = $00FD64       ; open a logical file
 LIECCLSLF       = $00FD68       ; close a specified logical file
-LClearScrVec    = $00FD6C       ; clear the 9918 Screen
-LLOADFONTVec    = $00FD70       ; load the 9918 font
+LClearScrVec    = $00FD6C       ; clear the  Screen
+
 
 
 CSRX            = $0330         ; CURRENT X POSITION
 CSRY            = $0331         ; CURRENT Y POSITION
 ConsoleDevice   = $0341         ; Current Console Device
 VIDEOWIDTH      = $0343
+TEMP            = $0344
 SpriteAttrs     = $0344
 SpritePatterns  = $0345
 IECSTW          = $000317
@@ -52,8 +53,19 @@ IECSTRTL        = $00031D       ; IEC Start Address Pointer
 IECSTRTH        = IECSTRTL+1
 LINEFLGS        = $03D0         ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one extra for scrolling)
 
-CMDP            = $FE0B         ; 	VDP COMMAND port
-DATAP           = $FE0A         ; 	VDP Data port
+
+
+VideoDisplayPage        = $fe31
+VideoTextMode           = $fe35
+VideoLoresMode          = $fe36
+VideoDoubleLores        = $fe37
+VideoHiresMode          = $fe38
+VideoDoubleHires        = $fe39
+Video80col              = $fe3A
+VideoMixedMode          = $fe3b
+VideoQuadLores          = $fe3c
+VideoMonoLores          = $fe3d
+
 
 ;__________________________________________________________
 
@@ -126,12 +138,13 @@ V_OUTP1:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 TitleScreen:
+        JSL     LClearScrVec
         JSR     psginit
         LDA     #40
-        STA     >VIDEOWIDTH
+        STA     f:VIDEOWIDTH
         LDA     #2
         STA     <VIDEOMODE
-        LDA     >ConsoleDevice
+        LDA     f:ConsoleDevice
         CMP     #$00
         BNE     TitleScreen_1
         LDA     #<LAB_SMSG1     ; point to sign-on message (low addr)
@@ -243,10 +256,10 @@ pexit:
 
         LDX     #81
         LDA     #$00
-        STA     >LIbuffs,X
+        STA     f:LIbuffs,X
 TERMLOOP:
         DEX
-        LDA     >LIbuffs,X
+        LDA     f:LIbuffs,X
         CMP     #32
         BEQ     TERMLOOP_B
         CMP     #00
@@ -254,7 +267,7 @@ TERMLOOP:
         BRA     TERMLOOP_A
 TERMLOOP_B:
         LDA     #00
-        STA     >LIbuffs,X
+        STA     f:LIbuffs,X
 TERMLOOP_C:
         CPX     #00
         BNE     TERMLOOP
@@ -269,17 +282,13 @@ TERMLOOP_A:
 
 
 LdKbBuffer:
-        LDA     CSRX
-        PHA
-        LDA     CSRY
-        PHA
 ; clear input buffer
         LDX     #81
-clloop:
+:
         LDA     #00
-        STA     >LIbuffs-1,X
+        STA     f:LIbuffs-1,X
         DEX
-        BNE     clloop
+        BNE     :-
 
 ; are we on the first line?  If so, we know it is not a continue
         LDY     CSRY
@@ -305,37 +314,54 @@ LdKbBuffer_1:
         LDA     LINEFLGS+1,X
         CMP     #$00
         BEQ     LdKbBuffer_1a
-        PLA
         INC     A
-        PHA
         LDA     #81             ; get 80 chars
         BRA     LdKbBuffer_1b
 LdKbBuffer_1a:
         LDA     #41             ; get 40 chars
 LdKbBuffer_1b:
-        LDX     #0
-        JSL     LSetXYVEC
+        INDEX16
+        LDY     #$0000
         TAY
 LdKbBuffer_2:
-        JSR     DELAY9918
-        LDA     DATAP
-        STA     >LIbuffs-1,X
+        JSR     GetVideoAddressOffset
+        LDA     $1000,X
+        STA     f:LIbuffs-1,X
         INX
         DEY
-        CPY     #00
+        CPY     #0000
         BNE     LdKbBuffer_2
-        PLY
-        STY     CSRY
-        PLA
-        STA     CSRX
-        CPY     #24
-        BNE     LdKbBuffer_3
-        DEY
-        STY     CSRY
-        LDA     #40
-        JSL     LSrlUpVEC
-LdKbBuffer_3:
         RTS
+
+GetVideoAddressOffset:
+        LDA     CSRY
+        ACCUMULATORINDEX16
+        AND     #$00FF
+        STA     TEMP
+        CLC
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        PHA
+        LDA     TEMP
+        CLC
+        ASL     A
+        ASL     A
+        ASL     A
+        STA     TEMP
+        PLA
+        CLC
+        ADC     TEMP
+        STA     TEMP
+        LDA     CSRX
+        AND     #$00FF
+        CLC
+        ADC     TEMP
+        TAX
+        ACCUMULATOR8
+        rts
 
 ;___LAB_MONITOR_____________________________________________
 ;
@@ -352,4 +378,4 @@ LAB_MONITOR:
         ACCUMULATORINDEX16
         LDA     #STACK          ; get the stack address
         TCS                     ; and set the stack to it
-        JML     $008000
+        JML     $00E000
