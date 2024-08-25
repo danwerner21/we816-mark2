@@ -231,9 +231,9 @@ CONSOLE_INIT:
 
         JSR     SERIAL_CONSOLE_INIT
         JSR     SETUPVIDEO
-        JSR     ClearScreen
         LDA     #$0F
         JSR     SetColor
+        JSR     ClearScreen
         LDA     #$00
         STA     ConsoleDevice
         JSR     INITKEYBOARD
@@ -257,7 +257,7 @@ OUTCH:
         PHP
         ACCUMULATORINDEX8
         TAX
-        LDA     ConsoleDevice
+        LDA     F:ConsoleDevice
         CMP     #$01
         BNE     OUTCH2
         TXA
@@ -288,7 +288,7 @@ INCHW:
         PHP
         ACCUMULATORINDEX8
 
-;        LDA     ConsoleDevice
+;        LDA     F:ConsoleDevice
 ;        CMP     #$01
 ;        BNE     INCHW2
 ;        JSR     GetKey
@@ -317,7 +317,7 @@ INCH:
         PHP
         ACCUMULATORINDEX8
 
-;      LDA     ConsoleDevice
+;      LDA     F:ConsoleDevice
 ;      CMP     #$01
 ;      BNE     INCH2
 

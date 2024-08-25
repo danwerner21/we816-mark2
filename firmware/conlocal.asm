@@ -63,18 +63,21 @@ SETUPVIDEO:
 
 ;	Setup Width Parm
         LDA     #40
-        STA     VIDEOWIDTH
+        STA     F:VIDEOWIDTH
 
         LDA     #1
-        STA     VDP_PAGE
+        STA     F:VDP_PAGE
 
         LDA     #1
-        STA     VDP_TEXT_MODE
+        STA     F:VDP_TEXT_MODE
 
         LDA     #2
-        STA     VDP_80COL_MODE
+        STA     F:VDP_80COL_MODE
 
-        jsr     ClearScreen
+        LDA     #$0F
+        STA     F:DEFAULT_COLOR
+
+        JSR     ClearScreen
 
         PLP
         PLA
@@ -93,28 +96,28 @@ CURSOR:
         PHP
         ACCUMULATOR8
         INDEX16
-        jsr     GetVideoAddressOffset
-        lda     $1800,x
-        cmp     #$00
-        bne     :+
-        lda     DEFAULT_COLOR
+        JSR     GetVideoAddressOffset
+        LDA     F:$1800,x
+        CMP     #$00
+        BNE     :+
+        LDA     F:DEFAULT_COLOR
 :
         ASL     a
         ASL     a
         ASL     a
         ASL     a
-        and     #$F0
-        STA     CSRCHAR
-        lda     $1800,x
-        lsr     a
-        lsr     a
-        lsr     a
-        lsr     a
-        and     #$0f
-        ora     CSRCHAR
-        sta     $1800,x
-        lda     $1000,x
-        STA     CSRCHAR
+        AND     #$F0
+        STA     F:CSRCHAR
+        LDA     F:$1800,x
+        LSR     a
+        LSR     a
+        LSR     a
+        LSR     a
+        AND     #$0f
+        ORA     F:CSRCHAR
+        STA     F:$1800,x
+        LDA     F:$1000,x
+        STA     F:CSRCHAR
         PLP
         PLA
         PLY
@@ -139,48 +142,53 @@ UNCURSOR:
 OutVideoCh:
         PHX
         PHY
+        PHA
         PHP
         ACCUMULATORINDEX8
-
-        LDX     CSRX
-        LDY     CSRY
-
+        PHA
+        LDA     F:CSRX
+        TAX
+        LDA     F:CSRY
+        TAY
+        PLA
         CMP     #10
         BEQ     OutVideoCh_Exit
         CMP     #13
         BEQ     OutVideoCh_CR
         CMP     #8
         LBEQ    OutVideoCh_BS
-        jsr     GetVideoAddressOffset
-        STA     $1000,X
-        LDA     DEFAULT_COLOR
-        STA     $1800,X
+        JSR     GetVideoAddressOffset
+        STA     F:$1000,X
+        LDA     F:DEFAULT_COLOR
+        STA     F:$1800,X
         INDEX8
-        LDX     CSRX
+        LDA     F:CSRX
+        TAX
         INX
-        CPX     VIDEOWIDTH
+        TXA
+        CMP     F:VIDEOWIDTH
         BNE     OutVideoCh_Exit
         INY
-        TYX                     ; set next line as a continuation line
-        LDA     #$FF            ;
-        STA     LINEFLGS,X      ;
         LDX     #0
         CPY     #24
         BNE     OutVideoCh_Exit
 OutVideoCh_CR1:
-        LDA     VIDEOWIDTH
         LDX     #0
+        TXA
+        STA     F:CSRX
         LDY     #23
-        STX     CSRX
-        STY     CSRY
+        TYA
+        STA     F:CSRY
+        LDA     F:VIDEOWIDTH
         JSR     ScrollUp
-        LDA     #00             ;
-        STA     LINEFLGS+24     ;
 
 OutVideoCh_Exit:
-        STX     CSRX
-        STY     CSRY
+        TXA
+        STA     F:CSRX
+        TYA
+        STA     F:CSRY
         PLP
+        PLA
         PLY
         PLX
         RTS
@@ -189,35 +197,27 @@ OutVideoCh_CR:
         CPY     #24
         BEQ     OutVideoCh_CR1
         LDX     #0
-        STX     CSRX
-        STY     CSRY
-        PLP
-        PLY
-        PLX
-        RTS
+        BRA     OutVideoCh_Exit
 OutVideoCh_BS:
         CPX     #0
         BEQ     OutVideoCh_BS1
         DEX
-        STX     CSRX
-        STY     CSRY
         BRA     OutVideoCh_Exit
 OutVideoCh_BS1:
         CPY     #0
         BEQ     OutVideoCh_Exit
         DEY
-        LDX     VIDEOWIDTH
-        DEX
-        STX     CSRX
-        STY     CSRY
+        LDA     F:VIDEOWIDTH
+        DEC     A
+        TAX
         BRA     OutVideoCh_Exit
 
 GetVideoAddressOffset:
         PHA
-        LDA     CSRY
+        LDA     F:CSRY
         ACCUMULATORINDEX16
         AND     #$00FF
-        STA     TEMP
+        STA     F:TEMP
         CLC
         ASL     A
         ASL     A
@@ -225,24 +225,24 @@ GetVideoAddressOffset:
         ASL     A
         ASL     A
         PHA
-        LDA     TEMP
+        LDA     F:TEMP
         CLC
         ASL     A
         ASL     A
         ASL     A
-        STA     TEMP
+        STA     F:TEMP
         PLA
         CLC
-        ADC     TEMP
-        STA     TEMP
-        LDA     CSRX
+        ADC     F:TEMP
+        STA     F:TEMP
+        LDA     F:CSRX
         AND     #$00FF
         CLC
-        ADC     TEMP
+        ADC     F:TEMP
         TAX
         ACCUMULATOR8
         PLA
-        rts
+        RTS
 
 
 
@@ -254,7 +254,7 @@ GetVideoAddressOffset:
 SetColor:
         PHP
         ACCUMULATORINDEX8
-        STA     DEFAULT_COLOR
+        STA     F:DEFAULT_COLOR
         PLP
         RTS
 
@@ -264,12 +264,15 @@ SetColor:
 ; Screen Coords in X,Y
 ;________________________________________________________________________________________
 SetXY:
+        PHA
         PHP
         ACCUMULATORINDEX8
-        STY     CSRY
-        STX     CSRX
-        ACCUMULATORINDEX16
+        TYA
+        STA     F:CSRY
+        TXA
+        STA     F:CSRX
         PLP
+        PLA
         RTS
 
 ;__ScrollUp______________________________________________________________________________
@@ -295,18 +298,13 @@ ScrollUp:
         LDY     #$1800
         MVN     #$00,#$00
 
-        LDA     #$0025          ; SCROLL UP THE LINE FLAGS
-        LDX     #LINEFLGS+1
-        LDY     #LINEFLGS
-        MVN     #$00,#$00
-
         ACCUMULATORINDEX8
         LDX     #$00            ; CLEAR BOTTOM LINE
 ScrollUpLoop:
         LDA     #32
-        STA     $1398,X
-        LDA     DEFAULT_COLOR
-        STA     $1B98,X
+        STA     F:$1398,X
+        LDA     F:DEFAULT_COLOR
+        STA     F:$1B98,X
         INX
         CPX     #40
         BNE     ScrollUpLoop
@@ -324,7 +322,7 @@ ScrollUpLoop:
 
 
 ;__ClearScreen___________________________________________________________________________
-;  clear 9918 Screen
+;  clear Screen
 ;________________________________________________________________________________________
 ClearScreen:
         PHY
@@ -336,17 +334,17 @@ ClearScreen:
 
 ; Now let's clear
         LDA     #32
-        LDX     #$03C0
+        LDX     #$03C1
 ClearScreen1:
-        STA     $1000,X
         DEX
+        STA     F:$1000,X
         BNE     ClearScreen1
 
-        LDA     DEFAULT_COLOR
-        LDX     #$03C0
+        LDA     F:DEFAULT_COLOR
+        LDX     #$03C1
 ClearScreen2:
-        STA     $1800,X
         DEX
+        STA     F:$1800,X
         BNE     ClearScreen2
 
 
@@ -370,7 +368,7 @@ INITKEYBOARD:
         ACCUMULATORINDEX8
         PHA
         LDA     #$F0
-        STA     LEDS
+        STA     F:LEDS
         LDA     #00
         STA     KeyLock
         PLA
@@ -394,16 +392,16 @@ GetKey_Loop:
         JSR     ScanKeyboard
         CMP     #$FF
         BEQ     GetKey_Loop
-        STA     TEMP+1
+        STA     F:TEMP+1
         JSR     ModifierKeyCheck
-        STA     ScannedKey
+        STA     F:ScannedKey
 GetKey_loop1:
         JSR     kbdDelay
         JSR     ScanKeyboard
-        CMP     TEMP+1
+        CMP     F:TEMP+1
         BEQ     GetKey_loop1
 
-        LDA     ScannedKey
+        LDA     F:ScannedKey
         JSR     DecodeKeyboard
 
         CMP     #$FF
@@ -428,20 +426,21 @@ ScanKeyboard:
         PHX
         PHY
         LDA     #$ff            ; SET OUTPUT DIRECTION
-        STA     via2ddrb        ; write value
+        STA     F:via2ddrb      ; write value
         LDA     #$00            ; SET INPUT DIRECTION
-        STA     via2ddra        ; write value
+        STA     F:via2ddra      ; write value
 
         LDY     #$00            ; SET ROW AND LEDS
 outerScanLoop:
         CPY     #09
         BEQ     KeyNotFound
-        STY     TEMP
-        LDA     LEDS
-        ORA     TEMP
-        STA     via2regb        ; write value
+        TYA
+        STA     F:TEMP
+        LDA     F:LEDS
+        ORA     F:TEMP
+        STA     F:via2regb      ; write value
 innerScanLoop:
-        LDA     via2rega        ; read value
+        LDA     F:via2rega      ; read value
         LDX     #$00
         CMP     #$FF            ;NO KEY PRESSED
         BEQ     exitInnerScanLoop
@@ -478,14 +477,15 @@ KeyNotFound:
         PLP
         RTS
 keyFound:
-        STX     TEMP
+        TXA
+        STA     F:TEMP
         TYA
         CLC
         ASL
         ASL
         ASL
         CLC
-        ADC     TEMP
+        ADC     F:TEMP
         CMP     #48
         BEQ     KeyNotFound
         CMP     #49
@@ -508,10 +508,10 @@ ModifierKeyCheck:
         ACCUMULATORINDEX8
         PHA
 ; Check for Modifiers
-        LDA     LEDS
+        LDA     F:LEDS
         ORA     #06
-        STA     via2regb        ; write value
-        LDA     via2rega        ; read value
+        STA     F:via2regb      ; write value
+        LDA     F:via2rega      ; read value
         CMP     #$FF            ;NO KEY PRESSED
         BEQ     exit_Scan
         CMP     #$FE            ; COL 1 key Pressed
@@ -569,55 +569,55 @@ DecodeKeyboard:
         CMP     #22
         BCC     skip_Lock
         CLC
-        ADC     KeyLock
+        ADC     F:KeyLock
 skip_Lock:
         TAX
-        LDA     DecodeTable,X
+        LDA     F:DecodeTable,X
         PLX
         PLP
         RTS
 is_CapsLock:
 ; check for toggle and set LEDs
-        LDA     LEDS
+        LDA     F:LEDS
         AND     #$10
         CMP     #$00
         BEQ     Cap_off
-        LDA     LEDS
+        LDA     F:LEDS
         AND     #$C0
         ORA     #$20
-        STA     LEDS
-        STA     via2regb        ; write value
+        STA     F:LEDS
+        STA     F:via2regb      ; write value
         LDA     #72
-        STA     KeyLock
+        STA     F:KeyLock
         LDA     #$FF
         PLX
         PLP
         RTS
 Cap_off:
-        LDA     LEDS
+        LDA     F:LEDS
         AND     #$C0
         ORA     #$30
-        STA     LEDS
-        STA     via2regb        ; write value
+        STA     F:LEDS
+        STA     F:via2regb      ; write value
         LDA     #0
-        STA     KeyLock
+        STA     F:KeyLock
         LDA     #$FF
         PLX
         PLP
         RTS
 is_GraphLock:
 ; check for toggle and set LEDs
-        LDA     LEDS
+        LDA     F:LEDS
         AND     #$20
         CMP     #$00
         BEQ     Cap_off
-        LDA     LEDS
+        LDA     F:LEDS
         AND     #$C0
         ORA     #$10
-        STA     LEDS
-        STA     via2regb        ; write value
+        STA     F:LEDS
+        STA     F:via2regb      ; write value
         LDA     #192
-        STA     KeyLock
+        STA     F:KeyLock
         LDA     #$FF
         PLX
         PLP
@@ -671,9 +671,9 @@ kbdDelay:
         PHX
         LDX     #KBD_DELAY
         LDA     #$40            ; set for 1024 cycles (MHZ)
-        STA     via2t2ch        ; set VIA 2 T2C_h
+        STA     F:via2t2ch      ; set VIA 2 T2C_h
 kbdDelay_a:
-        LDA     via2ifr         ; get VIA 2 IFR
+        LDA     F:via2ifr       ; get VIA 2 IFR
         AND     #$20            ; mask T2 interrupt
         BEQ     kbdDelay_a      ; loop until T2 interrupt
         DEX

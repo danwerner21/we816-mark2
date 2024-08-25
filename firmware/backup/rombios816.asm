@@ -111,6 +111,7 @@ IECODN          = $0328         ; output device number
 ;------------------------------------------------------------------------------
 
 ; VIDEO/KEYBOARD PARAMETER AREA
+
 CSRX            = $0330         ; CURRENT X POSITION
 CSRY            = $0331         ; CURRENT Y POSITION
 LEDS            = $0332
@@ -120,15 +121,17 @@ ScrollCount     = $0335         ;
 TEMP            = $0336         ; TEMP AREA
 
 ConsoleDevice   = $0341         ; Current Console Device
-; $00 Serial, $01 On-Board 9918/KB
+                                ; $00 Serial, $01 On-Board 9918/KB
 CSRCHAR         = $0342         ; Character under the Cursor
 VIDEOWIDTH      = $0343         ; SCREEN WIDTH -- 32 or 40 (80 in the future)
-ScrollBuffer    = $0350         ; at least 80 bytes?
+DEFAULT_COLOR   = $0344         ; DEFAULT COLOR FOR PRINTING
+
+; Tables
 PTRLFT          = $03B0         ; .. to $03B9 logical file table
 PTRDNT          = $03BA         ; .. to $03C3 device number table
 PTRSAT          = $03C4         ; .. to $03CD secondary address table
 LINEFLGS        = $03D0         ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one extra for scrolling)
-DEFAULT_COLOR   = $03E9         ; DEFAULT COLOR FOR PRINTING
+
 
 TRUE            = 1
 FALSE           = 0
@@ -228,9 +231,9 @@ CONSOLE_INIT:
 
         JSR     SERIAL_CONSOLE_INIT
         JSR     SETUPVIDEO
-        JSR     ClearScreen
-        LDA     #$F0
+        LDA     #$0F
         JSR     SetColor
+        JSR     ClearScreen
         LDA     #$00
         STA     ConsoleDevice
         JSR     INITKEYBOARD
@@ -376,22 +379,22 @@ LINPWVEC:
         JSR     INCHW
         RTL
 LSetXYVEC:
-        JSR     DONOOP
+        JSR     SetXY
         RTL
 LCPYVVEC:
         JSR     DONOOP
         RTL
 LSrlUpVEC:
-        JSR     DONOOP
+        JSR     ScrollUp
         RTL
 LSetColorVEC:
-        JSR     DONOOP
+        JSR     SetColor
         RTL
 LCURSORVEC:
-        JSR     DONOOP
+        JSR     CURSOR
         RTL
 LUNCURSORVEC:
-        JSR     DONOOP
+        JSR     UNCURSOR
         RTL
 LWRITERTC:
         JSR     DONOOP
@@ -448,7 +451,7 @@ LIECCLSLF:
         JSR     LAB_F34A        ; close a specified logical file
         RTL
 LClearScrVec:
-        JSR     DONOOP          ; clear the 9918 Screen
+        JSR     ClearScreen     ; clear the 9918 Screen
         RTL
 LLOADFONTVec:
         JSR     DONOOP          ; LOAD THE FONT
@@ -464,17 +467,17 @@ INPVEC:
 INPWVEC:
         JMP     INCHW
 SetXYVEC:
-        JMP     DONOOP
+        JMP     SetXY
 CPYVVEC:
         JMP     DONOOP
 SrlUpVEC:
-        JMP     DONOOP
+        JMP     ScrollUp
 SetColorVEC:
-        JMP     DONOOP
+        JMP     SetColor
 CURSORVEC:
-        JMP     DONOOP
+        JMP     CURSOR
 UNCURSORVEC:
-        JMP     DONOOP
+        JMP     UNCURSOR
 WRITERTC:
         JMP     DONOOP
 READRTC:
@@ -512,7 +515,7 @@ IECOPNLF:
 IECCLSLF:
         JMP     LAB_F34A        ; close a specified logical file
 ClearScrVec:
-        JMP     DONOOP          ; clear the 9918 Screen
+        JMP     ClearScreen     ; clear the 9918 Screen
 LOADFONTVec:
         JMP     DONOOP          ; LOAD THE FONT
 

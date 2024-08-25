@@ -31,15 +31,15 @@ LIECOPNLF       = $00FD64       ; open a logical file
 LIECCLSLF       = $00FD68       ; close a specified logical file
 LClearScrVec    = $00FD6C       ; clear the  Screen
 
-
-
 CSRX            = $0330         ; CURRENT X POSITION
 CSRY            = $0331         ; CURRENT Y POSITION
 ConsoleDevice   = $0341         ; Current Console Device
+CSRCHAR         = $0342         ; Character under the Cursor
 VIDEOWIDTH      = $0343
-TEMP            = $0344
-SpriteAttrs     = $0344
-SpritePatterns  = $0345
+DEFAULT_COLOR   = $0344         ; DEFAULT COLOR FOR PRINTING
+TEMP            = $0345
+TEMPOFFSET      = $0347
+
 IECSTW          = $000317
 IECMSGM         = $00031F       ; message mode flag,
 ; $C0 = both control and kernal messages,
@@ -51,20 +51,17 @@ LOADBUFH        = LOADBUFL+1
 LOADBANK        = LOADBUFL+2    ; BANK buffer Pointer
 IECSTRTL        = $00031D       ; IEC Start Address Pointer
 IECSTRTH        = IECSTRTL+1
-LINEFLGS        = $03D0         ; 24 BYTES OF LINE POINTERS (3D0 - 3E9 , one extra for scrolling)
 
-
-
-VideoDisplayPage        = $fe31
-VideoTextMode           = $fe35
-VideoLoresMode          = $fe36
-VideoDoubleLores        = $fe37
-VideoHiresMode          = $fe38
-VideoDoubleHires        = $fe39
-Video80col              = $fe3A
-VideoMixedMode          = $fe3b
-VideoQuadLores          = $fe3c
-VideoMonoLores          = $fe3d
+VideoDisplayPage = $fe31
+VideoTextMode   = $fe35
+VideoLoresMode  = $fe36
+VideoDoubleLores = $fe37
+VideoHiresMode  = $fe38
+VideoDoubleHires = $fe39
+Video80col      = $fe3A
+VideoMixedMode  = $fe3b
+VideoQuadLores  = $fe3c
+VideoMonoLores  = $fe3d
 
 
 ;__________________________________________________________
@@ -84,16 +81,7 @@ VideoMonoLores          = $fe3d
 ;   NOTE THAT BIOS IS IN BANK 0, SO A LONG BRANCH IS REQUIRED
 ;__________________________________________________________
 V_INPT:
-        PHB
-        PHD
-        PHX
-        LDX     #$00
-        PHX
-        PLB
         JSL     LINPVEC         ; INCHAR
-        PLX
-        PLD
-        PLB
         RTS
 
 ;___V_OUTP_________________________________________________
@@ -108,20 +96,13 @@ V_INPT:
 ;__________________________________________________________
 
 V_OUTP: ; send byte to output device
-        PHB
-        PHD
-        PHX
-        LDX     <VIDEOMODE
-        CPX     #2
-        BNE     V_OUTP1
-        LDX     #$00
-        PHX
-        PLB
+;        PHX
+;        LDX     <VIDEOMODE
+;        CPX     #0
+;        BNE     V_OUTP1
         JSL     LPRINTVEC       ; OUTCHAR
-V_OUTP1:
-        PLX
-        PLD
-        PLB
+;V_OUTP1:
+;        PLX
         RTS
 
 
@@ -138,12 +119,13 @@ V_OUTP1:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 TitleScreen:
-        JSL     LClearScrVec
         JSR     psginit
+
         LDA     #40
         STA     f:VIDEOWIDTH
-        LDA     #2
+        LDA     #0
         STA     <VIDEOMODE
+
         LDA     f:ConsoleDevice
         CMP     #$00
         BNE     TitleScreen_1
@@ -152,16 +134,9 @@ TitleScreen:
         JSR     LAB_18C3        ; print null terminated string from memory
         RTS
 TitleScreen_1:
-        LDX     #02
-        JSR     V_SCREEN1
-        PHB
-        SETBANK 0
-        LDA     #$F4
+        LDA     #$9E
         JSL     LSetColorVEC
-        LDX     #$00
-        TXY
-        JSL     LSetXYVEC
-        PLB
+        JSL     LClearScrVec
         LDA     #<LAB_CONMSG    ; point to sign-on message (low addr)
         LDY     #>LAB_CONMSG    ; point to sign-on message (high addr)
         JSR     LAB_18C3        ; print null terminated string from memory
@@ -178,9 +153,8 @@ ScreenEditor:
         PHX
         PHY
         PHP
-        ACCUMULATORINDEX8
         PHB
-        SETBANK 0
+        ACCUMULATORINDEX8
 ; allow prepopulate of screen
 ploop:
         JSL     LCURSORVEC
@@ -195,61 +169,70 @@ ploop:
         CMP     #$1f
         BEQ     crsrlt
         CMP     #$04
-        BEQ     crsrrt
-        PHA
+        LBEQ    crsrrt
+
+        CMP     #$0A
+        BEQ     ploop
+
         JSL     LPRINTVEC
-        PLA
+
         CMP     #13
-        BEQ     pexit
+        LBEQ    pexit
         JMP     ploop
 
 crsrup:
-        LDA     CSRY
+        LDA     F:CSRY
         CMP     #00
         BEQ     ploop
-        DEC     CSRY
+        LDA     F:CSRY
+        DEC     A
+        STA     F:CSRY
         BRA     ploop
 crsrdn:
-        LDA     CSRY
+        LDA     F:CSRY
         CMP     #23
         BEQ     crsrdn_1
-        INC     CSRY
+        LDA     F:CSRY
+        INC     A
+        STA     F:CSRY
         BRA     ploop
 crsrdn_1:
-        LDA     CSRX
+        LDA     F:CSRX
         PHA
         LDA     #40
-        LDX     #0
-        LDY     #23
-        STX     CSRX
-        STY     CSRY
         JSL     LSrlUpVEC
         PLA
-        STA     CSRX
+        STA     F:CSRX
         BRA     ploop
 crsrlt:
-        LDA     CSRX
+        LDA     F:CSRX
         CMP     #00
         BEQ     crsrlt_1
-        DEC     CSRX
+        LDA     F:CSRX
+        DEC     A
+        STA     F:CSRX
         JMP     ploop
 crsrlt_1:
-        LDA     CSRY
+        LDA     F:CSRY
         CMP     #00
-        BEQ     ploop
+        LBEQ    ploop
         LDA     #39
-        STA     CSRX
-        DEC     CSRY
+        STA     F:CSRX
+        LDA     F:CSRY
+        DEC     A
+        STA     F:CSRY
         JMP     ploop
 crsrrt:
-        LDA     CSRX
+        LDA     F:CSRX
         CMP     #39
         BEQ     crsrrt_1
-        INC     CSRX
+        LDA     F:CSRX
+        INC     A
+        STA     F:CSRX
         JMP     ploop
 crsrrt_1:
         LDA     #00
-        STA     CSRX
+        STA     F:CSRX
         BRA     crsrdn
 pexit:
         JSR     LdKbBuffer
@@ -272,7 +255,6 @@ TERMLOOP_C:
         CPX     #00
         BNE     TERMLOOP
 TERMLOOP_A:
-
         PLB
         PLP
         PLY
@@ -290,17 +272,28 @@ LdKbBuffer:
         DEX
         BNE     :-
 
-; are we on the first line?  If so, we know it is not a continue
-        LDY     CSRY
-        DEY
+; Let's calculate the screen memory offset and store it
+        LDA     F:CSRY
+        DEC     A
+        TAY
+        JSR     GetVideoAddressOffset
+; are we on the first line?  If so, we know it is not continued from the previous line
         CPY     #$00
         BEQ     LdKbBuffer_1
 ; if prior line linked  set y-1
-        TYX
-        LDA     LINEFLGS,X
-        CMP     #$00
+        ACCUMULATORINDEX16
+        LDA     f:TEMPOFFSET
+        TAX
+        ACCUMULATOR8
+        LDA     F:$0FFF,X
+        INDEX8
+        CMP     #$20
         BEQ     LdKbBuffer_1
-        DEY
+        ACCUMULATOR16
+        SEC
+        SBC     #40
+        STA     f:TEMPOFFSET
+        ACCUMULATOR8
         LDA     #81             ; get 80 chars
         BRA     LdKbBuffer_1b
 ; get chars; 40 if last line char=32, 80 if not
@@ -310,34 +303,47 @@ LdKbBuffer_1:
         CPY     #23
         BEQ     LdKbBuffer_1a
 ; if current line linked carries to the next set size to 80
-        TYX
-        LDA     LINEFLGS+1,X
-        CMP     #$00
+        ACCUMULATORINDEX16
+        LDA     f:TEMPOFFSET
+        TAX
+        ACCUMULATOR8
+        LDA     F:$1027,X
+        INDEX8
+        CMP     #$20
         BEQ     LdKbBuffer_1a
-        INC     A
         LDA     #81             ; get 80 chars
         BRA     LdKbBuffer_1b
 LdKbBuffer_1a:
         LDA     #41             ; get 40 chars
 LdKbBuffer_1b:
-        INDEX16
-        LDY     #$0000
+        ACCUMULATORINDEX16
+        AND     #$00FF
         TAY
+        LDA     f:TEMPOFFSET
+        TAX
+        LDA     #$0000
+        STA     f:LOCALWORK
+        ACCUMULATOR8
+
 LdKbBuffer_2:
-        JSR     GetVideoAddressOffset
-        LDA     $1000,X
-        STA     f:LIbuffs-1,X
+        LDA     f:$1000,X
+        PHX
+        LDX     <LOCALWORK
+        STA     f:LIbuffs,X
+        INX
+        STX     <LOCALWORK
+        PLX
         INX
         DEY
         CPY     #0000
         BNE     LdKbBuffer_2
+        ACCUMULATORINDEX8
         RTS
 
 GetVideoAddressOffset:
-        LDA     CSRY
-        ACCUMULATORINDEX16
+        ACCUMULATOR16
         AND     #$00FF
-        STA     TEMP
+        STA     f:TEMP
         CLC
         ASL     A
         ASL     A
@@ -345,24 +351,21 @@ GetVideoAddressOffset:
         ASL     A
         ASL     A
         PHA
-        LDA     TEMP
+        LDA     f:TEMP
         CLC
         ASL     A
         ASL     A
         ASL     A
-        STA     TEMP
+        STA     f:TEMP
         PLA
         CLC
-        ADC     TEMP
-        STA     TEMP
-        LDA     CSRX
-        AND     #$00FF
-        CLC
-        ADC     TEMP
-        TAX
+        ADC     f:TEMP
+        STA     f:TEMPOFFSET
         ACCUMULATOR8
-        rts
+        RTS
 
+.I8
+.A8
 ;___LAB_MONITOR_____________________________________________
 ;
 ; UTILIZE BIOS TO GO TO MONITOR

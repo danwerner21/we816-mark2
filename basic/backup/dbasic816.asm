@@ -90,14 +90,7 @@ LAB_COLD:
 ; byte count-1
 LAB_2D13:
         LDA     PG2_TABS,X      ; get byte
-        LDY     #00             ; SET DATA BANK = TO ZERO BANK
-        PHY
-        PLB                     ;
         STA     f:ccflag,X      ; store in page 2
-        LDY     #PROGRAMBANK    ; SET DATA BANK = TO PROGRAM BANK TO ALLOW FOR INITIALIZATION FROM ROM
-        PHY
-        PLB                     ;
-
         DEX                     ; decrement count
         BPL     LAB_2D13        ; loop if not done
 
@@ -131,8 +124,7 @@ TabLoop:
         STA     <Bpntrp         ; SET LAB_GBYT PAGE POINTER TO DATA BANK
         PHA
         PLB
-        LDA     #2              ;
-        STA     <VIDEOMODE
+
         LDA     #$00            ; clear A
         STA     <NmiBase        ; clear NMI handler enabled flag
         STA     <IrqBase        ; clear IRQ handler enabled flag
@@ -145,7 +137,6 @@ TabLoop:
         STA     <g_step         ; save it
         LDX     #<des_sk        ; descriptor stack start
         STX     <next_s         ; set descriptor stack pointer
-        JSR     LAB_CRLF        ; print CR/LF
 
         LDA     #<Ram_top
         LDY     #>Ram_top
@@ -162,10 +153,9 @@ TabLoop:
         TYA                     ; clear A
         STA     (<Smeml),Y      ; clear first byte
         INC     <Smeml          ; increment start of mem low byte
-LAB_2E05:
+
 ; DO TITLE SCREEN
         JSR     TitleScreen
-
         JSR     LAB_CRLF        ; print CR/LF
         JSR     LAB_1463        ; do "NEW" and "CLEAR"
         LDA     <Ememl          ; get end of mem low byte
@@ -338,14 +328,14 @@ LAB_OMER:
 LAB_XERR:
         JSR     LAB_CRLF        ; print CR/LF
 
-        LDA     <VIDEOMODE
-        CMP     #2
-        BEQ     LAB_XERRA
-        PHX
-        LDX     #2
-        JSR     V_SCREEN1
-        PLX
-LAB_XERRA:
+;        LDA     <VIDEOMODE
+;        CMP     #2
+;        BEQ     LAB_XERRA
+;        PHX
+;        LDX     #2
+;        JSR     V_SCREEN1
+;        PLX
+;LAB_XERRA:
         LDA     LAB_BAER,X      ; get error message pointer low byte
         LDY     LAB_BAER+1,X    ; get error message pointer high byte
         JSR     LAB_18C3        ; print null terminated string from memory
@@ -366,12 +356,12 @@ LAB_1269:
 ; wait for Basic command
 
 LAB_1274:
-        LDA     <VIDEOMODE
-        CMP     #2
-        BEQ     LAB_1274a
-        LDX     #2
-        JSR     V_SCREEN1
-LAB_1274a:
+;        LDA     <VIDEOMODE
+;        CMP     #2
+;        BEQ     LAB_1274a
+;        LDX     #2
+;        JSR     V_SCREEN1
+;LAB_1274a:
 ; clear ON IRQ/NMI bytes
         LDA     #$00            ; clear A
         STA     <IrqBase        ; clear enabled byte
@@ -404,6 +394,7 @@ LAB_1280:
 ; handle new BASIC line
 
 LAB_1295:
+
         JSR     LAB_GFPN        ; get fixed-point number into temp integer
         JSR     LAB_13A6        ; crunch keywords into Basic tokens
         STY     <Ibptr          ; save index pointer to end of crunched line
@@ -1227,11 +1218,11 @@ LAB_1651:
 
 ; else ..
 
-        LDA     <VIDEOMODE
-        CMP     #2
-        BEQ     LAB_1651A
-        LDX     #2
-        JSR     V_SCREEN1
+;        LDA     <VIDEOMODE
+;        CMP     #2
+;        BEQ     LAB_1651A
+;        LDX     #2
+;        JSR     V_SCREEN1
 LAB_1651A:
         LDA     #<LAB_BMSG      ; point to "Break" low byte
         LDY     #>LAB_BMSG      ; point to "Break" high byte

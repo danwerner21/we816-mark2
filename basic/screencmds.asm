@@ -132,6 +132,7 @@ V_SPOKE:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_SCREEN:
+        RTS
 ;;;;; SOME OF THESE ARE OK IN DIRECT MODE -- WILL WANT THIS LATER THOUGH        JSR     LAB_CKRN        ; check not Direct, back here if ok
         JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (MODE)
 V_SCREEN1:
