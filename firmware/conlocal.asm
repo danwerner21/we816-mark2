@@ -286,6 +286,8 @@ ScrollUp:
         PHX
         PHY
         PHP
+        PHB
+        SETBANK 0
         ACCUMULATORINDEX16
 
         LDA     #$0397          ; SCROLL SCREEN MEMORY
@@ -312,6 +314,7 @@ ScrollUpLoop:
         LDY     #23
         JSR     SetXY
 
+        PLB
         PLP
         PLY
         PLX

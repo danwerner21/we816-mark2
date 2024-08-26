@@ -170,14 +170,12 @@ ploop:
         BEQ     crsrlt
         CMP     #$04
         LBEQ    crsrrt
-
         CMP     #$0A
         BEQ     ploop
-
-        JSL     LPRINTVEC
-
         CMP     #13
         LBEQ    pexit
+
+        JSL     LPRINTVEC
         JMP     ploop
 
 crsrup:
@@ -237,7 +235,7 @@ crsrrt_1:
 pexit:
         JSR     LdKbBuffer
 
-        LDX     #81
+        LDX     #80
         LDA     #$00
         STA     f:LIbuffs,X
 TERMLOOP:
@@ -255,6 +253,8 @@ TERMLOOP_C:
         CPX     #00
         BNE     TERMLOOP
 TERMLOOP_A:
+        lda     #13
+        JSL     LPRINTVEC
         PLB
         PLP
         PLY
@@ -274,7 +274,6 @@ LdKbBuffer:
 
 ; Let's calculate the screen memory offset and store it
         LDA     F:CSRY
-        DEC     A
         TAY
         JSR     GetVideoAddressOffset
 ; are we on the first line?  If so, we know it is not continued from the previous line
@@ -290,6 +289,7 @@ LdKbBuffer:
         CMP     #$20
         BEQ     LdKbBuffer_1
         ACCUMULATOR16
+        LDA     f:TEMPOFFSET
         SEC
         SBC     #40
         STA     f:TEMPOFFSET
@@ -322,9 +322,8 @@ LdKbBuffer_1b:
         LDA     f:TEMPOFFSET
         TAX
         LDA     #$0000
-        STA     f:LOCALWORK
+        STA     <LOCALWORK
         ACCUMULATOR8
-
 LdKbBuffer_2:
         LDA     f:$1000,X
         PHX
