@@ -69,3 +69,11 @@
      bra *+5
      jmp PARM1
 .endmacro
+
+.macro       SETBANK PARM1
+    PHX
+	LDX #PARM1
+	PHX
+	PLB
+    PLX
+.endmacro

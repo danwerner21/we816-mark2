@@ -197,7 +197,7 @@ OutVideoCh_CR:
         CPY     #24
         BEQ     OutVideoCh_CR1
         LDX     #0
-        bra     OutVideoCh_Exit
+        BRA     OutVideoCh_Exit
 OutVideoCh_BS:
         CPX     #0
         BEQ     OutVideoCh_BS1
@@ -286,6 +286,8 @@ ScrollUp:
         PHX
         PHY
         PHP
+        PHB
+        SETBANK 0
         ACCUMULATORINDEX16
 
         LDA     #$0397          ; SCROLL SCREEN MEMORY
@@ -312,6 +314,7 @@ ScrollUpLoop:
         LDY     #23
         JSR     SetXY
 
+        PLB
         PLP
         PLY
         PLX

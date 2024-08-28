@@ -28,8 +28,8 @@ PIN   19  = !o_rom      ; /*                                 */
 
 /* ****  MEMORY MAP ******
 
-000000..00DFFF	LOW RAM < 32K
-00E000..00FFFF  LOW ROM
+000000..00BFFF	LOW RAM < 32K
+00C000..00FFFF  LOW ROM
 010000..07FFFF	HIGH RAM > 64K
 080000..FEFFFF	EXTERNAL ECB BUS RAM
 FF0000..FFFFFF OPTION ROM
@@ -42,7 +42,7 @@ z0	=	!a19 & !a18 & !a17 & !a16			;
 
 hi_ram	=	z1 & !a19 & (a18 # a17 # a16)		;	/* 010000..07FFFF */
 
-rom_area	=  a15 &  a14 & a13	;
+rom_area	=  a15 &  a14 	;
 
 io_area	=  a15 & a14 & a13 & a12 & a11 & a10 & a9 & !a8		;
 

@@ -63,7 +63,7 @@ via2ier         = $FE2E         ; Register
 via2ora         = $FE2F         ; Register
 
 
-STACK           = $DFFF         ;   POINTER TO TOP OF STACK
+STACK           = $BFFF         ;   POINTER TO TOP OF STACK
 
 ;
 KEYBUFF         = $0200         ; 256 BYTE KEYBOARD BUFFER
@@ -142,7 +142,7 @@ KBD_DELAY       = 64            ; keyboard delay in MS.   Set higher if keys bou
 
 ; CHOOSE ONE CONSOLE IO DEVICE
 
-        .ORG    $E000
+        .ORG    $C000
 
 ;__COLD_START___________________________________________________
 ;

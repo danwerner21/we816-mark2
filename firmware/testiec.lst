@@ -93,6 +93,14 @@ Current file: testiec.asm
 000000r 2                    jmp PARM1
 000000r 2               .endmacro
 000000r 2               
+000000r 2               .macro       SETBANK PARM1
+000000r 2                   PHX
+000000r 2               	LDX #PARM1
+000000r 2               	PHX
+000000r 2               	PLB
+000000r 2                   PLX
+000000r 2               .endmacro
+000000r 2               
 000000r 1               
 000000r 1               ;
 000000r 1               ; Hardware port addresses. SBC65816 uses the $FExx block for ECB hardware.

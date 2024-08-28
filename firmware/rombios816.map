@@ -11,7 +11,7 @@ Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-ROM                   00E000  00FCF0  001CF1  00001
+ROM                   00C000  00DCF0  001CF1  00001
 NJUMP                 00FD00  00FD73  000074  00001
 EJUMP                 00FF71  00FFC7  000057  00001
 VECTORS               00FFE4  00FFFF  00001C  00001

@@ -32,7 +32,7 @@ SERIAL_CONSOLE_INIT:
 ;        CMP     #166            ; is valid?
 ;        BEQ     UART_INIT1
         LDA     #$80            ;
-        STA     F:UART3           ; SET DLAB FLAG
+        STA     F:UART3         ; SET DLAB FLAG
         LDA     #12             ; SET TO 12 = 9600 BAUD
 ;        BRA     UART_INIT2
 ;UART_INIT1:
@@ -41,12 +41,12 @@ SERIAL_CONSOLE_INIT:
 ;        LDX     #41             ;
 ;        JSR     RTC_READ        ; get baud rate
 UART_INIT2:
-        STA     F:UART0           ; save baud rate
+        STA     F:UART0         ; save baud rate
         LDA     #00             ;
-        STA     F:UART1           ;
+        STA     F:UART1         ;
         LDA     #03             ;
-        STA     F:UART3           ; SET 8 BIT DATA, 1 STOPBIT
-        STA     F:UART4           ;
+        STA     F:UART3         ; SET 8 BIT DATA, 1 STOPBIT
+        STA     F:UART4         ;
         PLP
         RTS
 
@@ -60,12 +60,12 @@ SERIAL_OUTCH:
         ACCUMULATORINDEX8
         PHA                     ; STORE ACC
 TX_BUSYLP:
-        LDA     F:UART5           ; READ LINE STATUS REGISTER
+        LDA     F:UART5         ; READ LINE STATUS REGISTER
         AND     #$20            ; TEST IF UART IS READY TO SEND (BIT 5)
         CMP     #$00
         BEQ     TX_BUSYLP       ; IF NOT REPEAT
         PLA                     ; RESTORE ACC
-        STA     F:UART0           ; THEN WRITE THE CHAR TO UART
+        STA     F:UART0         ; THEN WRITE THE CHAR TO UART
 
         PLP                     ; RESTORE CPU CONTEXT
         RTS                     ; DONE
@@ -80,11 +80,11 @@ SERIAL_INCHW:
         PHP
         ACCUMULATORINDEX8
 SERIAL_INCHW1:
-        LDA     F:UART5           ; READ LINE STATUS REGISTER
+        LDA     F:UART5         ; READ LINE STATUS REGISTER
         AND     #$01            ; TEST IF DATA IN RECEIVE BUFFER
         CMP     #$00
         BEQ     SERIAL_INCHW1   ; LOOP UNTIL DATA IS READY
-        LDA     F:UART0           ; THEN READ THE CHAR FROM THE UART
+        LDA     F:UART0         ; THEN READ THE CHAR FROM THE UART
 
         PLP                     ; RESTORE CPU CONTEXT
         RTS
@@ -98,10 +98,10 @@ SERIAL_INCHW1:
 SERIAL_INCH:
         PHP
         ACCUMULATORINDEX8
-        LDA     F:UART5           ; READ LINE STATUS REGISTER
+        LDA     F:UART5         ; READ LINE STATUS REGISTER
         AND     #$01            ; TEST IF DATA IN RECEIVE BUFFER
         BEQ     SERIAL_INCH1    ; NO CHAR FOUND
-        LDA     F:UART0           ; THEN READ THE CHAR FROM THE UART
+        LDA     F:UART0         ; THEN READ THE CHAR FROM THE UART
         PLP                     ; RESTORE CPU CONTEXT
         CLC
         RTS

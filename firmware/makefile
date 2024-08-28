@@ -24,8 +24,8 @@ rombios816.out: rombios816.asm conserial.asm iec.asm conlocal.asm macros.asm
 
 
 rombios816.hex: rombios816.out
-	srec_cat  rombios816.out -binary -offset 0x0200 -exclude 0x0000 0xE000 -o  rombios816.s19  -data-only -address-length=3
-	srec_cat  rombios816.out -binary -offset 0x0200 -exclude 0x0000 0xE000 -o  rombios816.hex  -intel -address-length=2
+	srec_cat  rombios816.out -binary -offset 0x0200 -exclude 0x0000 0xC000 -o  rombios816.s19  -data-only -address-length=3
+	srec_cat  rombios816.out -binary -offset 0x0200 -exclude 0x0000 0xC000 -o  rombios816.hex  -intel -address-length=2
 	sed -i -e '$$aS8' rombios816.s19
 	cp rombios816.hex ../bin/
 
