@@ -17,20 +17,15 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
 
 
 ## To Do:
-* Fix Reset Circuit
-
 * BIOS RTC Code
 * Basic Access to RTC
-* Add Support to new video
 * Document BIOS Calls
 
 * Video speed is not fast enough to deal with a clock speed > (around) 2mhz (1.8 work perfectly)  Need to add wait state hardware for video
-* Work on Video Firmware for Pi Pico
-** Sprites
+* BASIC COMMANDS FOR Video Firmware for Pi Pico
+** 80 COLUMN MODE
 ** Hires Graphics (with pallette)
 ** Lores Graphics (more colors also with pallette)
-** Reassign control bits to make them more sane
-
 
 ---
 

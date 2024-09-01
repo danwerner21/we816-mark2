@@ -121,8 +121,6 @@ V_OUTP: ; send byte to output device
 TitleScreen:
         JSR     psginit
 
-        LDA     #40
-        STA     f:VIDEOWIDTH
         LDA     #0
         STA     <VIDEOMODE
 
@@ -197,7 +195,7 @@ crsrdn:
 crsrdn_1:
         LDA     F:CSRX
         PHA
-        LDA     #40
+        LDA     F:VIDEOWIDTH
         JSL     LSrlUpVEC
         PLA
         STA     F:CSRX
@@ -214,15 +212,17 @@ crsrlt_1:
         LDA     F:CSRY
         CMP     #00
         LBEQ    ploop
-        LDA     #39
+        LDA     F:VIDEOWIDTH
+        dec     A
         STA     F:CSRX
         LDA     F:CSRY
         DEC     A
         STA     F:CSRY
         JMP     ploop
 crsrrt:
-        LDA     F:CSRX
-        CMP     #39
+        LDA     F:VIDEOWIDTH
+        dec     A
+        CMP     F:CSRX
         BEQ     crsrrt_1
         LDA     F:CSRX
         INC     A
@@ -234,7 +234,6 @@ crsrrt_1:
         BRA     crsrdn
 pexit:
         JSR     LdKbBuffer
-
         LDX     #80
         LDA     #$00
         STA     f:LIbuffs,X
@@ -273,10 +272,16 @@ LdKbBuffer:
         BNE     :-
 
 ; Let's calculate the screen memory offset and store it
+        JSR     GetVideoAddressOffset
+
+        LDA     F:VIDEOWIDTH
+        CMP     #40
+        BEQ     :+
+        jmp    LdKbBuffer_1c
+:
+; are we on the first line?  If so, we know it is not continued from the previous line
         LDA     F:CSRY
         TAY
-        JSR     GetVideoAddressOffset
-; are we on the first line?  If so, we know it is not continued from the previous line
         CPY     #$00
         BEQ     LdKbBuffer_1
 ; if prior line linked  set y-1
@@ -311,6 +316,7 @@ LdKbBuffer_1:
         INDEX8
         CMP     #$20
         BEQ     LdKbBuffer_1a
+LdKbBuffer_1c:
         LDA     #81             ; get 80 chars
         BRA     LdKbBuffer_1b
 LdKbBuffer_1a:
@@ -339,10 +345,13 @@ LdKbBuffer_2:
         ACCUMULATORINDEX8
         RTS
 
+.I8
+.A8
 GetVideoAddressOffset:
-        ACCUMULATOR16
+        LDA     F:CSRY
+        ACCUMULATORINDEX16
         AND     #$00FF
-        STA     f:TEMP
+        STA     F:TEMP
         CLC
         ASL     A
         ASL     A
@@ -350,18 +359,30 @@ GetVideoAddressOffset:
         ASL     A
         ASL     A
         PHA
-        LDA     f:TEMP
+        LDA     F:TEMP
         CLC
         ASL     A
         ASL     A
         ASL     A
-        STA     f:TEMP
+        STA     F:TEMP
         PLA
         CLC
-        ADC     f:TEMP
-        STA     f:TEMPOFFSET
+        ADC     F:TEMP
+        STA     F:TEMPOFFSET
+; if 80 columns double it.
         ACCUMULATOR8
+        LDA     F:VIDEOWIDTH
+        CMP     #40
+        BEQ     :+
+        ACCUMULATOR16
+        LDA     F:TEMPOFFSET
+        ASL     A
+        STA     F:TEMPOFFSET
+:
+        ACCUMULATORINDEX8
         RTS
+
+
 
 .I8
 .A8
