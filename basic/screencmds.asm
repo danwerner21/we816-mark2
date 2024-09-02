@@ -64,42 +64,6 @@ V_COLOR:
         PLB
         RTS
 
-;___V_SPEEK()______________________________________________
-;
-; GET VALUE FROM SCREEN MEMORY
-;
-;  TAKES ONE PARAMETER (ADDRESS), RETURNS VALUE
-;
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPEEK:
-        JSR     LAB_F2FX        ; save integer part of FAC1 in temporary integer
-
-        PHB
-        SETBANK 0
-        LDA     (Itempl)
-        PLB
-        TAY                     ; copy byte to Y
-        JMP     LAB_1FD0        ; convert Y to byte in FAC1 and return
-
-
-;___V_SPOKE_________________________________________________
-;
-; PUT VALUE IN SCREEN MEMORY
-;
-;  TAKES TWO PARAMETERS ADDRESS,VALUE
-;
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPOKE:
-        JSR     LAB_GADB        ; get two parameters for POKE or WAIT
-        PHB
-        SETBANK 0
-        TXA
-        STA     (Itempl)
-        PLB
-        RTS
-
 ;___V_SCREEN_________________________________________________
 ;
 ;  SET SCREEN MODE
@@ -594,11 +558,11 @@ V_PLOT_HIRES_MONO:
         INDEX8
         RTS
 HIRES_BIT_LOOKUP_S:
-        .BYTE %10000000,%01000000,%00100000,%00010000,%00001000,%00000100,%00000010,%00000001
+        .BYTE   %10000000,%01000000,%00100000,%00010000,%00001000,%00000100,%00000010,%00000001
 HIRES_BIT_LOOKUP_R:
-        .BYTE %01111111,%10111111,%11011111,%11101111,%11110111,%11111011,%11111101,%11111110
-HIRES_BIT_LOOKUP_SET= (PROGRAMBANK*$10000)+HIRES_BIT_LOOKUP_S
-HIRES_BIT_LOOKUP_RESET= (PROGRAMBANK*$10000)+HIRES_BIT_LOOKUP_R
+        .BYTE   %01111111,%10111111,%11011111,%11101111,%11110111,%11111011,%11111101,%11111110
+HIRES_BIT_LOOKUP_SET = (PROGRAMBANK*$10000)+HIRES_BIT_LOOKUP_S
+HIRES_BIT_LOOKUP_RESET =    (PROGRAMBANK*$10000)+HIRES_BIT_LOOKUP_R
 
 ;___V_PATTERN________________________________________________
 ;
@@ -606,9 +570,22 @@ HIRES_BIT_LOOKUP_RESET= (PROGRAMBANK*$10000)+HIRES_BIT_LOOKUP_R
 ;
 ;  TAKES 10 PARAMETERS
 ;       PATTERN NUM (0-255)
-;       COLOR NUM (0-255)
 ;       PATTERN DATA (8 BYTES)
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_PATTERN:
+        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X
+        TXA
+        STA     f:VideoCharGenOffset
+        LDY     #8
+:
+        PHY
+        JSR     LAB_1C01        ; GET THE NEXT PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE NEXT PARAMETER, RETURN IN X
+        PLY
+        TXA
+        STA     f:VideoCharGenData
+        DEY
+        CPY     #$00
+        BNE     :-
         RTS

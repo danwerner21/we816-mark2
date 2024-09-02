@@ -53,6 +53,8 @@ IECSTRTL        = $00031D       ; IEC Start Address Pointer
 IECSTRTH        = IECSTRTL+1
 
 VideoDisplayPage = $fe31
+VideoCharGenOffset = $FE32
+VideoCharGenData = $fe33
 VideoTextMode   = $fe35
 VideoLoresMode  = $fe36
 VideoDoubleLores = $fe37

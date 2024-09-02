@@ -53,8 +53,7 @@ TK_DISKCMD      = TK_GETN+1     ; DISKCMD token
 TK_SCNCLR       = TK_DISKCMD+1  ;SCNCLR token
 TK_LOCATE       = TK_SCNCLR+1   ;LOCATE token
 TK_COLOR        = TK_LOCATE+1   ;COLOR token
-TK_SPOKE        = TK_COLOR+1    ;SPOKE token
-TK_SCREEN       = TK_SPOKE+1    ;SCREEN token
+TK_SCREEN       = TK_COLOR+1    ;SCREEN token
 TK_PLOT         = TK_SCREEN+1   ;PLOT token
 TK_PATTERN      = TK_PLOT+1     ;PATTERN token
 TK_SYS          = TK_PATTERN+1  ;SYS token
@@ -111,8 +110,7 @@ TK_SIN          = TK_COS+1      ; SIN token
 TK_TAN          = TK_SIN+1      ; TAN token
 TK_ATN          = TK_TAN+1      ; ATN token
 TK_PEEK         = TK_ATN+1      ; PEEK token
-TK_SPEEK        = TK_PEEK+1     ;SPEEK token
-TK_SADD         = TK_SPEEK+1    ; SADD token
+TK_SADD         = TK_PEEK+1     ; SADD token
 TK_LEN          = TK_SADD+1     ; LEN token
 TK_STRS         = TK_LEN+1      ; STR$ token
 TK_VAL          = TK_STRS+1     ; VAL token
@@ -188,7 +186,6 @@ LAB_CTBL:
         .WORD   V_SCNCLR-1      ; SCNCLR		SCNCLR COMMAND
         .WORD   V_LOCATE-1      ; LOCATE		LOCATE COMMAND
         .WORD   V_COLOR-1       ; COLOR			COLOR COMMAND
-        .WORD   V_SPOKE-1       ; SPOKE			SPOKE COMMAND
         .WORD   V_SCREEN-1      ; SCREEN		SCREEN COMMAND
         .WORD   V_PLOT-1        ; PLOT			PLOT COMMAND
         .WORD   V_PATTERN-1     ; PATTERN		PATTERN COMMAND
@@ -217,7 +214,6 @@ LAB_FTPM        = LAB_FTPL+$01
         .WORD   LAB_PPFN-1      ; TAN(n)		"
         .WORD   LAB_PPFN-1      ; ATN(n)		"
         .WORD   LAB_PPFN-1      ; PEEK(n)		"
-        .WORD   LAB_PPFN-1      ; SPEEK(N)		"
         .WORD   $0000           ; SADD()	none
         .WORD   LAB_PPFS-1      ; LEN($)	process string expression in ()
         .WORD   LAB_PPFN-1      ; STR$(n)	process numeric expression in ()
@@ -258,7 +254,6 @@ LAB_FTBM        = LAB_FTBL+$01
         .WORD   LAB_TAN-1       ; TAN()
         .WORD   LAB_ATN-1       ; ATN()
         .WORD   LAB_PEEK-1      ; PEEK()
-        .WORD   V_SPEEK-1       ; SPEEK()
         .WORD   LAB_SADD-1      ; SADD()		new function
         .WORD   LAB_LENS-1      ; LEN()
         .WORD   LAB_STRS-1      ; STR$()
@@ -622,10 +617,6 @@ LBB_SOUND:
         .BYTE   "OUND",TK_SOUND ; SOUND
 LBB_SPC:
         .BYTE   "PC(",TK_SPC    ; SPC(
-LBB_SPEEK:
-        .BYTE   "PEEK(",TK_SPEEK; SPEEK
-LBB_SPOKE:
-        .BYTE   "POKE",TK_SPOKE ; SPOKE
 LBB_SQR:
         .BYTE   "QR(",TK_SQR    ; SQR(
 LBB_STEP:
@@ -792,8 +783,6 @@ LAB_KEYT:
         .WORD   LBB_LOCATE      ; LOCATE
         .BYTE   5,'C'
         .WORD   LBB_COLOR       ; COLOR
-        .BYTE   5,'S'
-        .WORD   LBB_SPOKE       ; SPOKE
         .BYTE   6,'S'
         .WORD   LBB_SCREEN      ; SCREEN
         .BYTE   4,'P'
@@ -899,8 +888,6 @@ LAB_KEYT:
         .WORD   LBB_ATN         ; ATN
         .BYTE   5,'P'           ;
         .WORD   LBB_PEEK        ; PEEK
-        .BYTE   6,'S'
-        .WORD   LBB_SPEEK       ; SPEEK
         .BYTE   5,'S'           ;
         .WORD   LBB_SADD        ; SADD
         .BYTE   4,'L'           ;
