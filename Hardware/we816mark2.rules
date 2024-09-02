@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 29467)
+    (start_pass_no 18228)
     (layer_rule Component
       (active on)
       (preferred_direction horizontal)
@@ -89,7 +89,7 @@
     URESET "Net-(J11-Pad3)" "N_EMU" "B_RW" "O1_ROM" "unconnected-(J11-Pad4)" "unconnected-(J11-Pad9)" "unconnected-(J11-Pad11)"
     "unconnected-(J11-Pad12)" "Net-(J11-Pad13)" "Net-(J11-Pad14)" "unconnected-(J11-Pad15)" "unconnected-(U2-Pad8)" "unconnected-(U2-Pad9)" "unconnected-(U2-Pad10)" "unconnected-(U2-Pad11)"
     "unconnected-(U2-Pad12)" "unconnected-(U2-Pad13)" "unconnected-(U3-Pad1)" "unconnected-(U3-Pad2)" "Net-(U3-Pad9)" "unconnected-(U3-Pad10)" "unconnected-(U3-Pad11)" "Net-(U3-Pad13)"
-    "~{RTC_CS}" "unconnected-(U4-Pad10)" "unconnected-(U4-Pad11)" "~{RTC_CS_O}" "Net-(K1-Pin_2)" "Net-(K2-Pin_2)" "Net-(K3-Pin_2)" "Net-(K4-Pin_2)"
+    "~{RTC_CS}" "unconnected-(U4-Pad10)" "unconnected-(U4-Pad11)" "~{RTC_CS_O}" "unconnected-(U13-I020-Pad20)" "Net-(K2-Pin_2)" "Net-(K3-Pin_2)" "Net-(K4-Pin_2)"
     "unconnected-(P1-Pin_1-Pad1)" "unconnected-(P1-Pin_2-Pad2)" "unconnected-(P1-Pin_7-Pad7)" "unconnected-(P1-Pin_8-Pad8)" "unconnected-(P1-Pin_10-Pad10)" "Net-(P2-Pin_1)" "Net-(P2-Pin_2)" "Net-(P2-Pin_3)"
     "Net-(P4-Pin_1)" "Net-(U7-ADJ)" "Net-(U7-CS)" "V_RW" VDSEL "V_CLK" VGAR500 VGAR1K
     VGAR2K VGAG500 VGAG1L VGAG2K VGAB500 VGAB1K VGAB2K HSYNC

@@ -9,7 +9,7 @@
 static void render_dlores_line(uint line);
 
 static inline uint lores_line_to_mem_offset(uint line) {
-    return ((line & 0x7) << 7) + (((line >> 3) & 0x3) * 40);
+    return line * (soft_dlores ? 80 : 40);
 }
 
 

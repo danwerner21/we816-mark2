@@ -213,7 +213,7 @@ crsrlt_1:
         CMP     #00
         LBEQ    ploop
         LDA     F:VIDEOWIDTH
-        dec     A
+        DEC     A
         STA     F:CSRX
         LDA     F:CSRY
         DEC     A
@@ -221,7 +221,7 @@ crsrlt_1:
         JMP     ploop
 crsrrt:
         LDA     F:VIDEOWIDTH
-        dec     A
+        DEC     A
         CMP     F:CSRX
         BEQ     crsrrt_1
         LDA     F:CSRX
@@ -252,7 +252,7 @@ TERMLOOP_C:
         CPX     #00
         BNE     TERMLOOP
 TERMLOOP_A:
-        lda     #13
+        LDA     #13
         JSL     LPRINTVEC
         PLB
         PLP
@@ -277,7 +277,7 @@ LdKbBuffer:
         LDA     F:VIDEOWIDTH
         CMP     #40
         BEQ     :+
-        jmp    LdKbBuffer_1c
+        JMP     LdKbBuffer_1c
 :
 ; are we on the first line?  If so, we know it is not continued from the previous line
         LDA     F:CSRY

@@ -46,15 +46,15 @@ V_SAVE_2:
         SETBANK 0
         JSL     LSETLFS
         LDA     <Smemh
-        STA     IECSTRTH
+        STA     F:IECSTRTH
         LDA     <Smeml
-        STA     IECSTRTL
+        STA     F:IECSTRTL
         LDA     <Svarl
-        STA     LOADBUFL
+        STA     F:LOADBUFL
         LDA     <Svarh
-        STA     LOADBUFH
+        STA     F:LOADBUFH
         LDA     #DATABANK
-        STA     LOADBANK
+        STA     F:LOADBANK
         JSL     LSAVE
         PLB
         LDA     #<LAB_RMSG      ; point to "Ready" message low byte
@@ -112,15 +112,15 @@ V_LOAD_2:
         SETBANK 0
         JSL     LSETLFS
         LDA     <Smemh
-        STA     LOADBUFH
+        STA     F:LOADBUFH
         LDA     <Smeml
-        STA     LOADBUFL
+        STA     F:LOADBUFL
         LDA     #DATABANK
-        STA     LOADBANK
+        STA     F:LOADBANK
         JSL     LLOAD
-        LDA     LOADBUFH
+        LDA     F:LOADBUFH
         STA     <Svarh
-        LDA     LOADBUFL
+        LDA     F:LOADBUFL
         STA     <Svarl
         PLB
         LDA     #<LAB_RMSG      ; point to "Ready" message low byte

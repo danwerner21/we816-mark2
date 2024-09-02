@@ -22,10 +22,10 @@ V_SCNCLR:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_LOCATE:
-        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (FILE#)
+        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X
         PHX
         JSR     LAB_1C01        ; (AFTER ',') OR SYN ERR
-        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X (DEVICE)
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
         PLY
         PHB
         SETBANK 0
@@ -42,21 +42,21 @@ V_LOCATE:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_COLOR:
-        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (FILE#)
+        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X
         TXA
         AND     #$0F
         PHA
         JSR     LAB_1C01        ; (AFTER ',') OR SYN ERR
-        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X (DEVICE)
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
         TXA
         AND     #$0F
+        STA     <TMPFLG
+        PLA
         CLC
         ASL
         ASL
         ASL
         ASL
-        STA     <TMPFLG
-        PLA
         ORA     <TMPFLG
         PHB
         SETBANK 0
@@ -77,7 +77,7 @@ V_SPEEK:
 
         PHB
         SETBANK 0
-        LDA     Itempl
+        LDA     (Itempl)
         PLB
         TAY                     ; copy byte to Y
         JMP     LAB_1FD0        ; convert Y to byte in FAC1 and return
@@ -95,7 +95,8 @@ V_SPOKE:
         JSR     LAB_GADB        ; get two parameters for POKE or WAIT
         PHB
         SETBANK 0
-        STX     Itempl
+        TXA
+        STA     (Itempl)
         PLB
         RTS
 
@@ -124,7 +125,7 @@ V_SPOKE:
 ;  0=SINGLE HIRES
 ;  1=DOUBLE HIRES
 ;  2=QUAD HIRES
-;  1=MONO HIRES
+;  3=MONO HIRES
 ;  HIRES MODE THIRD PARAMETER
 ;  0=MIXED MODE
 ;  1=FULL SCREEN MODE
@@ -132,8 +133,6 @@ V_SPOKE:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_SCREEN:
-        RTS
-;;;;; SOME OF THESE ARE OK IN DIRECT MODE -- WILL WANT THIS LATER THOUGH        JSR     LAB_CKRN        ; check not Direct, back here if ok
         JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (MODE)
 V_SCREEN1:
         STX     <VIDEOMODE
@@ -152,14 +151,14 @@ V_SCREEN1:
         JMP     LAB_1319        ; RESET VARS, STACK AND RETURN CONTROL TO BASIC
         RTS
 
-SETUPMODE0:
+SETUPMODE0:                     ; TEXT MODE
         LDA     #$01
         STA     F:VideoTextMode
         LDA     #$02
         STA     F:VideoLoresMode
         STA     F:VideoHiresMode
         JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
-        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X (PATTERN)
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
         CPX     #$00
         BNE     SETUPMODE0_80
         LDA     #$02
@@ -176,90 +175,353 @@ SETUPMODE0_CLEAR:
         JMP     V_SCNCLR
         RTS
 
-SETUPMODE1:
-SETUPMODE2:
+SETUPMODE1:                     ; LORES MODE
+        LDA     #$01
+        STA     F:VideoLoresMode
+        LDA     #$02
+        STA     F:VideoTextMode
+        STA     F:VideoHiresMode
+        JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
+
+        CPX     #$00
+        BNE     SETUPMODE1_DOUBLE
+        LDA     #$02
+        STA     F:VideoDoubleLores
+        BRA     SETUPMODE1_CLEAR
+SETUPMODE1_DOUBLE:
+        LDA     #$01
+        STA     F:VideoDoubleLores
+        LDA     #$11
+        STA     <VIDEOMODE
+SETUPMODE1_CLEAR:
+        PHP                     ; Clear Lores RAM
+        PHB
+        SETBANK 0
+        INDEX16
+        LDA     #$00
+        LDX     #$0000
+:
+        STA     $2000,X
+        INX
+        CPX     #$0800
+        BNE     :-
+        INDEX8
+        PLB
+        PLP
+        JSR     LAB_1C01        ; GET THE THIRD PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE THIRD PARAMETER, RETURN IN X
+        CPX     #$00
+        BNE     SETUPMODE1_MIXED
+        LDA     #$02
+        STA     F:VideoMixedMode
+        RTS
+SETUPMODE1_MIXED:
+        LDA     #$01
+        STA     F:VideoMixedMode
+        LDA     <VIDEOMODE
+        ORA     #$80
+        STA     <VIDEOMODE
         RTS
 
-;___V_SPRITE________________________________________________
-;
-;  SET SPRITE PARAMETERS
-;
-;  TAKES SIX PARAMETERS
-;       SPRITE NUM (0-32)
-;       SPRITE PATTERN (0-255)
-;       X CORD (0-255)
-;       Y CORD (0-255)
-;       COLOR  (0-15)
-;       LEFT SHIFT BIT (0/1)
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPRITE:
+
+SETUPMODE2:               ; HIRES MODE
+        LDA     #$01
+        STA     F:VideoHiresMode
+        LDA     #$02
+        STA     F:VideoTextMode
+        STA     F:VideoLoresMode
+        JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
+
+        CPX     #$00
+        BNE     SETUPMODE2_DOUBLE
+        LDA     #$02
+        STA     F:VideoDoubleHires
+        STA     F:VideoQuadHires
+        STA     F:VideoMonoHires
+        BRA     SETUPMODE2_CLEAR
+SETUPMODE2_DOUBLE:
+        CPX     #$01
+        BNE     SETUPMODE2_QUAD
+        LDA     #$01
+        STA     F:VideoDoubleHires
+        LDA     #$02
+        STA     F:VideoQuadHires
+        STA     F:VideoMonoHires
+        BRA     SETUPMODE2_CLEAR
+        LDA     #$12
+        STA     <VIDEOMODE
+SETUPMODE2_QUAD:
+        CPX     #$02
+        BNE     SETUPMODE2_MONO
+        LDA     #$01
+        STA     F:VideoQuadHires
+        LDA     #$02
+        STA     F:VideoDoubleHires
+        STA     F:VideoMonoHires
+        BRA     SETUPMODE2_CLEAR
+        LDA     #$22
+        STA     <VIDEOMODE
+SETUPMODE2_MONO:
+        LDA     #$01
+        STA     F:VideoMonoHires
+        LDA     #$02
+        STA     F:VideoDoubleHires
+        STA     F:VideoQuadHires
+        BRA     SETUPMODE2_CLEAR
+        LDA     #$32
+        STA     <VIDEOMODE
+
+SETUPMODE2_CLEAR:
+        PHP                     ; Clear Hires RAM
+        PHB
+        SETBANK 0
+        INDEX16
+        LDA     #$00
+        LDX     #$0000
+:
+        STA     $2000,X
+        INX
+        CPX     #$8000
+        BNE     :-
+        INDEX8
+        PLB
+        PLP
+        JSR     LAB_1C01        ; GET THE THIRD PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE THIRD PARAMETER, RETURN IN X
+        CPX     #$00
+        BNE     SETUPMODE2_MIXED
+        LDA     #$02
+        STA     F:VideoMixedMode
         RTS
-
-
-;___V_SPRDEF________________________________________________
-;
-;  DEFINE SPRITE PATTERN
-;
-;  TAKES 9 OR 17 PARAMETERS
-;       SPRITE NUM (0-32)
-;       SPRITE PATTERN DATA (8 BYTES OR 16 BYTES)
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPRDEF:
+SETUPMODE2_MIXED:
+        LDA     #$01
+        STA     F:VideoMixedMode
+        LDA     <VIDEOMODE
+        ORA     #$80
+        STA     <VIDEOMODE
         RTS
-
-
-;___LAB_VIDST_______________________________________________
-;
-; RETURN VIDEO STATUS BYTE
-;
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-LAB_VIDST:
-LAB_PVIDST:
-        RTS
-
-
-;___SPRSIZE_________________________________________________
-;
-; SET SPRITE SIZE AND MAGNIFICATION
-;
-;  TAKES ONE PARAMETER
-;
-; 0= 8X8 SPRITES, 1x DISPLAY
-; 1= 8X8 SPRITES, 2X DISPLAY
-; 2= 16X16 SPRITES, 1X DISPLAY
-; 3= 16X16 SPRITES, 2X DISPLAY
-;
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPRSIZE:
-        RTS
-
 
 
 ;___V_PLOT__________________________________________________
 ;
 ;  PLOT ON SCREEN
-;         VM= 1     TAKES THREE PARAMETERS,  X,Y,COLOR
-;         VM= 4     TAKES FOUR PARAMETERS,  X,Y,PRIORITY,COLOR
-;         VM= 0 AND 3     TAKES THREE PARAMETERS,  X,Y,PATTERN
+;         TAKES THREE PARAMETERS,  X,Y,COLOR
 ;
-;  0=GRAPHICS MODE (32X24)
-;  1=MULTICOLOR MODE (64X48 BLOCKS)
-;  2=TEXT MODE (40X24)
-;  3=GRAPHICS MODE 0, WITH MODE 2 COLOR (32X24 MULTICOLOR)
-;  4=GRAPHICS MODE 2 (32X24 MULTICOLOR)
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_PLOT:
+        LDA     <VIDEOMODE
+        AND     #$0F
+        CMP     #$01
+        BEQ     V_PLOT_LORES
+        CMP     #$02
+        LBNE    V_PLOT_HIRES
         RTS
+ V_PLOT_LORES:
+        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X
+        TXA
+        STA     F:TEMPOFFSET    ; STORE X COORD IN OFFSET ADDRESS
+        LDA     #00
+        STA     F:TEMPOFFSET+1
+        JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
+                                ; FIGURE THE BUFFER OFFSET
+        TXA                     ; GET Y COORD
+        PHA                     ; STORE FOR LATER
+        LSR     A               ; THERE ARE TWO ROWS PER BYTE
+        ACCUMULATORINDEX16      ; MULTIPLY Y COORD BY 40 OR 80 (SINGLE OR DOUBLE LORES)
+        AND     #$00FF
+        STA     F:TEMP
+        CLC
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        PHA
+        LDA     F:TEMP
+        CLC
+        ASL     A
+        ASL     A
+        ASL     A
+        STA     F:TEMP
+        PLA
+        CLC
+        ADC     F:TEMP
+        STA     F:TEMP
+; if double lores columns double it.
+        ACCUMULATOR8
+        LDA     <VIDEOMODE
+        AND     #$10
+        CMP     #00
+        BEQ     :+
+        ACCUMULATOR16
+        LDA     F:TEMP
+        ASL     A
+        STA     F:TEMP
+:
+        ACCUMULATOR16
+        LDA     F:TEMPOFFSET
+        CLC
+        ADC     F:TEMP
+        STA     F:TEMPOFFSET    ; AT THIS POINT WE SHOULD HAVE THE BUFFER OFFSET CALCULATED
+        ACCUMULATORINDEX8
+        JSR     LAB_1C01        ; GET THE THIRD PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE THIRD PARAMETER, RETURN IN X (PATTERN)
+        TXA
+        AND     #$0F
+        STA     F:TEMP          ; SAVE COLOR IN TEMP
+        PLA
+        LSR     A               ; TOP OR BOTTOM PIXEL?
+        BCC     :+
+                                ; TOP PIXEL
+        ACCUMULATORINDEX16
+        LDA     F:TEMPOFFSET
+        TAX
+        ACCUMULATOR8
+        LDA     F:$2000,X
+        AND     #$0F
+        PHA
+        LDA     F:TEMP
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        STA     F:TEMP
+        PLA
+        ORA     F:TEMP
+        STA     F:$2000,X
+        ACCUMULATORINDEX8
+        RTS
+:
+                               ; BOTTOM PIXEL
+        ACCUMULATORINDEX16
+        LDA     F:TEMPOFFSET
+        TAX
+        ACCUMULATOR8
+        LDA     F:$2000,X
+        AND     #$F0
+        ORA     F:TEMP
+        STA     F:$2000,X
+        ACCUMULATORINDEX8
+        RTS
+V_PLOT_HIRES:
+        JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X
+        TXA
+        PHA
+        LSR     A               ; 2 PIXEL PER BYTE
+        STA     F:TEMPOFFSET    ; STORE X COORD IN OFFSET ADDRESS
+        LDA     #00
+        STA     F:TEMPOFFSET+1
+        JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X
+                                ; FIGURE THE BUFFER OFFSET
+        TXA                     ; GET Y COORD
+        ACCUMULATORINDEX16      ; MULTIPLY Y COORD BY 40 OR 80 (SINGLE OR DOUBLE LORES)
+        AND     #$00FF
+        STA     F:TEMP
+        CLC
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        PHA
+        LDA     F:TEMP
+        CLC
+        ASL     A
+        ASL     A
+        PHA
+        LDA     F:TEMP
+        CLC
+        ASL     A
+        STA     F:TEMP
+        PLA
+        CLC
+        ADC     F:TEMP
+        STA     F:TEMP
+        PLA
+        CLC
+        ADC     F:TEMP
+        STA     F:TEMP
+; if double hires double it.
+        ACCUMULATOR8
+        LDA     <VIDEOMODE
+        AND     #$30
+        CMP     #00
+        BEQ     :+
+        ACCUMULATOR16
+        LDA     F:TEMP
+        ASL     A
+        STA     F:TEMP
+        JMP     V_PLOT_COLOR    ; WE HAVE AN OFFSET, USE COLOR ALGORITHM
+:
+; if quad columns double it again.
+        ACCUMULATOR8
+        LDA     <VIDEOMODE
+        AND     #$30
+        CMP     #20
+        BEQ     :+
+        ACCUMULATOR16
+        LDA     F:TEMP
+        ASL     A
+        STA     F:TEMP
+:
+        JMP     V_PLOT_MONO      ; WE HAVE AN OFFSET, USE MONO ALGORITHM
 
+V_PLOT_COLOR:
+        ACCUMULATOR16
+        LDA     F:TEMPOFFSET
+        CLC
+        ADC     F:TEMP
+        STA     F:TEMPOFFSET    ; AT THIS POINT WE SHOULD HAVE THE BUFFER OFFSET CALCULATED
+        ACCUMULATORINDEX8
+        JSR     LAB_1C01        ; GET THE THIRD PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE THIRD PARAMETER, RETURN IN X (PATTERN)
+        TXA
+        AND     #$0F
+        STA     F:TEMP          ; SAVE COLOR IN TEMP
+        PLA
+        LSR     A               ; TOP OR BOTTOM PIXEL?
+        BCC     :+
+                                ; TOP PIXEL
+        ACCUMULATORINDEX16
+        LDA     F:TEMPOFFSET
+        TAX
+        ACCUMULATOR8
+        LDA     F:$2000,X
+        AND     #$0F
+        PHA
+        LDA     F:TEMP
+        ASL     A
+        ASL     A
+        ASL     A
+        ASL     A
+        STA     F:TEMP
+        PLA
+        ORA     F:TEMP
+        STA     F:$2000,X
+        ACCUMULATORINDEX8
+        RTS
+:
+                               ; BOTTOM PIXEL
+        ACCUMULATORINDEX16
+        LDA     F:TEMPOFFSET
+        TAX
+        ACCUMULATOR8
+        LDA     F:$2000,X
+        AND     #$F0
+        ORA     F:TEMP
+        STA     F:$2000,X
+        ACCUMULATORINDEX8
+        RTS
 
 ;___V_PATTERN________________________________________________
 ;
-;  DEFINE GGRAPHICS PATTERN
+;  DEFINE GRAPHICS PATTERN
 ;
 ;  TAKES 10 PARAMETERS
 ;       PATTERN NUM (0-255)

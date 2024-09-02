@@ -25,6 +25,13 @@ static inline  uint32_t getBits(uint8_t bits,uint8_t mask) {
   return (uint32_t)(ntsc_palette[15]<<16 | ntsc_palette[15]);
 }
 
+static inline  uint32_t getQuadBits(uint8_t bits,uint8_t mask,uint8_t mask2) {
+  if(((bits & mask2)==0) && ((bits & mask)==0))  return (uint32_t)(ntsc_palette[0]<<16 | ntsc_palette[0]);
+  if(((bits & mask2)==0) && ((bits & mask)!=0)) return (uint32_t)(ntsc_palette[0]<<16 | ntsc_palette[15]);
+  if(((bits & mask2)!=0) && ((bits & mask)==0))  return (uint32_t)(ntsc_palette[15]<<16 | ntsc_palette[0]);
+  return (uint32_t)(ntsc_palette[15]<<16 | ntsc_palette[15]);
+}
+
 void render_hires(bool mixed) {
     vga_prepare_frame();
     // Skip 48 lines to center vertically
@@ -105,8 +112,8 @@ static void render_hires_line(uint line) {
 static void render_qhires_line(uint line) {
     uint sl_pos = 0;
 
-    const uint8_t *page = hires_mainmem_page1;
-    const uint8_t *line_main = page + dhires_line_to_mem_offset(line);
+    const uint8_t *page = soft_page2 ? hires_mainmem_page2 : hires_mainmem_page1;
+    const uint8_t *line_main = page + hires_line_to_mem_offset(line);
     struct vga_scanline *sl = vga_prepare_scanline();
 
     // Pad 40 pixels on the left to center horizontally
@@ -116,16 +123,17 @@ static void render_qhires_line(uint line) {
 
 
     // Standard 560x192 2-color hires mode
-    for(uint i = 0; i < 70; i++) {
+    for(uint i = 0; i < 70;) {
         uint8_t bits=line_main[i++];
-        sl->data[sl_pos++] =getBits(bits,0x80);
-        sl->data[sl_pos++] =getBits(bits,0x40);
-        sl->data[sl_pos++] =getBits(bits,0x20);
-        sl->data[sl_pos++] =getBits(bits,0x10);
-        sl->data[sl_pos++] =getBits(bits,0x08);
-        sl->data[sl_pos++] =getBits(bits,0x04);
-        sl->data[sl_pos++] =getBits(bits,0x02);
-        sl->data[sl_pos++] =getBits(bits,0x01);
+        sl->data[sl_pos++] =getQuadBits(bits,0x80,0x40);
+        sl->data[sl_pos++] =getQuadBits(bits,0x20,0x10);
+        sl->data[sl_pos++] =getQuadBits(bits,0x08,0x04);
+        sl->data[sl_pos++] =getQuadBits(bits,0x02,0x01);
+        bits=line_main[i++];
+        sl->data[sl_pos++] =getQuadBits(bits,0x80,0x40);
+        sl->data[sl_pos++] =getQuadBits(bits,0x20,0x10);
+        sl->data[sl_pos++] =getQuadBits(bits,0x08,0x04);
+        sl->data[sl_pos++] =getQuadBits(bits,0x02,0x01);
     }
 
 
@@ -153,23 +161,15 @@ static void render_mhires_line(uint line) {
 
 
     // Standard 280x192 2-color hires mode
-    for(uint i = 0; i < 35; i++) {
+    for(uint i = 0; i < 35;) {
         uint8_t bits=line_main[i++];
         sl->data[sl_pos++] =getBits(bits,0x80);
-        sl->data[sl_pos++] =getBits(bits,0x80);
-        sl->data[sl_pos++] =getBits(bits,0x40);
         sl->data[sl_pos++] =getBits(bits,0x40);
         sl->data[sl_pos++] =getBits(bits,0x20);
-        sl->data[sl_pos++] =getBits(bits,0x20);
-        sl->data[sl_pos++] =getBits(bits,0x10);
         sl->data[sl_pos++] =getBits(bits,0x10);
         sl->data[sl_pos++] =getBits(bits,0x08);
-        sl->data[sl_pos++] =getBits(bits,0x08);
-        sl->data[sl_pos++] =getBits(bits,0x04);
         sl->data[sl_pos++] =getBits(bits,0x04);
         sl->data[sl_pos++] =getBits(bits,0x02);
-        sl->data[sl_pos++] =getBits(bits,0x02);
-        sl->data[sl_pos++] =getBits(bits,0x01);
         sl->data[sl_pos++] =getBits(bits,0x01);
     }
 

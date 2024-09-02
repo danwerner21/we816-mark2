@@ -1,14 +1,14 @@
 Modules list:
 -------------
 dbasic816.o:
-    HIGHMEM           Offs=000000  Size=003AC6  Align=00001  Fill=0000
+    HIGHMEM           Offs=000000  Size=003D1A  Align=00001  Fill=0000
 
 
 Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-HIGHMEM               010000  013AC5  003AC6  00001
+HIGHMEM               010000  013D19  003D1A  00001
 
 
 Exports list by name:

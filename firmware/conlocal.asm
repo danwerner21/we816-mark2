@@ -430,6 +430,7 @@ INITKEYBOARD:
         STA     F:LEDS
         LDA     #00
         STA     KeyLock
+        JSR     CapsLockOn
         PLA
         PLP
         RTS
@@ -641,6 +642,7 @@ is_CapsLock:
         AND     #$10
         CMP     #$00
         BEQ     Cap_off
+CapsLockOn:
         LDA     F:LEDS
         AND     #$C0
         ORA     #$20
