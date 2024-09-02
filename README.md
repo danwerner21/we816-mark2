@@ -1,12 +1,10 @@
 # WE816-MARK2
-The WE816 is a 16-bit 65816 based system with 512K of System RAM, 96K of System ROM, 32K of video RAM, a Raspberry PI Pico based graphics processor and an AY-3-8910 Sound chip.  The system runs a custom version of BASIC and supports commodore compatible IEC disk drives.
+The WE816-MARK2 is the second iteration of a 16-bit 65816 based system with 512K of System RAM, 96K of System ROM, a Raspberry PI Pico based graphics processor and an AY-3-8910 Sound chip.  The system runs a custom version of BASIC and supports commodore compatible IEC disk drives.
 
 EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It is designed to allow a full 64K bank for BASIC code and variables with the BASIC interpreter running in a totally different bank. Full documentation on the basic intrepreter can be found in the support folder
 
 ![System](Support/images/case13.jpg)
 ![System](Support/images/boardset2.jpg)
-
-** WORK IN PROGRESS, NOT READY FOR BUILD
 
 ---
 
@@ -24,7 +22,6 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
 * Document IO Ports
 * Memory Map
 * Video speed is not fast enough to deal with a clock speed > (around) 2mhz (1.8432 works perfectly)  Need to add wait state hardware for video
-* Fix Mixed Mode Text Handling
 * Add Pictures to this Document
 ---
 
