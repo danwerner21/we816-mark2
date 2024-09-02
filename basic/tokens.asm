@@ -55,10 +55,7 @@ TK_LOCATE       = TK_SCNCLR+1   ;LOCATE token
 TK_COLOR        = TK_LOCATE+1   ;COLOR token
 TK_SPOKE        = TK_COLOR+1    ;SPOKE token
 TK_SCREEN       = TK_SPOKE+1    ;SCREEN token
-TK_SPRITE       = TK_SCREEN+1   ;SPRITE token
-TK_SPRDEF       = TK_SPRITE+1   ;SPRDEF token
-TK_SPRSIZE      = TK_SPRDEF+1   ;SPRSIZE token
-TK_PLOT         = TK_SPRSIZE+1  ;PLOT token
+TK_PLOT         = TK_SCREEN+1   ;PLOT token
 TK_PATTERN      = TK_PLOT+1     ;PATTERN token
 TK_SYS          = TK_PATTERN+1  ;SYS token
 TK_SOUND        = TK_SYS+1      ;SOUND token
@@ -130,8 +127,7 @@ TK_MAX          = TK_BITTST+1   ; MAX token
 TK_MIN          = TK_MAX+1      ; MIN token
 TK_PI           = TK_MIN+1      ; PI token
 TK_IECST        = TK_PI+1       ; IECST token
-TK_VIDST        = TK_IECST+1    ; VIDST token
-TK_VPTR         = TK_VIDST+1    ; VARPTR token
+TK_VPTR         = TK_IECST+1    ; VARPTR token
 TK_LEFTS        = TK_VPTR+1     ; LEFT$ token
 TK_RIGHTS       = TK_LEFTS+1    ; RIGHT$ token
 TK_MIDS         = TK_RIGHTS+1   ; MID$ token
@@ -194,9 +190,6 @@ LAB_CTBL:
         .WORD   V_COLOR-1       ; COLOR			COLOR COMMAND
         .WORD   V_SPOKE-1       ; SPOKE			SPOKE COMMAND
         .WORD   V_SCREEN-1      ; SCREEN		SCREEN COMMAND
-        .WORD   V_SPRITE-1      ; SPRITE		SPRITE COMMAND
-        .WORD   V_SPRDEF-1      ; SPRDEF		SPRDEF COMMAND
-        .WORD   V_SPRSIZE-1     ; SPRSIZE		SPRSIZE COMMAND
         .WORD   V_PLOT-1        ; PLOT			PLOT COMMAND
         .WORD   V_PATTERN-1     ; PATTERN		PATTERN COMMAND
         .WORD   LAB_SYS-1       ; SYS			SYS COMMAND
@@ -240,7 +233,6 @@ LAB_FTPM        = LAB_FTPL+$01
         .WORD   LAB_MMPP-1      ; MIN()		"
         .WORD   LAB_PPBI-1      ; PI		advance pointer
         .WORD   LAB_PIECST-1    ; IECST		"
-        .WORD   LAB_PVIDST-1    ; VIDST		"
         .WORD   $0000           ; VARPTR()	none
         .WORD   LAB_LRMS-1      ; LEFT$()	process string expression
         .WORD   LAB_LRMS-1      ; RIGHT$()		"
@@ -282,7 +274,6 @@ LAB_FTBM        = LAB_FTBL+$01
         .WORD   LAB_MIN-1       ; MIN()		new function
         .WORD   LAB_PI-1        ; PI			new function
         .WORD   LAB_IECST-1     ; IECST		new function
-        .WORD   LAB_VIDST-1     ; VIDST		new function
         .WORD   LAB_VARPTR-1    ; VARPTR()		new function
         .WORD   LAB_LEFT-1      ; LEFT$()
         .WORD   LAB_RIGHT-1     ; RIGHT$()
@@ -635,12 +626,6 @@ LBB_SPEEK:
         .BYTE   "PEEK(",TK_SPEEK; SPEEK
 LBB_SPOKE:
         .BYTE   "POKE",TK_SPOKE ; SPOKE
-LBB_SPRDEF:
-        .BYTE   "PRDEF",TK_SPRDEF; SPRDEF
-LBB_SPRITE:
-        .BYTE   "PRITE",TK_SPRITE; SPRITE
-LBB_SPRSIZE:
-        .BYTE   "PRSIZE",TK_SPRSIZE; SPRSIZE
 LBB_SQR:
         .BYTE   "QR(",TK_SQR    ; SQR(
 LBB_STEP:
@@ -680,8 +665,6 @@ LBB_VAL:
         .BYTE   "AL(",TK_VAL    ; VAL(
 LBB_VPTR:
         .BYTE   "ARPTR(",TK_VPTR; VARPTR(
-LBB_VIDST:
-        .BYTE   "IDST",TK_VIDST ; VIDST
 LBB_VOICE:
         .BYTE   "OICE",TK_VOICE ; VOICE
 LBB_VOLUME:
@@ -813,12 +796,6 @@ LAB_KEYT:
         .WORD   LBB_SPOKE       ; SPOKE
         .BYTE   6,'S'
         .WORD   LBB_SCREEN      ; SCREEN
-        .BYTE   6,'S'
-        .WORD   LBB_SPRITE      ; SPRITE
-        .BYTE   6,'S'
-        .WORD   LBB_SPRDEF      ; SPRDEF
-        .BYTE   7,'S'
-        .WORD   LBB_SPRSIZE     ; SPRSIZE
         .BYTE   4,'P'
         .WORD   LBB_PLOT        ; PLOT
         .BYTE   7,'P'
@@ -954,8 +931,6 @@ LAB_KEYT:
         .WORD   LBB_PI          ; PI
         .BYTE   5,'I'           ;
         .WORD   LBB_IECST       ; IECST
-        .BYTE   7,'V'           ;
-        .WORD   LBB_VIDST       ; VIDST
         .BYTE   5,'V'           ;
         .WORD   LBB_VPTR        ; VARPTR
         .BYTE   6,'L'           ;

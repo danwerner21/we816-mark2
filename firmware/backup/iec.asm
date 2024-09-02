@@ -588,7 +588,7 @@ LAB_F598:
         INDEX16
         LDX     LOADBUFL
         PLB
-        STA     0,x             ; save byte to memory
+        STA     A:0,x           ; save byte to memory
         PLB                     ; restore bank
         INDEX8
 
@@ -673,7 +673,7 @@ LAB_F6BC:
         INDEX16
         LDX     IECBUFFL
         PLB
-        LDA     0,x             ; load byte from memory
+        LDA     A:0,x           ; load byte from memory
         PLB                     ; restore bank
         INDEX8
 
@@ -1109,11 +1109,13 @@ INITIEC:
         STA     via2ier         ; set VIA 2 IER
 ;	LDA	#$26			; set timer constant low byte [PAL]
 ;	LDA	#$89			; set timer constant low byte [NTSC]
-        LDA     #$FF            ; set timer constant low byte [4MHz]
+;        LDA     #$FF            ; set timer constant low byte [4MHz]
+        LDA     #$F5            ; set timer constant low byte [1.8432MHz]
         STA     via2t1cl        ; set VIA 2 T1C_l
 ;	LDA	#$48			; set timer constant high byte [PAL]
 ;	LDA	#$42			; set timer constant high byte [NTSC]
-        LDA     #$FF            ; set timer constant high byte [4MHz]
+;        LDA     #$FF            ; set timer constant high byte [4MHz]
+        LDA     #$75            ; set timer constant high byte [1.8432MHz]
         STA     via2t1ch        ; set VIA 2 T1C_h
 
         LDA     #$00

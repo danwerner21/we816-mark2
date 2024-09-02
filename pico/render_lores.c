@@ -19,7 +19,7 @@ static void render_lores_line(uint line) {
     struct vga_scanline *sl2 = vga_prepare_scanline();
     uint sl_pos = 0;
 
-    const uint8_t *page = soft_page2 ? text_mainmem_page2 : text_mainmem_page1;
+    const uint8_t *page = soft_page2 ? text_mainmem_page1 : text_mainmem_page2;
     const uint8_t *line_buf = page + lores_line_to_mem_offset(line);
 
     // Pad 40 pixels on the left to center horizontally
@@ -70,7 +70,7 @@ static void render_dlores_line(uint line) {
     struct vga_scanline *sl2 = vga_prepare_scanline();
     uint sl_pos = 0;
 
-    const uint8_t *page_main = soft_page2 ? text_mainmem_page2 : text_mainmem_page1;
+    const uint8_t *page_main = soft_page2 ? text_mainmem_page1 : text_mainmem_page2;
     const uint line_offset = lores_line_to_mem_offset(line);
     const uint8_t *line_main = page_main + line_offset;
 

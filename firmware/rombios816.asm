@@ -24,7 +24,8 @@ UART4           = $FE04         ;   MODEM CONTROL
 UART5           = $FE05         ;   LINE STATUS
 UART6           = $FE06         ;   MODEM STATUS
 
-RTC             = $FE08         ;   RTC REG.
+RTCA            = $FE08         ;   RTC Address REGISTER.
+RTC             = $FE09         ;   RTC Data REGISTER.
 
 via1regb        = $FE10         ; Register
 via1rega        = $FE11         ; Register
@@ -42,8 +43,6 @@ via1pcr         = $FE1C         ; Register
 via1ifr         = $FE1D         ; Register
 via1ier         = $FE1E         ; Register
 via1ora         = $FE1F         ; Register
-
-
 
 via2regb        = $FE20         ; Register
 via2rega        = $FE21         ; Register
@@ -171,7 +170,7 @@ COLD_START:
 
         ACCUMULATORINDEX8
         JSR     CONSOLE_INIT    ; Init UART
-;       JSR     INITIEC        ; Init IEC port
+        JSR     INITIEC         ; Init IEC port
 ;       JSR     BATEST         ; Perform Basic Assurance Test
 
 ;       JML     $FF1000         ; START BASIC
@@ -288,14 +287,14 @@ INCHW:
         PHP
         ACCUMULATORINDEX8
 
-;        LDA     F:ConsoleDevice
-;        CMP     #$01
-;        BNE     INCHW2
-;        JSR     GetKey
-;        PLP
-;        PLY
-;        PLX
-;        RTS
+        LDA     F:ConsoleDevice
+        CMP     #$01
+        BNE     INCHW2
+        JSR     GetKey
+        PLP
+        PLY
+        PLX
+        RTS
 
 ; Default (serial)
 INCHW2:
@@ -317,15 +316,15 @@ INCH:
         PHP
         ACCUMULATORINDEX8
 
-;      LDA     F:ConsoleDevice
-;      CMP     #$01
-;      BNE     INCH2
+        LDA     F:ConsoleDevice
+        CMP     #$01
+        BNE     INCH2
 
-;     JSR     ScanKeyboard
-;     CMP     #$FF
-;     BEQ     INCH2S
-;      JSR     GetKey
-;     BRA     INCH2C
+        JSR     ScanKeyboard
+        CMP     #$FF
+        BEQ     INCH2S
+        JSR     GetKey
+        BRA     INCH2C
 
 ; Default (serial)
 INCH2:
@@ -356,11 +355,7 @@ nothere:
         .INCLUDE "conserial.asm"
         .INCLUDE "conlocal.asm"
         .INCLUDE "iec.asm"
-
-
-
-;______________________________________________________________
-;        INCLUDE 'RTC.ASM'
+        .INCLUDE "rtc.asm"
 ;______________________________________________________________
 
 
@@ -397,10 +392,10 @@ LUNCURSORVEC:
         JSR     UNCURSOR
         RTL
 LWRITERTC:
-        JSR     DONOOP
+        JSR     RTCWRITE
         RTL
 LREADRTC:
-        JSR     DONOOP
+        JSR     RTCREAD
         RTL
 LIECIN:
         JSR     LAB_EF19        ;. Read byte from serial bus. (Must call TALK and TALKSA beforehands.)
@@ -479,9 +474,9 @@ CURSORVEC:
 UNCURSORVEC:
         JMP     UNCURSOR
 WRITERTC:
-        JMP     DONOOP
+        JMP     RTCWRITE
 READRTC:
-        JMP     DONOOP
+        JMP     RTCREAD
 IECIN:
         JMP     LAB_EF19        ; Read byte from serial bus. (Must call TALK and TALKSA beforehands.)
 IECOUT:

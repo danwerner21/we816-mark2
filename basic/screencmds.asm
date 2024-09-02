@@ -50,13 +50,13 @@ V_COLOR:
         JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X (DEVICE)
         TXA
         AND     #$0F
+        STA     <TMPFLG
+        PLA
         CLC
         ASL
         ASL
         ASL
         ASL
-        STA     <TMPFLG
-        PLA
         ORA     <TMPFLG
         PHB
         SETBANK 0
@@ -77,7 +77,7 @@ V_SPEEK:
 
         PHB
         SETBANK 0
-        LDA     Itempl
+        LDA     (Itempl)
         PLB
         TAY                     ; copy byte to Y
         JMP     LAB_1FD0        ; convert Y to byte in FAC1 and return
@@ -95,7 +95,8 @@ V_SPOKE:
         JSR     LAB_GADB        ; get two parameters for POKE or WAIT
         PHB
         SETBANK 0
-        STX     Itempl
+        TXA
+        STA     (Itempl)
         PLB
         RTS
 
@@ -124,7 +125,7 @@ V_SPOKE:
 ;  0=SINGLE HIRES
 ;  1=DOUBLE HIRES
 ;  2=QUAD HIRES
-;  1=MONO HIRES
+;  3=MONO HIRES
 ;  HIRES MODE THIRD PARAMETER
 ;  0=MIXED MODE
 ;  1=FULL SCREEN MODE
@@ -132,8 +133,6 @@ V_SPOKE:
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_SCREEN:
-        RTS
-;;;;; SOME OF THESE ARE OK IN DIRECT MODE -- WILL WANT THIS LATER THOUGH        JSR     LAB_CKRN        ; check not Direct, back here if ok
         JSR     LAB_GTBY        ; GET THE FIRST PARAMETER, RETURN IN X (MODE)
 V_SCREEN1:
         STX     <VIDEOMODE
@@ -152,7 +151,7 @@ V_SCREEN1:
         JMP     LAB_1319        ; RESET VARS, STACK AND RETURN CONTROL TO BASIC
         RTS
 
-SETUPMODE0:
+SETUPMODE0:                     ; TEXT MODE
         LDA     #$01
         STA     F:VideoTextMode
         LDA     #$02
@@ -176,81 +175,142 @@ SETUPMODE0_CLEAR:
         JMP     V_SCNCLR
         RTS
 
-SETUPMODE1:
-SETUPMODE2:
+SETUPMODE1:                     ; LORES MODE
+        LDA     #$01
+        STA     F:VideoLoresMode
+        LDA     #$02
+        STA     F:VideoTextMode
+        STA     F:VideoHiresMode
+        JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X (PATTERN)
+
+        CPX     #$00
+        BNE     SETUPMODE1_DOUBLE
+        LDA     #$02
+        STA     F:VideoDoubleLores
+        BRA     SETUPMODE1_CLEAR
+SETUPMODE1_DOUBLE:
+        LDA     #$01
+        STA     F:VideoDoubleLores
+        LDA     #$11
+        STA     <VIDEOMODE
+SETUPMODE1_CLEAR:
+        PHP                     ; Clear Lores RAM
+        PHB
+        SETBANK 0
+        INDEX16
+        LDA     #$00
+        LDX     #$0000
+:
+        STA     $1000,X
+        INX
+        CPX     #$1800
+        BNE     :-
+        INDEX8
+        PLB
+        PLP
+        JSR     LAB_1C01        ; GET THE THIRD PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE THIRD PARAMETER, RETURN IN X (PATTERN)
+        CPX     #$00
+        BNE     SETUPMODE1_MIXED
+        JSR     LAB_CKRN        ; check not Direct, back here if ok
+        LDA     #$02
+        STA     F:VideoMixedMode
+        RTS
+SETUPMODE1_MIXED:
+        LDA     #$01
+        STA     F:VideoMixedMode
+        LDA     <VIDEOMODE
+        ORA     #$80
+        STA     <VIDEOMODE
         RTS
 
-;___V_SPRITE________________________________________________
-;
-;  SET SPRITE PARAMETERS
-;
-;  TAKES SIX PARAMETERS
-;       SPRITE NUM (0-32)
-;       SPRITE PATTERN (0-255)
-;       X CORD (0-255)
-;       Y CORD (0-255)
-;       COLOR  (0-15)
-;       LEFT SHIFT BIT (0/1)
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPRITE:
+
+SETUPMODE2:               ; HIRES MODE
+        LDA     #$01
+        STA     F:VideoHiresMode
+        LDA     #$02
+        STA     F:VideoTextMode
+        STA     F:VideoLoresMode
+        JSR     LAB_1C01        ; GET THE SECOND PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE SECOND PARAMETER, RETURN IN X (PATTERN)
+
+        CPX     #$00
+        BNE     SETUPMODE2_DOUBLE
+        LDA     #$02
+        STA     F:VideoDoubleHires
+        STA     F:VideoQuadHires
+        STA     F:VideoMonoHires
+        BRA     SETUPMODE2_CLEAR
+SETUPMODE2_DOUBLE:
+        CPX     #$01
+        BNE     SETUPMODE2_QUAD
+        LDA     #$01
+        STA     F:VideoDoubleHires
+        LDA     #$02
+        STA     F:VideoQuadHires
+        STA     F:VideoMonoHires
+        BRA     SETUPMODE2_CLEAR
+        LDA     #$12
+        STA     <VIDEOMODE
+SETUPMODE2_QUAD:
+        CPX     #$02
+        BNE     SETUPMODE2_MONO
+        LDA     #$01
+        STA     F:VideoQuadHires
+        LDA     #$02
+        STA     F:VideoDoubleHires
+        STA     F:VideoMonoHires
+        BRA     SETUPMODE2_CLEAR
+        LDA     #$22
+        STA     <VIDEOMODE
+SETUPMODE2_MONO:
+        LDA     #$01
+        STA     F:VideoMonoHires
+        LDA     #$02
+        STA     F:VideoDoubleHires
+        STA     F:VideoQuadHires
+        BRA     SETUPMODE2_CLEAR
+        LDA     #$32
+        STA     <VIDEOMODE
+
+SETUPMODE2_CLEAR:
+        PHP                     ; Clear Hires RAM
+        PHB
+        SETBANK 0
+        INDEX16
+        LDA     #$00
+        LDX     #$0000
+:
+        STA     $2000,X
+        INX
+        CPX     #$8000
+        BNE     :-
+        INDEX8
+        PLB
+        PLP
+        JSR     LAB_1C01        ; GET THE THIRD PARAMETER (AFTER ',') OR SYN ERR
+        JSR     LAB_GTBY        ; GET THE THIRD PARAMETER, RETURN IN X (PATTERN)
+        CPX     #$00
+        BNE     SETUPMODE2_MIXED
+        JSR     LAB_CKRN        ; check not Direct, back here if ok
+        LDA     #$02
+        STA     F:VideoMixedMode
         RTS
-
-
-;___V_SPRDEF________________________________________________
-;
-;  DEFINE SPRITE PATTERN
-;
-;  TAKES 9 OR 17 PARAMETERS
-;       SPRITE NUM (0-32)
-;       SPRITE PATTERN DATA (8 BYTES OR 16 BYTES)
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPRDEF:
+SETUPMODE2_MIXED:
+        LDA     #$01
+        STA     F:VideoMixedMode
+        LDA     <VIDEOMODE
+        ORA     #$80
+        STA     <VIDEOMODE
         RTS
-
-
-;___LAB_VIDST_______________________________________________
-;
-; RETURN VIDEO STATUS BYTE
-;
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-LAB_VIDST:
-LAB_PVIDST:
-        RTS
-
-
-;___SPRSIZE_________________________________________________
-;
-; SET SPRITE SIZE AND MAGNIFICATION
-;
-;  TAKES ONE PARAMETER
-;
-; 0= 8X8 SPRITES, 1x DISPLAY
-; 1= 8X8 SPRITES, 2X DISPLAY
-; 2= 16X16 SPRITES, 1X DISPLAY
-; 3= 16X16 SPRITES, 2X DISPLAY
-;
-; THIS IS NATIVE '816 CODE
-;__________________________________________________________
-V_SPRSIZE:
-        RTS
-
 
 
 ;___V_PLOT__________________________________________________
 ;
 ;  PLOT ON SCREEN
-;         VM= 1     TAKES THREE PARAMETERS,  X,Y,COLOR
-;         VM= 4     TAKES FOUR PARAMETERS,  X,Y,PRIORITY,COLOR
-;         VM= 0 AND 3     TAKES THREE PARAMETERS,  X,Y,PATTERN
+;         TAKES THREE PARAMETERS,  X,Y,COLOR
 ;
-;  0=GRAPHICS MODE (32X24)
-;  1=MULTICOLOR MODE (64X48 BLOCKS)
-;  2=TEXT MODE (40X24)
-;  3=GRAPHICS MODE 0, WITH MODE 2 COLOR (32X24 MULTICOLOR)
-;  4=GRAPHICS MODE 2 (32X24 MULTICOLOR)
 ; THIS IS NATIVE '816 CODE
 ;__________________________________________________________
 V_PLOT:
@@ -259,7 +319,7 @@ V_PLOT:
 
 ;___V_PATTERN________________________________________________
 ;
-;  DEFINE GGRAPHICS PATTERN
+;  DEFINE GRAPHICS PATTERN
 ;
 ;  TAKES 10 PARAMETERS
 ;       PATTERN NUM (0-255)

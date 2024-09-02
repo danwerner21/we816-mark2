@@ -235,6 +235,17 @@ GetVideoAddressOffset:
         CLC
         ADC     F:TEMP
         STA     F:TEMP
+; if 80 columns double it.
+        ACCUMULATOR8
+        LDA     F:VIDEOWIDTH
+        CMP     #40
+        BEQ     :+
+        ACCUMULATOR16
+        LDA     F:TEMP
+        ASL     A
+        STA     F:TEMP
+:
+        ACCUMULATOR16
         LDA     F:CSRX
         AND     #$00FF
         CLC
@@ -243,6 +254,7 @@ GetVideoAddressOffset:
         ACCUMULATOR8
         PLA
         RTS
+
 
 
 
@@ -288,6 +300,37 @@ ScrollUp:
         PHP
         PHB
         SETBANK 0
+; if 80 columns double it.
+        ACCUMULATOR8
+        LDA     F:VIDEOWIDTH
+        CMP     #40
+        BEQ     ScrollUp_40
+
+        ACCUMULATORINDEX16
+        LDA     #$0729          ; SCROLL SCREEN MEMORY
+        LDX     #$1050
+        LDY     #$1000
+        MVN     #$00,#$00
+
+        LDA     #$0729          ; SCROLL COLOR MEMORY
+        LDX     #$1850
+        LDY     #$1800
+        MVN     #$00,#$00
+
+        ACCUMULATORINDEX8
+        LDX     #$00            ; CLEAR BOTTOM LINE
+
+ScrollUpLoop80:
+        LDA     #32
+        STA     F:$1730,X
+        LDA     F:DEFAULT_COLOR
+        STA     F:$1F30,X
+        INX
+        CPX     #80
+        BNE     ScrollUpLoop80
+        JMP     ScrollUpEnd
+
+ScrollUp_40:
         ACCUMULATORINDEX16
 
         LDA     #$0397          ; SCROLL SCREEN MEMORY
@@ -302,26 +345,24 @@ ScrollUp:
 
         ACCUMULATORINDEX8
         LDX     #$00            ; CLEAR BOTTOM LINE
-ScrollUpLoop:
+ScrollUpLoop40:
         LDA     #32
         STA     F:$1398,X
         LDA     F:DEFAULT_COLOR
         STA     F:$1B98,X
         INX
         CPX     #40
-        BNE     ScrollUpLoop
+        BNE     ScrollUpLoop40
+ScrollUpEnd:
         LDX     #0
         LDY     #23
         JSR     SetXY
-
         PLB
         PLP
         PLY
         PLX
         PLA
         RTS
-
-
 
 
 ;__ClearScreen___________________________________________________________________________
@@ -336,15 +377,29 @@ ClearScreen:
 
 
 ; Now let's clear
-        LDA     #32
+        LDA     F:VIDEOWIDTH
+        CMP     #80
+        BEQ     :+
         LDX     #$03C1
+        BRA     :++
+:
+        LDX     #$0780
+:
+        LDA     #32
 ClearScreen1:
         DEX
         STA     F:$1000,X
         BNE     ClearScreen1
 
-        LDA     F:DEFAULT_COLOR
+        LDA     F:VIDEOWIDTH
+        CMP     #80
+        BEQ     :+
         LDX     #$03C1
+        BRA     :++
+:
+        LDX     #$0780
+:
+        LDA     F:DEFAULT_COLOR
 ClearScreen2:
         DEX
         STA     F:$1800,X
@@ -359,6 +414,7 @@ ClearScreen2:
         PLA
         PLY
         RTS
+
 
 
 

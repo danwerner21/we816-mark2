@@ -18,7 +18,7 @@ testsnd.out: testsnd.asm
 	ca65   testsnd.asm -l testsnd.lst -o testsnd.o
 	ld65 testsnd.o -m testsnd.map -C rom816.cfg -o testsnd.out
 
-rombios816.out: rombios816.asm conserial.asm iec.asm conlocal.asm macros.asm
+rombios816.out: rombios816.asm conserial.asm iec.asm conlocal.asm macros.asm rtc.asm
 	ca65   rombios816.asm -l rombios816.lst -o rombios816.o
 	ld65 rombios816.o -m rombios816.map -C rom816.cfg -o rombios816.out
 
@@ -55,6 +55,7 @@ pretty:
 	pretty6502 -p1 -a0 -du -mu -l ./backup/conserial.asm conserial.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/conlocal.asm conlocal.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/iec.asm iec.asm
+	pretty6502 -p1 -a0 -du -mu -l ./backup/rtc.asm rtc.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/rombios816.asm rombios816.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/scrm816.asm scrm816.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/testiec.asm testiec.asm

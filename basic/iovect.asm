@@ -60,8 +60,8 @@ VideoHiresMode  = $fe38
 VideoDoubleHires = $fe39
 Video80col      = $fe3A
 VideoMixedMode  = $fe3b
-VideoQuadLores  = $fe3c
-VideoMonoLores  = $fe3d
+VideoQuadHires  = $fe3c
+VideoMonoHires  = $fe3d
 
 
 ;__________________________________________________________

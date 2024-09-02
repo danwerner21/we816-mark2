@@ -14,19 +14,18 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
 * V0.08 board
         U13 should be a 22V10 rather than a 20V8  (no patches required)
         U31 should be 74ALS245 rather than 74AC245 (no patches required)
+        The Footprints for the expansion(J7) and Keyboard(J3) connectors are wrong -- special cables are required to connect this version to keyboard and expansion
 
 
 ## To Do:
-* BIOS RTC Code
 * Basic Access to RTC
 * Document BIOS Calls
-
-* Video speed is not fast enough to deal with a clock speed > (around) 2mhz (1.8 work perfectly)  Need to add wait state hardware for video
-* BASIC COMMANDS FOR Video Firmware for Pi Pico
-** 80 COLUMN MODE
-** Hires Graphics (with pallette)
-** Lores Graphics (more colors also with pallette)
-
+* Document Jumper Settings
+* Document IO Ports
+* Memory Map
+* Video speed is not fast enough to deal with a clock speed > (around) 2mhz (1.8432 works perfectly)  Need to add wait state hardware for video
+* Fix Mixed Mode Text Handling
+* Add Pictures to this Document
 ---
 
 
