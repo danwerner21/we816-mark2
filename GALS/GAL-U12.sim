@@ -1,4 +1,5 @@
 %SIGNAL
+PIN  12 =  VDA 
 PIN   2 =  a0 
 PIN   3 =  a1 
 PIN   4 =  a2 
@@ -8,13 +9,11 @@ PIN   7 =  a5
 PIN   8 =  a6 
 PIN   9 =  a7 
 PIN  16 = !cs_rtc 
-PIN  13 = !cs_snd 
 PIN  19 = !cs_uart 
 PIN  17 = !cs_vdp 
 PIN  15 = !cs_via1 
 PIN  14 = !cs_via2 
 PIN   1 = !io 
-PIN  18 = !rtc_ad_wr 
 PIN  11 = !wr 
 %END
 
@@ -23,10 +22,7 @@ PIN  11 = !wr
 
 %EQUATION
 cs_rtc =>
-    a0 & !a1 & !a2 & a3 & !a4 & !a5 & !a6 & !a7 & !io
-
-cs_snd =>
-    !a1 & a2 & a3 & !a4 & !a5 & !a6 & !a7 & !io
+    !a5 & a6 & !a7 & !io
 
 cs_uart =>
     !a3 & !a4 & !a5 & !a6 & !a7 & !io
@@ -39,8 +35,5 @@ cs_via1 =>
 
 cs_via2 =>
     !a4 & a5 & !a6 & !a7 & !io
-
-rtc_ad_wr =>
-    !a0 & !a1 & !a2 & a3 & !a4 & !a5 & !a6 & !a7 & !io & !wr
 
 %END

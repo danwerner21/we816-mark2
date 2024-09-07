@@ -22,13 +22,14 @@ busak =>
 
 data_dir =>
     bus
-  # phi
   # !rw
 
 rd =>
-    phi & rw
+    phi & rw & vda
+  # phi & rw & vpa
 
 wr =>
-    phi & !rw
+    phi & !rw & vda
+  # phi & !rw & vpa
 
 %END

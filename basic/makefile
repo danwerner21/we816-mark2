@@ -2,7 +2,7 @@
 all:  	  dbasic816.hex
 
 
-dbasic816.out: dbasic816.asm definitions.asm diskcmds.asm iovect.asm macros.asm messages.asm numconst.asm screencmds.asm tokens.asm zeropage.asm diskcmds.asm screencmds.asm ay38910.asm
+dbasic816.out: dbasic816.asm definitions.asm diskcmds.asm iovect.asm macros.asm messages.asm numconst.asm screencmds.asm tokens.asm zeropage.asm diskcmds.asm screencmds.asm ay38910.asm rtc.asm
 	ca65   dbasic816.asm -l dbasic816.lst -o dbasic816.o
 	ld65 dbasic816.o -m dbasic816.map -C rom816.cfg -o dbasic816.out
 
@@ -28,7 +28,7 @@ pretty:
 	pretty6502 -p1 -a0 -du -mu -l ./backup/diskcmds.asm diskcmds.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/screencmds.asm screencmds.asm
 	pretty6502 -p1 -a0 -du -mu -l ./backup/ay38910.asm ay38910.asm
-
+	pretty6502 -p1 -a0 -du -mu -l ./backup/rtc.asm rtc.asm
 
 clean:
 	@rm -f *.o

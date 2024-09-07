@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Fri Aug 09 16:26:30 2024 "}
+  {DBtime "Sat Sep 07 13:25:28 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,32 +33,32 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P IO' {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
-   {P A0 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
-   {P A1 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
-   {P A2 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
-   {P A3 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
-   {P A4 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
-   {P A5 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
-   {P A6 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
-   {P A7 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
-   {P WR' {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
-   {P CS_SND' {Pt "I/O"}{Lq 0}{Ploc 300 20}}
-   {P CS_VIA2' {Pt "I/O"}{Lq 0}{Ploc 300 40}}
-   {P CS_VIA1' {Pt "I/O"}{Lq 0}{Ploc 300 60}}
-   {P CS_RTC' {Pt "I/O"}{Lq 0}{Ploc 300 80}}
-   {P CS_VDP' {Pt "I/O"}{Lq 0}{Ploc 300 100}}
-   {P RTC_AD_W' {Pt "I/O"}{Lq 0}{Ploc 300 120}}
-   {P CS_UART' {Pt "I/O"}{Lq 0}{Ploc 300 140}}
+   {P IO' {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P A0 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P A1 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P A2 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P A3 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P A4 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P A5 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P A6 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P A7 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P WR' {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P VDA {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
+   {P CS_VIA2' {Pt "I/O"}{Lq 0}{Ploc 300 20}}
+   {P CS_VIA1' {Pt "I/O"}{Lq 0}{Ploc 300 40}}
+   {P CS_RTC' {Pt "I/O"}{Lq 0}{Ploc 300 60}}
+   {P CS_VDP' {Pt "I/O"}{Lq 0}{Ploc 300 80}}
+   {P CS_UART' {Pt "I/O"}{Lq 0}{Ploc 300 100}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 200 230}
+   {Rdl 200 250}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
+   {Pnl 120 230}
    {Pnl 120 210}
    {Pnl 120 190}
    {Pnl 120 170}
@@ -75,18 +75,17 @@
    {Pnl 280 70}
    {Pnl 280 90}
    {Pnl 280 110}
-   {Pnl 280 130}
-   {Pnl 280 150}
 
-   {Sd A 1 2 3 4 5 6 7 8 9 11 13 14 15 16 17 18 19}
+   {Sd A 1 2 3 4 5 6 7 8 9 11 12 14 15 16 17 19}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 220 270 0}
-   {L 120 200 100 200}
-   {C 125 200 5}
+   {R 130 240 270 0}
+   {L 120 220 100 220}
+   {C 125 220 5}
+   {L 130 200 100 200}
    {L 130 180 100 180}
    {L 130 160 100 160}
    {L 130 140 100 140}
@@ -94,9 +93,9 @@
    {L 130 100 100 100}
    {L 130 80 100 80}
    {L 130 60 100 60}
-   {L 130 40 100 40}
-   {L 120 20 100 20}
-   {C 125 20 5}
+   {L 120 40 100 40}
+   {C 125 40 5}
+   {L 130 20 100 20}
    {C 275 20 5}
    {L 280 20 300 20}
    {C 275 40 5}
@@ -107,30 +106,25 @@
    {L 280 80 300 80}
    {C 275 100 5}
    {L 280 100 300 100}
-   {C 275 120 5}
-   {L 280 120 300 120}
-   {C 275 140 5}
-   {L 280 140 300 140}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "IO'" 140 200}
-   {T "A0" 140 180}
-   {T "A1" 140 160}
-   {T "A2" 140 140}
-   {T "A3" 140 120}
-   {T "A4" 140 100}
-   {T "A5" 140 80}
-   {T "A6" 140 60}
-   {T "A7" 140 40}
-   {T "WR'" 140 20}
+   {T "IO'" 140 220}
+   {T "A0" 140 200}
+   {T "A1" 140 180}
+   {T "A2" 140 160}
+   {T "A3" 140 140}
+   {T "A4" 140 120}
+   {T "A5" 140 100}
+   {T "A6" 140 80}
+   {T "A7" 140 60}
+   {T "WR'" 140 40}
+   {T "VDA" 140 20}
    [Tj "RC"]
-   {T "CS_SND'" 260 20}
-   {T "CS_VIA2'" 260 40}
-   {T "CS_VIA1'" 260 60}
-   {T "CS_RTC'" 260 80}
-   {T "CS_VDP'" 260 100}
-   {T "RTC_AD_W'" 260 120}
-   {T "CS_UART'" 260 140}
+   {T "CS_VIA2'" 260 20}
+   {T "CS_VIA1'" 260 40}
+   {T "CS_RTC'" 260 60}
+   {T "CS_VDP'" 260 80}
+   {T "CS_UART'" 260 100}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "G16V8AS" 200 -10}
@@ -144,7 +138,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD N:\PROJECTS\WE816-MARK2\GALS\GAL-U12 200 220}
+    {At PLD N:\PROJECTS\WE816-MARK2\GALS\GAL-U12 200 240}
    }
   }
  }
@@ -174,7 +168,7 @@
    }
    {N WR'
    }
-   {N CS_SND'
+   {N VDA
    }
    {N CS_VIA2'
    }
@@ -183,8 +177,6 @@
    {N CS_RTC'
    }
    {N CS_VDP'
-   }
-   {N RTC_AD_W'
    }
    {N CS_UART'
    }

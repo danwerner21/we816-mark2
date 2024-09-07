@@ -6,7 +6,7 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (date "2024-08-11")
+    (date "2024-09-07")
     (rev "V0.90")
   )
 
@@ -4525,7 +4525,7 @@
     (property "Reference" "U30" (at 361.95 52.07 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "74AC373" (at 363.22 60.96 0)
+    (property "Value" "74ALS373" (at 363.22 60.96 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads" (at 361.95 52.07 0)
@@ -4569,7 +4569,7 @@
     (property "Reference" "U31" (at 365.76 93.345 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Value" "74AC245" (at 359.41 114.3 0)
+    (property "Value" "74ALS245" (at 359.41 114.3 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
     (property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads" (at 363.22 107.95 0)

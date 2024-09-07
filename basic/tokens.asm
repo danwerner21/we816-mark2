@@ -125,7 +125,8 @@ TK_MAX          = TK_BITTST+1   ; MAX token
 TK_MIN          = TK_MAX+1      ; MIN token
 TK_PI           = TK_MIN+1      ; PI token
 TK_IECST        = TK_PI+1       ; IECST token
-TK_VPTR         = TK_IECST+1    ; VARPTR token
+TK_SECOND       = TK_IECST+1    ; SECOND token
+TK_VPTR         = TK_SECOND+1   ; VARPTR token
 TK_LEFTS        = TK_VPTR+1     ; LEFT$ token
 TK_RIGHTS       = TK_LEFTS+1    ; RIGHT$ token
 TK_MIDS         = TK_RIGHTS+1   ; MID$ token
@@ -229,6 +230,7 @@ LAB_FTPM        = LAB_FTPL+$01
         .WORD   LAB_MMPP-1      ; MIN()		"
         .WORD   LAB_PPBI-1      ; PI		advance pointer
         .WORD   LAB_PIECST-1    ; IECST		"
+        .WORD   LAB_PSECOND-1   ; SECOND	"
         .WORD   $0000           ; VARPTR()	none
         .WORD   LAB_LRMS-1      ; LEFT$()	process string expression
         .WORD   LAB_LRMS-1      ; RIGHT$()		"
@@ -269,6 +271,7 @@ LAB_FTBM        = LAB_FTBL+$01
         .WORD   LAB_MIN-1       ; MIN()		new function
         .WORD   LAB_PI-1        ; PI			new function
         .WORD   LAB_IECST-1     ; IECST		new function
+        .WORD   LAB_SECOND-1    ; SECOND	new function
         .WORD   LAB_VARPTR-1    ; VARPTR()		new function
         .WORD   LAB_LEFT-1      ; LEFT$()
         .WORD   LAB_RIGHT-1     ; RIGHT$()
@@ -606,9 +609,11 @@ LBB_SADD:
 LBB_SAVE:
         .BYTE   "AVE",TK_SAVE   ; SAVE
 LBB_SCNCLR:
-        .BYTE   "CNCLR",TK_SCNCLR; SCNCLR
+        .BYTE   "CNCLR",TK_SCNCLR ; SCNCLR
 LBB_SCREEN:
-        .BYTE   "CREEN",TK_SCREEN; SCREEN
+        .BYTE   "CREEN",TK_SCREEN ; SCREEN
+LBB_SECOND:
+        .BYTE   "ECOND",TK_SECOND   ; SECOND
 LBB_SGN:
         .BYTE   "GN(",TK_SGN    ; SGN(
 LBB_SIN:
@@ -918,6 +923,8 @@ LAB_KEYT:
         .WORD   LBB_PI          ; PI
         .BYTE   5,'I'           ;
         .WORD   LBB_IECST       ; IECST
+        .BYTE   6,'S'           ;
+        .WORD   LBB_SECOND      ; SECOND
         .BYTE   5,'V'           ;
         .WORD   LBB_VPTR        ; VARPTR
         .BYTE   6,'L'           ;

@@ -33,11 +33,11 @@ FootHole        = 4.4;
 
 /* [STL element to export] */
 //Top shell
-  TShell        = 1;// [0:No, 1:Yes]
+  TShell        = 0;// [0:No, 1:Yes]
 //Bottom shell
   BShell        = 0;// [0:No, 1:Yes]
 // logo plate  
-  RLogo         = 0;// Logo
+  RLogo         = 1;// Logo
 
 
   
@@ -285,8 +285,8 @@ module BottomShell(){
             } 
 
             // Video, Audio, IEC Opening    
-            translate([-1,(Thick)+25,Thick]){
-              cube([21,65,BottomHeight-3]);
+            translate([-1,(Thick)+6,Thick]){
+              cube([21,84,BottomHeight-3]);
             }   
 
     

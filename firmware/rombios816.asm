@@ -24,8 +24,7 @@ UART4           = $FE04         ;   MODEM CONTROL
 UART5           = $FE05         ;   LINE STATUS
 UART6           = $FE06         ;   MODEM STATUS
 
-RTCA            = $FE08         ;   RTC Address REGISTER.
-RTC             = $FE09         ;   RTC Data REGISTER.
+
 
 via1regb        = $FE10         ; Register
 via1rega        = $FE11         ; Register
@@ -355,7 +354,6 @@ nothere:
         .INCLUDE "conserial.asm"
         .INCLUDE "conlocal.asm"
         .INCLUDE "iec.asm"
-        .INCLUDE "rtc.asm"
 ;______________________________________________________________
 
 
@@ -392,10 +390,10 @@ LUNCURSORVEC:
         JSR     UNCURSOR
         RTL
 LWRITERTC:
-        JSR     RTCWRITE
+        JSR     DONOOP
         RTL
 LREADRTC:
-        JSR     RTCREAD
+        JSR     DONOOP
         RTL
 LIECIN:
         JSR     LAB_EF19        ;. Read byte from serial bus. (Must call TALK and TALKSA beforehands.)
@@ -449,7 +447,7 @@ LClearScrVec:
         JSR     ClearScreen     ; clear the 9918 Screen
         RTL
 LLOADFONTVec:
-        JSR     DONOOP          ; LOAD THE FONT
+        JSR     DONOOP
         RTL
 
         .SEGMENT "EJUMP"
@@ -474,9 +472,9 @@ CURSORVEC:
 UNCURSORVEC:
         JMP     UNCURSOR
 WRITERTC:
-        JMP     RTCWRITE
+        JMP     DONOOP
 READRTC:
-        JMP     RTCREAD
+        JMP     DONOOP
 IECIN:
         JMP     LAB_EF19        ; Read byte from serial bus. (Must call TALK and TALKSA beforehands.)
 IECOUT:
@@ -512,7 +510,7 @@ IECCLSLF:
 ClearScrVec:
         JMP     ClearScreen     ; clear the 9918 Screen
 LOADFONTVec:
-        JMP     DONOOP          ; LOAD THE FONT
+        JMP     DONOOP
 
         .SEGMENT "VECTORS"
 ; 65c816 Native Vectors

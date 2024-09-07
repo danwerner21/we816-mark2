@@ -430,7 +430,13 @@ INITKEYBOARD:
         STA     F:LEDS
         LDA     #00
         STA     KeyLock
-        JSR     CapsLockOn
+
+        LDA     #$20
+        STA     F:LEDS
+        STA     F:via2regb
+        LDA     #72
+        STA     F:KeyLock
+
         PLA
         PLP
         RTS

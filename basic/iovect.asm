@@ -65,6 +65,8 @@ VideoMixedMode  = $fe3b
 VideoQuadHires  = $fe3c
 VideoMonoHires  = $fe3d
 
+RTCA            = $FE08         ;   RTC Address REGISTER.
+RTC             = $FE09         ;   RTC Data REGISTER.
 
 ;__________________________________________________________
 
@@ -111,6 +113,7 @@ V_OUTP: ; send byte to output device
         .INCLUDE "diskcmds.asm"
         .INCLUDE "screencmds.asm"
         .INCLUDE "ay38910.asm"
+        .INCLUDE "rtc.asm"
 
 
 

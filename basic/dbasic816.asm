@@ -2080,8 +2080,8 @@ LAB_18E3:
         LDA     #$3F            ; load "?" character
 
 ; print character in A
-; now .includes the null handler
-; also .includes infinite line length code
+; now includes the null handler
+; also includes infinite line length code
 ; note! some routines expect this one to exit with Zb=0
 
 LAB_PRNA:
@@ -6925,7 +6925,7 @@ LAB_CBIN:
 LAB_EXCH:
         JMP     LAB_28F6        ; evaluate -ve flag and return
 
-; ctrl-c check routine. .includes limited "life" byte save for INGET routine
+; ctrl-c check routine. includes limited "life" byte save for INGET routine
 ; now also the code that checks to see if an interrupt has occurred
 
 CTRLC:

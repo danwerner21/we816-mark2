@@ -22,21 +22,7 @@ PIN   16  = !rd     	; /*                                 */
 PIN   15  = !wr     	; /*                                 */
 PIN   14  = !data_dir	; /*                                 */
 
-rd =  phi & rw ;
-wr =  phi & !rw ;
+rd =  phi & rw & ( vda # vpa) ;
+wr =  phi & !rw & ( vda # vpa) ;
 busak = 'b'0 ;
-data_dir = bus # phi # !rw  ;
-
-
-/*****
-PIN   9   = !busrq      ;
-PIN   19  = !mreq   	;
-PIN   18  = !iorq   	;
-PIN   13  = !m1	;
-mreq = !io & bus & phi ;
-iorq = !bus & io & phi ;
-m1 = vda & vpa ;
-data_dir = !bus ;
-busak = phi & (bus # io) ;
-
-*/
+data_dir = bus # !rw  ;

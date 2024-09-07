@@ -13,6 +13,7 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
         U13 should be a 22V10 rather than a 20V8  (no patches required)
         U31 should be 74ALS245 rather than 74AC245 (no patches required)
         The Footprints for the expansion(J7) and Keyboard(J3) connectors are wrong -- special cables are required to connect this version to keyboard and expansion
+        RTC IS STILL BROKEN, DO NOT POPULATE U7,U8,X3,C36,C37,C34,R1,R2,R3,U9,BT1,K4,JP1, & JP2
 
 
 ## To Do:
