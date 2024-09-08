@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 18228)
+    (start_pass_no 38092)
     (layer_rule Component
       (active on)
       (preferred_direction horizontal)
@@ -63,7 +63,7 @@
     )
   )
   (class "kicad_default"
-    "Net-(#FLG03-pwr)" "Net-(#FLG04-pwr)" "Net-(U7-OSCIN)" "Net-(U7-OSCOUT)" "Net-(C37-Pad2)" "Net-(U17-C1+)" "Net-(U17-C1-)" "Net-(U17-C2+)"
+    "Net-(BT2-+)" "Net-(U19-X1)" "Net-(U19-X2)" "unconnected-(U19-*PWR-Pad1)" "unconnected-(U19-*RST-Pad4)" "Net-(U17-C1+)" "Net-(U17-C1-)" "Net-(U17-C2+)"
     "Net-(C44-Pad2)" "Net-(C45-Pad1)" "Net-(C46-Pad2)" "Net-(C47-Pad2)" "B_INT" "VIA2_INT" "VIA1_INT" "Net-(U17-C2-)"
     "P1_B" "P1_A" "P1_R" "P1_L" "P1_D" "P1_U" "P2_B" "P2_A"
     "P2_R" "P2_L" "P2_D" "P2_U" "Net-(J4-Pad3)" SERSRQ SERCLKIN SERDATAIN
@@ -89,24 +89,22 @@
     URESET "Net-(J11-Pad3)" "N_EMU" "B_RW" "O1_ROM" "unconnected-(J11-Pad4)" "unconnected-(J11-Pad9)" "unconnected-(J11-Pad11)"
     "unconnected-(J11-Pad12)" "Net-(J11-Pad13)" "Net-(J11-Pad14)" "unconnected-(J11-Pad15)" "unconnected-(U2-Pad8)" "unconnected-(U2-Pad9)" "unconnected-(U2-Pad10)" "unconnected-(U2-Pad11)"
     "unconnected-(U2-Pad12)" "unconnected-(U2-Pad13)" "unconnected-(U3-Pad1)" "unconnected-(U3-Pad2)" "Net-(U3-Pad9)" "unconnected-(U3-Pad10)" "unconnected-(U3-Pad11)" "Net-(U3-Pad13)"
-    "~{RTC_CS}" "unconnected-(U4-Pad10)" "unconnected-(U4-Pad11)" "~{RTC_CS_O}" "unconnected-(U13-I020-Pad20)" "Net-(K2-Pin_2)" "Net-(K3-Pin_2)" "Net-(K4-Pin_2)"
-    "unconnected-(P1-Pin_1-Pad1)" "unconnected-(P1-Pin_2-Pad2)" "unconnected-(P1-Pin_7-Pad7)" "unconnected-(P1-Pin_8-Pad8)" "unconnected-(P1-Pin_10-Pad10)" "Net-(P2-Pin_1)" "Net-(P2-Pin_2)" "Net-(P2-Pin_3)"
-    "Net-(P4-Pin_1)" "Net-(U7-ADJ)" "Net-(U7-CS)" "V_RW" VDSEL "V_CLK" VGAR500 VGAR1K
-    VGAR2K VGAG500 VGAG1L VGAG2K VGAB500 VGAB1K VGAB2K HSYNC
-    VSYNC "VADDR_HIGH" "VADDR_LOW" VDATA "unconnected-(RN1-R5-Pad6)" "unconnected-(RR1-R1-Pad2)" "unconnected-(RR2-R4-Pad5)" "unconnected-(RR2-R5-Pad6)"
-    "unconnected-(RR4-R5-Pad6)" "unconnected-(U1-PA5-Pad7)" "unconnected-(U1-PA6-Pad8)" "unconnected-(U1-CB1-Pad18)" "unconnected-(U1-CB2-Pad19)" "unconnected-(U1-CA1-Pad40)" "unconnected-(U3-Pad3)" "unconnected-(U3-Pad4)"
-    "unconnected-(U4-Pad5)" "unconnected-(U4-Pad6)" "unconnected-(U6-I10{slash}~{OE}-Pad11)" "unconnected-(U6-IO8-Pad12)" "unconnected-(U6-IO7-Pad13)" "unconnected-(U6-IO6-Pad14)" "unconnected-(U6-IO5-Pad15)" "unconnected-(U6-IO4-Pad16)"
-    "unconnected-(U6-I03-Pad17)" "VIDEO_WS" "VIDEO_WINDOW" "Net-(U7-A0)" "Net-(U7-A1)" "Net-(U7-A2)" "Net-(U7-A3)" "unconnected-(U8-~{Q0}-Pad3)"
-    "unconnected-(U8-~{Q1}-Pad6)" "~{RTC_AD_WR}" "unconnected-(U8-~{Q2}-Pad11)" "unconnected-(U8-~{Q3}-Pad14)" "Net-(U30-LE)" "unconnected-(U10-Pad4)" "unconnected-(U10-Pad6)" "unconnected-(U10-Pad8)"
-    "unconnected-(U10-Pad10)" "unconnected-(U10-Pad12)" "unconnected-(U11-M{slash}XXTAL-Pad38)" "unconnected-(U12-IO8-Pad12)" "unconnected-(U12-IO7-Pad13)" "unconnected-(U14-I9-Pad9)" "unconnected-(U14-I10{slash}~{OE}-Pad11)" "unconnected-(U14-IO8-Pad12)"
-    "unconnected-(U14-IO7-Pad13)" "unconnected-(U14-IO2-Pad18)" "unconnected-(U14-IO1-Pad19)" "Net-(U15-RCLK)" "unconnected-(U15-XOUT-Pad17)" "unconnected-(U15-DDIS-Pad23)" "unconnected-(U15-~{TXRDY}-Pad24)" "unconnected-(U15-~{RXRDY}-Pad29)"
-    "unconnected-(U15-~{OUT2}-Pad31)" "unconnected-(U15-~{DTR}-Pad33)" "unconnected-(U15-~{OUT1}-Pad34)" "unconnected-(U15-~{DSR}-Pad37)" "unconnected-(U15-~{DCD}-Pad38)" "unconnected-(U15-~{RI}-Pad39)" "unconnected-(U21-I1a-Pad4)" "unconnected-(U21-I3a-Pad8)"
-    "unconnected-(U21-O0b-Pad9)" "unconnected-(U21-I0b-Pad11)" "unconnected-(U21-O3a-Pad12)" "unconnected-(U21-O1a-Pad16)" "unconnected-(U25-NC-Pad2)" "unconnected-(U25-NC-Pad5)" "unconnected-(U25-IOB7-Pad6)" "unconnected-(U25-IOB6-Pad7)"
-    "unconnected-(U25-IOA7-Pad14)" "unconnected-(U25-IOA6-Pad15)" "unconnected-(U25-~{SEL}-Pad26)" "unconnected-(U25-TEST1-Pad39)" "VDATA_DIR" "V_DA7" "V_DA6" "V_DA5"
-    "V_DA4" "V_DA3" "V_DA2" "V_DA1" "V_DA0" "unconnected-(U36-GND-Pad23)" "unconnected-(U36-GND-Pad28)" "unconnected-(U36-RUN-Pad30)"
-    "unconnected-(U36-AGND-Pad33)" "unconnected-(U36-ADC_VREF-Pad35)" "unconnected-(U36-3V3-Pad36)" "unconnected-(U36-3V3_EN-Pad37)" "unconnected-(U36-GND-Pad38)" "unconnected-(U36-VBUS-Pad40)" "unconnected-(U36-SWCLK-Pad41)" "unconnected-(U36-GND-Pad42)"
-    "unconnected-(U36-SWDIO-Pad43)" "unconnected-(U16-I8-Pad8)" FF1 FF2 WS1 WS2 "unconnected-(U16-I03-Pad17)" "unconnected-(U16-IO2-Pad18)"
-    "unconnected-(U16-IO1-Pad19)"
+    "~{RTC_CS}" "unconnected-(U4-Pad10)" "unconnected-(U4-Pad11)" "unconnected-(U19-SQW-Pad23)" "unconnected-(U13-I020-Pad20)" "Net-(K2-Pin_2)" "Net-(K3-Pin_2)" "unconnected-(P1-Pin_1-Pad1)"
+    "unconnected-(P1-Pin_2-Pad2)" "unconnected-(P1-Pin_7-Pad7)" "unconnected-(P1-Pin_8-Pad8)" "unconnected-(P1-Pin_10-Pad10)" "Net-(P2-Pin_1)" "Net-(P2-Pin_2)" "Net-(P2-Pin_3)" "Net-(P4-Pin_1)"
+    "V_RW" VDSEL "V_CLK" VGAR500 VGAR1K VGAR2K VGAG500 VGAG1L
+    VGAG2K VGAB500 VGAB1K VGAB2K HSYNC VSYNC "VADDR_HIGH" "VADDR_LOW"
+    VDATA "unconnected-(RN1-R5-Pad6)" "unconnected-(RR1-R1-Pad2)" "unconnected-(RR2-R4-Pad5)" "unconnected-(RR2-R5-Pad6)" "unconnected-(RR4-R5-Pad6)" "unconnected-(U1-PA5-Pad7)" "unconnected-(U1-PA6-Pad8)"
+    "unconnected-(U1-CB1-Pad18)" "unconnected-(U1-CB2-Pad19)" "unconnected-(U1-CA1-Pad40)" "unconnected-(U3-Pad3)" "unconnected-(U3-Pad4)" "unconnected-(U4-Pad5)" "unconnected-(U4-Pad6)" "unconnected-(U6-I10{slash}~{OE}-Pad11)"
+    "unconnected-(U6-IO8-Pad12)" "unconnected-(U6-IO7-Pad13)" "unconnected-(U6-IO6-Pad14)" "unconnected-(U6-IO5-Pad15)" "unconnected-(U6-IO4-Pad16)" "unconnected-(U6-I03-Pad17)" "VIDEO_WS" "VIDEO_WINDOW"
+    "~{RTC_AD_WR}" "Net-(U30-LE)" "unconnected-(U10-Pad4)" "unconnected-(U10-Pad6)" "unconnected-(U10-Pad8)" "unconnected-(U10-Pad10)" "unconnected-(U10-Pad12)" "unconnected-(U11-M{slash}XXTAL-Pad38)"
+    "unconnected-(U12-IO7-Pad13)" "unconnected-(U14-I9-Pad9)" "unconnected-(U14-I10{slash}~{OE}-Pad11)" "unconnected-(U14-IO8-Pad12)" "unconnected-(U14-IO7-Pad13)" "unconnected-(U14-IO2-Pad18)" "unconnected-(U14-IO1-Pad19)" "Net-(U15-RCLK)"
+    "unconnected-(U15-XOUT-Pad17)" "unconnected-(U15-DDIS-Pad23)" "unconnected-(U15-~{TXRDY}-Pad24)" "unconnected-(U15-~{RXRDY}-Pad29)" "unconnected-(U15-~{OUT2}-Pad31)" "unconnected-(U15-~{DTR}-Pad33)" "unconnected-(U15-~{OUT1}-Pad34)" "unconnected-(U15-~{DSR}-Pad37)"
+    "unconnected-(U15-~{DCD}-Pad38)" "unconnected-(U15-~{RI}-Pad39)" "unconnected-(U21-I1a-Pad4)" "unconnected-(U21-I3a-Pad8)" "unconnected-(U21-O0b-Pad9)" "unconnected-(U21-I0b-Pad11)" "unconnected-(U21-O3a-Pad12)" "unconnected-(U21-O1a-Pad16)"
+    "unconnected-(U25-NC-Pad2)" "unconnected-(U25-NC-Pad5)" "unconnected-(U25-IOB7-Pad6)" "unconnected-(U25-IOB6-Pad7)" "unconnected-(U25-IOA7-Pad14)" "unconnected-(U25-IOA6-Pad15)" "unconnected-(U25-~{SEL}-Pad26)" "unconnected-(U25-TEST1-Pad39)"
+    "VDATA_DIR" "V_DA7" "V_DA6" "V_DA5" "V_DA4" "V_DA3" "V_DA2" "V_DA1"
+    "V_DA0" "unconnected-(U36-GND-Pad23)" "unconnected-(U36-GND-Pad28)" "unconnected-(U36-RUN-Pad30)" "unconnected-(U36-AGND-Pad33)" "unconnected-(U36-ADC_VREF-Pad35)" "unconnected-(U36-3V3-Pad36)" "unconnected-(U36-3V3_EN-Pad37)"
+    "unconnected-(U36-GND-Pad38)" "unconnected-(U36-VBUS-Pad40)" "unconnected-(U36-SWCLK-Pad41)" "unconnected-(U36-GND-Pad42)" "unconnected-(U36-SWDIO-Pad43)" "unconnected-(U16-I8-Pad8)" FF1 FF2
+    WS1 WS2 "unconnected-(U16-I03-Pad17)" "unconnected-(U16-IO2-Pad18)" "unconnected-(U16-IO1-Pad19)"
     (clearance_class "kicad_default")
     (via_rule "kicad_default")
     (rule
@@ -116,8 +114,8 @@
       (use_layer Component Copper)
     )
   )
-  (class power
-    GND VCC "VCC_RTC" +3.3V
+  (class POWER
+    GND VCC +3.3V
     (clearance_class default)
     (via_rule default)
     (rule
