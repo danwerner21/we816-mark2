@@ -9,6 +9,7 @@ PIN   7 =  a21
 PIN   8 =  a22 
 PIN   9 =  a23 
 PIN  19 = !video_window 
+PIN  18 = !video_ws 
 %END
 
 %FIELD
@@ -16,6 +17,9 @@ PIN  19 = !video_window
 
 %EQUATION
 video_window =>
+    !a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23
+
+video_ws =>
     !a15 & !a16 & !a17 & !a18 & !a19 & !a20 & !a21 & !a22 & !a23
 
 %END

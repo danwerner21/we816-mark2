@@ -15,4 +15,3 @@ PIN   19  = !video_window ; /*                                 */
 
 
 video_window		=	!a23 & !a22 & !a21 & !a20 & !a19 & !a18 & !a17 & !a16 & !a15 	;
-

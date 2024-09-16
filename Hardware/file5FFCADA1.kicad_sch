@@ -6,8 +6,8 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (date "2024-09-07")
-    (rev "V0.90")
+    (date "2024-09-15")
+    (rev "V1.0")
   )
 
   (lib_symbols
@@ -2085,6 +2085,7 @@
       )
     )
   )
+
 
   (junction (at 261.62 27.94) (diameter 0) (color 0 0 0 0)
     (uuid 0f87eb9a-79bb-4375-8ece-cc7ce0d0126e)

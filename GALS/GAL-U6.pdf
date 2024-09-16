@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Fri Aug 09 16:45:34 2024 "}
+  {DBtime "Sun Sep 15 14:44:17 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -42,7 +42,8 @@
    {P A21 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
    {P A22 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
    {P A23 {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
-   {P VIDEO_WI' {Pt "I/O"}{Lq 0}{Ploc 310 20}}
+   {P VIDEO_WS' {Pt "I/O"}{Lq 0}{Ploc 310 20}}
+   {P VIDEO_WI' {Pt "I/O"}{Lq 0}{Ploc 310 40}}
   }
 
   {PKG
@@ -63,8 +64,9 @@
    {Pnl 120 30}
    [Ts 15][Tj "LC"]
    {Pnl 290 30}
+   {Pnl 290 50}
 
-   {Sd A 1 2 3 4 5 6 7 8 9 19}
+   {Sd A 1 2 3 4 5 6 7 8 9 18 19}
   }
 
   {PIC
@@ -82,6 +84,8 @@
    {L 130 20 100 20}
    {C 285 20 5}
    {L 290 20 310 20}
+   {C 285 40 5}
+   {L 290 40 310 40}
    [Ly "PINNAM"]
    [Tj "LC"]
    {T "A15" 140 180}
@@ -94,7 +98,8 @@
    {T "A22" 140 40}
    {T "A23" 140 20}
    [Tj "RC"]
-   {T "VIDEO_WI'" 270 20}
+   {T "VIDEO_WS'" 270 20}
+   {T "VIDEO_WI'" 270 40}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "G16V8AS" 205 -10}
@@ -135,6 +140,8 @@
    {N A22
    }
    {N A23
+   }
+   {N VIDEO_WS'
    }
    {N VIDEO_WI'
    }

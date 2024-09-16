@@ -125,7 +125,14 @@ TK_MAX          = TK_BITTST+1   ; MAX token
 TK_MIN          = TK_MAX+1      ; MIN token
 TK_PI           = TK_MIN+1      ; PI token
 TK_IECST        = TK_PI+1       ; IECST token
-TK_VPTR         = TK_IECST+1    ; VARPTR token
+TK_SECOND       = TK_IECST+1    ; SECOND token
+TK_MINUTE       = TK_SECOND+1   ; MINUTE token
+TK_HOUR         = TK_MINUTE+1   ; HOUR token
+TK_WEEKD        = TK_HOUR+1     ; WEEKD token
+TK_DAY          = TK_WEEKD+1    ; DAY token
+TK_MONTH        = TK_DAY+1      ; MONTH token
+TK_YEAR         = TK_MONTH+1    ; YEAR token
+TK_VPTR         = TK_YEAR       ; VARPTR token
 TK_LEFTS        = TK_VPTR+1     ; LEFT$ token
 TK_RIGHTS       = TK_LEFTS+1    ; RIGHT$ token
 TK_MIDS         = TK_RIGHTS+1   ; MID$ token
@@ -229,6 +236,13 @@ LAB_FTPM        = LAB_FTPL+$01
         .WORD   LAB_MMPP-1      ; MIN()		"
         .WORD   LAB_PPBI-1      ; PI		advance pointer
         .WORD   LAB_PIECST-1    ; IECST		"
+        .WORD   LAB_PSECOND-1   ; SECOND	"
+        .WORD   LAB_PMINUTE-1   ; MINUTE	"
+        .WORD   LAB_PHOUR-1     ; HOUR  	"
+        .WORD   LAB_PWEEKD-1    ; WEEKD   	"
+        .WORD   LAB_PDAY-1      ; DAY   	"
+        .WORD   LAB_PMONTH-1    ; MONTH	        "
+        .WORD   LAB_PYEAR-1     ; YEAR	        "
         .WORD   $0000           ; VARPTR()	none
         .WORD   LAB_LRMS-1      ; LEFT$()	process string expression
         .WORD   LAB_LRMS-1      ; RIGHT$()		"
@@ -269,6 +283,13 @@ LAB_FTBM        = LAB_FTBL+$01
         .WORD   LAB_MIN-1       ; MIN()		new function
         .WORD   LAB_PI-1        ; PI			new function
         .WORD   LAB_IECST-1     ; IECST		new function
+        .WORD   LAB_SECOND-1    ; SECOND	new function
+        .WORD   LAB_MINUTE-1    ; MINUTE	new function
+        .WORD   LAB_HOUR-1      ; HOUR	        new function
+        .WORD   LAB_WEEKD-1     ; WEEKD	        new function
+        .WORD   LAB_DAY-1       ; DAY	        new function
+        .WORD   LAB_MONTH-1     ; MONTH	        new function
+        .WORD   LAB_YEAR-1      ; YEAR	        new function
         .WORD   LAB_VARPTR-1    ; VARPTR()		new function
         .WORD   LAB_LEFT-1      ; LEFT$()
         .WORD   LAB_RIGHT-1     ; RIGHT$()
@@ -338,6 +359,7 @@ TAB_1STC:
         .BYTE   "U"
         .BYTE   "V"
         .BYTE   "W"
+        .BYTE   "Y"
         .BYTE   "^"
         .BYTE   $00             ; table terminator
 
@@ -373,6 +395,7 @@ TAB_CHRT:
         .WORD   TAB_ASCU        ; table for "U"
         .WORD   TAB_ASCV        ; table for "V"
         .WORD   TAB_ASCW        ; table for "W"
+        .WORD   TAB_ASCY        ; table for "Y"
         .WORD   TAB_POWR        ; table for "^"
 
 ; tables for each start character, note if a longer keyword with the same start
@@ -447,6 +470,8 @@ LBB_COS:
 TAB_ASCD:
 LBB_DATA:
         .BYTE   "ATA",TK_DATA   ; DATA
+LBB_DAY:
+        .BYTE   "AY",TK_DAY     ; DAY
 LBB_DEC:
         .BYTE   "EC",TK_DEC     ; DEC
 LBB_DEF:
@@ -493,6 +518,8 @@ LBB_GOTO:
 TAB_ASCH:
 LBB_HEXS:
         .BYTE   "EX$(",TK_HEXS  ; HEX$(
+LBB_HOUR:
+        .BYTE   "OUR",TK_HOUR  ; HOUR
         .BYTE   $00
 TAB_ASCI:
 LBB_IECINPUT:
@@ -539,8 +566,12 @@ LBB_MIDS:
         .BYTE   "ID$(",TK_MIDS  ; MID$(
 LBB_MIN:
         .BYTE   "IN(",TK_MIN    ; MIN(
+LBB_MINUTE:
+        .BYTE   "INUTE",TK_MINUTE ; MINUTE
 LBB_MONITOR:
-        .BYTE   "ONITOR",TK_MONITOR; MONITOR(
+        .BYTE   "ONITOR",TK_MONITOR ; MONITOR
+LBB_MONTH:
+        .BYTE   "ONTH",TK_MONTH ; MONTH
         .BYTE   $00
 TAB_ASCN:
 LBB_NEW:
@@ -606,9 +637,11 @@ LBB_SADD:
 LBB_SAVE:
         .BYTE   "AVE",TK_SAVE   ; SAVE
 LBB_SCNCLR:
-        .BYTE   "CNCLR",TK_SCNCLR; SCNCLR
+        .BYTE   "CNCLR",TK_SCNCLR ; SCNCLR
 LBB_SCREEN:
-        .BYTE   "CREEN",TK_SCREEN; SCREEN
+        .BYTE   "CREEN",TK_SCREEN ; SCREEN
+LBB_SECOND:
+        .BYTE   "ECOND",TK_SECOND   ; SECOND
 LBB_SGN:
         .BYTE   "GN(",TK_SGN    ; SGN(
 LBB_SIN:
@@ -665,11 +698,18 @@ LBB_VOLUME:
 TAB_ASCW:
 LBB_WAIT:
         .BYTE   "AIT",TK_WAIT   ; WAIT
+LBB_WEEKD:
+        .BYTE   "EEKD",TK_WEEKD     ; WEEKD
 LBB_WHILE:
         .BYTE   "HILE",TK_WHILE ; WHILE
 LBB_WIDTH:
         .BYTE   "IDTH",TK_WIDTH ; WIDTH
         .BYTE   $00
+TAB_ASCY:
+LBB_YEAR:
+        .BYTE   "EAR",TK_YEAR ; YEAR
+        .BYTE   $00
+
 TAB_POWR:
         .BYTE   TK_POWER,$00    ; ^
 
@@ -918,6 +958,20 @@ LAB_KEYT:
         .WORD   LBB_PI          ; PI
         .BYTE   5,'I'           ;
         .WORD   LBB_IECST       ; IECST
+        .BYTE   6,'S'           ;
+        .WORD   LBB_SECOND      ; SECOND
+        .BYTE   6,'M'           ;
+        .WORD   LBB_MINUTE      ; MINUTE
+        .BYTE   4,'H'           ;
+        .WORD   LBB_HOUR        ; HOUR
+        .BYTE   5,'W'           ;
+        .WORD   LBB_WEEKD       ; WEEKD
+        .BYTE   3,'D'           ;
+        .WORD   LBB_DAY         ; DAY
+        .BYTE   5,'M'           ;
+        .WORD   LBB_MONTH       ; MONTH
+        .BYTE   4,'Y'           ;
+        .WORD   LBB_YEAR        ; YEAR
         .BYTE   5,'V'           ;
         .WORD   LBB_VPTR        ; VARPTR
         .BYTE   6,'L'           ;

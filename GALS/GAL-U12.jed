@@ -1,7 +1,7 @@
 
 CUPL(WM)        5.0a  Serial# 60008009
 Device          g16v8as  Library DLIB-h-40-2
-Created         Sat Sep 07 13:25:28 2024
+Created         Sun Sep 15 13:54:06 2024
 Name            GAL-U12 
 Partno          00 
 Revision        01 
@@ -24,4 +24,4 @@ Location
 *L02144 11111111111111111111111111111111
 *L02176 111111111111111110
 *C1B4C
-*9196
+*91A1

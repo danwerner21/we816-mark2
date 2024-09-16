@@ -11,8 +11,6 @@ LSrlUpVEC       = $00FD14
 LSetColorVEC    = $00FD18
 LCURSORVEC      = $00FD1C
 LUNCURSORVEC    = $00FD20
-LWRITERTC       = $00FD24
-LREADRTC        = $00FD28
 LIECIN          = $00FD2C
 LIECOUT         = $00FD30
 LUNTALK         = $00FD34
@@ -65,8 +63,15 @@ VideoMixedMode  = $fe3b
 VideoQuadHires  = $fe3c
 VideoMonoHires  = $fe3d
 
-RTCA            = $FE08         ;   RTC Address REGISTER.
-RTC             = $FE09         ;   RTC Data REGISTER.
+RTCBASE         = $FE40         ;   RTC BASE REGISTER.
+RTCSECONDS      = RTCBASE+0     ;   RTC SECONDS
+RTCMINUTES      = RTCBASE+1     ;   RTC MINUTES
+RTCHOUR         = RTCBASE+2     ;   RTC HOUR
+RTCDAYOWEEK     = RTCBASE+3     ;   RTC DAY OF WEEK
+RTCDATE         = RTCBASE+4     ;   RTC DATE
+RTCMONTH        = RTCBASE+5     ;   RTC MONTH
+RTCYEAR         = RTCBASE+6     ;   RTC YEAR
+RTCCENTURY      = RTCBASE+7     ;   RTC CENTURY
 
 ;__________________________________________________________
 

@@ -118,40 +118,55 @@ LAB_YEAR:
         ACCUMULATORINDEX8
         LDA     F:RTCCENTURY
         JSR     BCD_TO_HEX
-        STA     nums_1
+        STA nums_1
         ACCUMULATOR16
-        LDA     nums_1
-        AND     #$00FF
-        ASL     a               ; THIS IS THE NUMBER * 2
-        ASL     a               ; THIS IS THE NUMBER * 4
-        STA     nums_1          ; PARK IT (NOW NUM*4)
-        ASL     a               ; THIS IS THE NUMBER * 8
-        ASL     a               ; THIS IS THE NUMBER * 16
-        ASL     a               ; THIS IS THE NUMBER * 32
+        LDA nums_1-1
+        AND     #$FF00
+        ASL     A               ; THIS IS THE NUMBER * 512
+        STA nums_1              ; PARK IT
+        LSR     a               ; THIS IS THE NUMBER / 256
         PHA
         CLC                     ; ADD IT TO STORED QUANTITY
-        ADC     nums_1
-        STA     nums_1          ; PARK IT (NOW NUM*36)
+        ADC nums_1
+        STA nums_1              ; PARK IT (NOW NUM*768)
         PLA
-        ASL     a               ; THIS IS THE NUMBER * 64
+        LSR     a               ; THIS IS THE NUMBER / 128
+        PHA
         CLC                     ; ADD IT TO STORED QUANTITY
-        ADC     nums_1
-        STA     Temp_2          ; PARK IT (NOW NUM*100)
+        ADC nums_1
+        STA nums_1              ; PARK IT (NOW NUM*896)
+        PLA
+        LSR     a               ; THIS IS THE NUMBER / 64
+        PHA
+        CLC                     ; ADD IT TO STORED QUANTITY
+        ADC nums_1
+        STA nums_1              ; PARK IT (NOW NUM*960)
+        PLA
+        LSR     a               ; THIS IS THE NUMBER / 32
+        PHA
+        CLC                     ; ADD IT TO STORED QUANTITY
+        ADC nums_1
+        STA nums_1              ; PARK IT (NOW NUM*992)
+        PLA
+        LSR     a               ; THIS IS THE NUMBER / 16
+        LSR     a               ; THIS IS THE NUMBER / 8
+        CLC                     ; ADD IT TO STORED QUANTITY
+        ADC nums_1
+        STA nums_1              ; PARK IT (NOW NUM*1000)
         ACCUMULATOR8
         LDA     F:RTCYEAR
-        JSR     BCD_TO_HEX
-        STA     nums_1
+        STA  Temp_2
         LDA     #$00
-        STA     nums_1+1
+        STA  Temp_2+1
         ACCUMULATOR16
-        LDA     Temp_2
+        LDA Temp_2
         CLC
-        ADC     nums_1
-        STA     nums_1
+        ADC nums_1
+        STA nums_1
         ACCUMULATOR8
-        LDA     nums_1
+        LDA nums_1
         TAY
-        LDA     nums_1+1
+        LDA nums_1+1
         JSR     LAB_AYFC
         RTS
 LAB_PYEAR:
@@ -161,17 +176,17 @@ LAB_PYEAR:
 
 
 BCD_TO_HEX:
-        STA     nums_2          ; Store in TEMP2
-        AND     #$F0
-        LSR     A               ; (shift 1 times to /2)
-        STA     nums_1          ; Store the /2 into TEMP
-        LSR     A               ;
-        LSR     A               ; Shift two more times to /8
+        STA nums_2      ; Store in TEMP2
+        AND #$F0
+        LSR A           ; (shift 1 times to /2)
+        STA nums_1      ; Store the /2 into TEMP
+        LSR A           ;
+        LSR A           ; Shift two more times to /8
         CLC
-        ADC     nums_1          ; add /8 + /2 to get /10
-        STA     nums_1          ; Store tens digit into TEMP
-        LDA     nums_2          ; Get Ones
-        AND     #$0F
+        ADC nums_1      ; add /8 + /2 to get /10
+        STA nums_1      ; Store tens digit into TEMP
+        LDA nums_2      ; Get Ones
+        AND #$0F
         CLC
-        ADC     nums_1
-        RTS                     ; Return from subroutine
+        ADC nums_1
+        RTS             ; Return from subroutine

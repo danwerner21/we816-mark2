@@ -6,8 +6,8 @@
 
   (title_block
     (title "WE65816 - MARK2")
-    (date "2024-09-07")
-    (rev "V0.90")
+    (date "2024-09-15")
+    (rev "V1.0")
   )
 
   (lib_symbols
