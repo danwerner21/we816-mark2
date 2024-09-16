@@ -15,14 +15,16 @@ EhBASIC by Lee Davison was ported to the 65816 CPU on the WE816 computer.   It i
         The Footprints for the expansion(J7) and Keyboard(J3) connectors are wrong -- special cables are required to connect this version to keyboard and expansion
         RTC IS STILL BROKEN, DO NOT POPULATE U7,U8,X3,C36,C37,C34,R1,R2,R3,U9,BT1,K4,JP1, & JP2
 
+* V0.9 board
+        U16 should not be populated -- the wait state generator is not functional, maximum successful tested clock speed is 2.4576 Mhz
+        Higher CPU speeds are possible, but the video will not function at much beyond this speed.
+
 
 ## To Do:
-* Basic Access to RTC
-* Document BIOS Calls
 * Document Jumper Settings
 * Document IO Ports
 * Memory Map
-* Video speed is not fast enough to deal with a clock speed > (around) 2mhz (1.8432 works perfectly)  Need to add wait state hardware for video
+* Video speed is not fast enough to deal with a clock speed > (around) 2mhz (2.4576 works perfectly)  Need to add wait state hardware for video
 * Add Pictures to this Document
 ---
 

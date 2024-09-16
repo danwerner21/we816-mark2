@@ -172,8 +172,8 @@ COLD_START:
         JSR     INITIEC         ; Init IEC port
 ;       JSR     BATEST         ; Perform Basic Assurance Test
 
-;       JML     $FF1000         ; START BASIC
-        JMP     mon
+        JML     $FF1000         ; START BASIC
+;        JMP     mon
 
 
 RCOPVECTOR:
@@ -232,7 +232,7 @@ CONSOLE_INIT:
         LDA     #$0F
         JSR     SetColor
         JSR     ClearScreen
-        LDA     #$00
+        LDA     #$01
         STA     ConsoleDevice
         JSR     INITKEYBOARD
 
