@@ -172,8 +172,8 @@ COLD_START:
         JSR     INITIEC         ; Init IEC port
 ;       JSR     BATEST         ; Perform Basic Assurance Test
 
-        JML     $FF1000         ; START BASIC
-;        JMP     mon
+;        JML     $FF1000         ; START BASIC
+        JMP     mon
 
 
 RCOPVECTOR:

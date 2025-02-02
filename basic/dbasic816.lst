@@ -689,7 +689,7 @@ Current file: dbasic816.asm
 001038  2               TK_DAY          = TK_WEEKD+1    ; DAY token
 001038  2               TK_MONTH        = TK_DAY+1      ; MONTH token
 001038  2               TK_YEAR         = TK_MONTH+1    ; YEAR token
-001038  2               TK_VPTR         = TK_YEAR       ; VARPTR token
+001038  2               TK_VPTR         = TK_YEAR+1     ; VARPTR token
 001038  2               TK_LEFTS        = TK_VPTR+1     ; LEFT$ token
 001038  2               TK_RIGHTS       = TK_LEFTS+1    ; RIGHT$ token
 001038  2               TK_MIDS         = TK_RIGHTS+1   ; MID$ token
@@ -807,6 +807,9 @@ Current file: dbasic816.asm
 001102  2  76 34                .WORD   LAB_PPFN-1      ; CON()		"
 001104  2               
 001104  2               ; action addresses for functions
+001104  2               
+001104  2               
+001104  2               
 001104  2               
 001104  2               LAB_FTBL:
 001104  2               LAB_FTBM        = LAB_FTBL+$01
@@ -1026,7 +1029,7 @@ Current file: dbasic816.asm
 00122D  2  4F 4C 4F 52          .BYTE   "OLOR",TK_COLOR ; COLOR
 001231  2  B2           
 001232  2               LBB_CON:
-001232  2  4F 4E 28 FC          .BYTE   "ON(",TK_CON    ;CON
+001232  2  4F 4E 28 FD          .BYTE   "ON(",TK_CON    ;CON
 001236  2               LBB_CONT:
 001236  2  4F 4E 54 9F          .BYTE   "ONT",TK_CONT   ; CONT
 00123A  2               LBB_COS:
@@ -1122,7 +1125,7 @@ Current file: dbasic816.asm
 0012CC  2               ; LCASE$(
 0012CC  2               LBB_LEFTS:
 0012CC  2  45 46 54 24          .BYTE   "EFT$(",TK_LEFTS; LEFT$(
-0012D0  2  28 F9        
+0012D0  2  28 FA        
 0012D2  2               LBB_LEN:
 0012D2  2  45 4E 28 E4          .BYTE   "EN(",TK_LEN    ; LEN(
 0012D6  2               LBB_LET:
@@ -1144,7 +1147,7 @@ Current file: dbasic816.asm
 0012F0  2  41 58 28 EE          .BYTE   "AX(",TK_MAX    ; MAX(
 0012F4  2               LBB_MIDS:
 0012F4  2  49 44 24 28          .BYTE   "ID$(",TK_MIDS  ; MID$(
-0012F8  2  FB           
+0012F8  2  FC           
 0012F9  2               LBB_MIN:
 0012F9  2  49 4E 28 EF          .BYTE   "IN(",TK_MIN    ; MIN(
 0012FD  2               LBB_MINUTE:
@@ -1215,7 +1218,7 @@ Current file: dbasic816.asm
 001366  2  4E 90        
 001368  2               LBB_RIGHTS:
 001368  2  49 47 48 54          .BYTE   "IGHT$(",TK_RIGHTS
-00136C  2  24 28 FA     
+00136C  2  24 28 FB     
 00136F  2               ; RIGHT$(
 00136F  2               LBB_RND:
 00136F  2  4E 44 28 DB          .BYTE   "ND(",TK_RND    ; RND(
@@ -1288,7 +1291,7 @@ Current file: dbasic816.asm
 0013E0  2  41 4C 28 E6          .BYTE   "AL(",TK_VAL    ; VAL(
 0013E4  2               LBB_VPTR:
 0013E4  2  41 52 50 54          .BYTE   "ARPTR(",TK_VPTR; VARPTR(
-0013E8  2  52 28 F8     
+0013E8  2  52 28 F9     
 0013EB  2               LBB_VOICE:
 0013EB  2  4F 49 43 45          .BYTE   "OICE",TK_VOICE ; VOICE
 0013EF  2  BB           

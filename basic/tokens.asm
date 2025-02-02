@@ -132,7 +132,7 @@ TK_WEEKD        = TK_HOUR+1     ; WEEKD token
 TK_DAY          = TK_WEEKD+1    ; DAY token
 TK_MONTH        = TK_DAY+1      ; MONTH token
 TK_YEAR         = TK_MONTH+1    ; YEAR token
-TK_VPTR         = TK_YEAR       ; VARPTR token
+TK_VPTR         = TK_YEAR+1     ; VARPTR token
 TK_LEFTS        = TK_VPTR+1     ; LEFT$ token
 TK_RIGHTS       = TK_LEFTS+1    ; RIGHT$ token
 TK_MIDS         = TK_RIGHTS+1   ; MID$ token
@@ -250,6 +250,9 @@ LAB_FTPM        = LAB_FTPL+$01
         .WORD   LAB_PPFN-1      ; CON()		"
 
 ; action addresses for functions
+
+
+
 
 LAB_FTBL:
 LAB_FTBM        = LAB_FTBL+$01
